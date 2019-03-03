@@ -1,0 +1,13 @@
+<ng-lottie
+  *ngIf="shown"
+  [options]="options"
+  (animationLoaded)="animationLoaded($event)"
+  (configReady)="configReady()"
+  (dataReady)="dataReady()"
+  (domLoaded)="domLoaded()"
+  (enterFrame)="enterFrame($event)"
+  (segmentStart)="segmentStart($event)"
+  (complete)="complete($event)"
+  (loopComplete)="loopComplete($event)"
+  (destroy)="destroy($event)"
+></ng-lottie>

@@ -1,0 +1,21 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "name": "ngx-lottie",
+  "version": "0.0.0",
+  "sideEffects": true,
+  "peerDependencies": {
+    "@angular/core": ">=6.0.0 <8.0.0",
+    "lottie-web": ">=5.0.0",
+    "rxjs": ">=6.0.0 || ^5.6.0-forward-compat.4"
+  },
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "ngx-lottie",
+      "entryFile": "index.ts",
+      "externals": {
+        "lottie-web/build/player/lottie.js": "lottie-web/build/player/lottie.js"
+      }
+    },
+    "dest": "../dist/ngx-lottie"
+  }
+}

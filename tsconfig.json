@@ -2,21 +2,22 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "paths": {
+      "ngx-lottie": ["projects/lottie/index"],
+      "ngx-lottie/*": ["projects/lottie/src/*"]
+    },
+    "target": "es5",
+    "lib": ["es2017", "dom"],
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types"],
+    "strict": true,
     "sourceMap": true,
     "declaration": false,
-    "module": "es2015",
-    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "noStrictGenericChecks": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "suppressImplicitAnyIndexErrors": true
   }
 }

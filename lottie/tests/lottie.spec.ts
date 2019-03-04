@@ -12,7 +12,13 @@ Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
   })
 });
 
-import { LottieModule, LottieOptions, AnimationItem, BMDestroyEvent } from '../';
+import {
+  LottieModule,
+  LottieOptions,
+  AnimationItem,
+  BMDestroyEvent,
+  LottieCSSStyleDeclaration
+} from '../';
 
 import animationData = require('./data.json');
 
@@ -24,8 +30,11 @@ describe(LottieModule.name, () => {
   @Component({
     template: `
       <ng-lottie
+        width="500"
+        height="500"
         [options]="options"
-        (animationLoaded)="animationLoaded($event)"
+        [styles]="styles"
+        (animationCreated)="animationCreated($event)"
         (domLoaded)="domLoaded()"
         (destroy)="destroy($event)"
       ></ng-lottie>
@@ -38,13 +47,17 @@ describe(LottieModule.name, () => {
       autoplay: true
     };
 
+    public styles: LottieCSSStyleDeclaration = {
+      display: 'flex'
+    };
+
     public isDomLoaded = false;
 
     public animationItem: AnimationItem = null!;
 
     public destroyEvent: BMDestroyEvent = null!;
 
-    public animationLoaded(animationItem: AnimationItem): void {
+    public animationCreated(animationItem: AnimationItem): void {
       this.animationItem = animationItem;
     }
 
@@ -69,14 +82,37 @@ describe(LottieModule.name, () => {
     const fixture = TestBed.createComponent(MockComponent);
     fixture.detectChanges();
 
-    const svg = query(fixture.debugElement.nativeElement, 'svg');
+    const svg = query(fixture.debugElement.nativeElement, 'svg')!;
     // Assert
     expect(svg).toBeTruthy();
-    expect(svg!.constructor).toBe(SVGSVGElement);
+    expect(svg.constructor).toBe(SVGSVGElement);
     fixture.destroy();
   });
 
-  it('should emit "animationLoaded" event', () => {
+  it('should set custom width and height', () => {
+    // Arrange
+    const fixture = TestBed.createComponent(MockComponent);
+    fixture.detectChanges();
+
+    const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
+    const { height, width } = lottie.style;
+    // Assert
+    expect(height).toBe('500px');
+    expect(width).toBe('500px');
+  });
+
+  it('should set custom styles', () => {
+    // Arrange
+    const fixture = TestBed.createComponent(MockComponent);
+    fixture.detectChanges();
+
+    const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
+    const { display } = lottie.style;
+    // Assert
+    expect(display).toBe('flex');
+  });
+
+  it('should emit "animationCreated" event', () => {
     // Arrange
     const fixture = TestBed.createComponent(MockComponent);
     fixture.detectChanges();

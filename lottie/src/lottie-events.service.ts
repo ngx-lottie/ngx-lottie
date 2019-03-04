@@ -1,12 +1,8 @@
 import { Injectable, OnDestroy, NgZone, EventEmitter } from '@angular/core';
 
-import {
-  AnimationItem,
-  LottieEvent,
-  LottieEventName,
-  LottieComponentConfigurable
-} from './symbols';
+import { AnimationItem, LottieEvent, LottieEventName } from './symbols';
 import { lottieEvents, getEventEmitterFromComponentInstance } from './internals';
+import { LottieComponent } from './lottie.component';
 
 @Injectable()
 export class LottieEventsService implements OnDestroy {
@@ -28,16 +24,16 @@ export class LottieEventsService implements OnDestroy {
    * This method is invoked after calling `loadAnimation` and dispatches the new one
    * created `AnimationItem` instance
    */
-  public animationLoaded(
+  public animationCreated(
     animationItem: AnimationItem,
-    animationLoaded: EventEmitter<AnimationItem>
+    animationCreated: EventEmitter<AnimationItem>
   ): void {
-    animationLoaded.emit(animationItem);
+    animationCreated.emit(animationItem);
   }
 
   public setAnimationItemAndLottieEventListeners(
     animationItem: AnimationItem,
-    instance: LottieComponentConfigurable
+    instance: LottieComponent
   ): void {
     this.animationItem = animationItem;
     // `AnimationItem` triggers different events every ms, we have to listen
@@ -45,32 +41,27 @@ export class LottieEventsService implements OnDestroy {
     this.zone.runOutsideAngular(() => this.setupLottieEventsListeners(instance));
   }
 
-  private setupLottieEventsListeners(instance: LottieComponentConfigurable): void {
+  private setupLottieEventsListeners(instance: LottieComponent): void {
     lottieEvents.forEach((name) => {
       this.setupLottieEventListener(name, instance);
     });
   }
 
-  private setupLottieEventListener(name: LottieEventName, instance: LottieComponentConfigurable) {
-    const listener = (event: LottieEvent): void => {
-      const emitter: EventEmitter<LottieEvent> = getEventEmitterFromComponentInstance(
-        instance,
-        name
-      );
-
-      emitter.emit(event);
-    };
+  private setupLottieEventListener(name: LottieEventName, instance: LottieComponent): void {
+    const emitter: EventEmitter<LottieEvent> = getEventEmitterFromComponentInstance(instance, name);
+    const listener = (event: LottieEvent): void => emitter.emit(event);
 
     this.animationItem!.addEventListener(name, listener);
-    this.listeners.set(name, listener);
+
+    // We don't have to save `destroy` listener, because `AnimationItem`
+    // is able to remove `destroy` event listener itself
+    if (name !== 'destroy') {
+      this.listeners.set(name, listener);
+    }
   }
 
   private dispose(): void {
     for (const [name, callback] of this.listeners.entries()) {
-      if (name === 'destroy') {
-        continue;
-      }
-
       this.animationItem!.removeEventListener(name, callback);
     }
 

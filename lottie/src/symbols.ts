@@ -4,6 +4,7 @@ export interface LottieOptions {
   animationData?: any;
   container?: HTMLElement;
   renderer?: 'svg' | 'canvas' | 'html';
+  autoloadSegments?: boolean;
   loop?: boolean | number;
   autoplay?: boolean;
   name?: string;
@@ -150,6 +151,8 @@ export type MappedLottieEventName =
   | 'loadedImages'
   | 'domLoaded'
   | 'destroy';
+
+export type LottieCSSStyleDeclaration = Partial<CSSStyleDeclaration>;
 
 export interface LottieComponentConfigurable {
   complete: EventEmitter<BMCompleteEvent>;

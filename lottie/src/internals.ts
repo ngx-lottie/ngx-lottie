@@ -12,7 +12,7 @@ import {
   LottieComponentConfigurable
 } from './symbols';
 
-export function resolveOptions(options: LottieOptions, container: HTMLElement): LottieOptions {
+function resolveOptions(options: LottieOptions | null, container: HTMLElement): LottieOptions {
   const defaulOptions: LottieOptions = {
     container,
     renderer: 'svg',
@@ -23,8 +23,13 @@ export function resolveOptions(options: LottieOptions, container: HTMLElement): 
   return Object.assign(defaulOptions, options);
 }
 
-export function loadAnimation(zone: NgZone, options: LottieOptions): AnimationItem {
-  return zone.runOutsideAngular(() => player.loadAnimation(options));
+export function loadAnimation(
+  zone: NgZone,
+  options: LottieOptions | null,
+  container: HTMLElement
+): AnimationItem {
+  options = resolveOptions(options, container);
+  return zone.runOutsideAngular(() => player.loadAnimation(options!));
 }
 
 /**

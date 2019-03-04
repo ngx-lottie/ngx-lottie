@@ -8,5 +8,6 @@ export {
   BMCompleteLoopEvent,
   BMCompleteEvent,
   BMSegmentStartEvent,
-  BMDestroyEvent
+  BMDestroyEvent,
+  LottieCSSStyleDeclaration
 } from './symbols';

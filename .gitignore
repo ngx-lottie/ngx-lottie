@@ -41,4 +41,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-.cache
+.cache/
+integration/**/yarn.lock

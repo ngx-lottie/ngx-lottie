@@ -1,5 +1,3 @@
-import { EventEmitter } from '@angular/core';
-
 export interface LottieOptions {
   animationData?: any;
   container?: HTMLElement;

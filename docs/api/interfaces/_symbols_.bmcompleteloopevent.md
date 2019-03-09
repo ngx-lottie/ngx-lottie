@@ -25,7 +25,7 @@
 
 **● frameMult**: *`number`*
 
-*Defined in symbols.ts:103*
+*Defined in symbols.ts:140*
 
 ___
 <a id="loop"></a>
@@ -34,7 +34,7 @@ ___
 
 **● loop**: *`number`*
 
-*Defined in symbols.ts:101*
+*Defined in symbols.ts:138*
 
 ___
 <a id="playcount"></a>
@@ -43,7 +43,7 @@ ___
 
 **● playCount**: *`number`*
 
-*Defined in symbols.ts:102*
+*Defined in symbols.ts:139*
 
 ___
 <a id="type"></a>
@@ -52,7 +52,7 @@ ___
 
 **● type**: *"loopComplete"*
 
-*Defined in symbols.ts:100*
+*Defined in symbols.ts:137*
 
 ___
 

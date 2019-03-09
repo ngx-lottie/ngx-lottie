@@ -23,7 +23,7 @@
 
 **● target**: *[AnimationItem](_symbols_.animationitem.md)*
 
-*Defined in symbols.ts:118*
+*Defined in symbols.ts:155*
 
 ___
 <a id="type"></a>
@@ -32,7 +32,7 @@ ___
 
 **● type**: *"destroy"*
 
-*Defined in symbols.ts:119*
+*Defined in symbols.ts:156*
 
 ___
 

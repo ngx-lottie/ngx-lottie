@@ -9,7 +9,6 @@
 ## Implements
 
 * `OnInit`
-* [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md)
 
 ## Index
 
@@ -19,19 +18,23 @@
 
 ### Properties
 
-* [animationLoaded](_lottie_component_.lottiecomponent.md#animationloaded)
+* [animationCreated](_lottie_component_.lottiecomponent.md#animationcreated)
 * [complete](_lottie_component_.lottiecomponent.md#complete)
 * [configReady](_lottie_component_.lottiecomponent.md#configready)
 * [container](_lottie_component_.lottiecomponent.md#container)
+* [containerClass](_lottie_component_.lottiecomponent.md#containerclass)
 * [dataFailed](_lottie_component_.lottiecomponent.md#datafailed)
 * [dataReady](_lottie_component_.lottiecomponent.md#dataready)
 * [destroy](_lottie_component_.lottiecomponent.md#destroy)
 * [domLoaded](_lottie_component_.lottiecomponent.md#domloaded)
 * [enterFrame](_lottie_component_.lottiecomponent.md#enterframe)
+* [height](_lottie_component_.lottiecomponent.md#height)
 * [loadedImages](_lottie_component_.lottiecomponent.md#loadedimages)
 * [loopComplete](_lottie_component_.lottiecomponent.md#loopcomplete)
 * [options](_lottie_component_.lottiecomponent.md#options)
 * [segmentStart](_lottie_component_.lottiecomponent.md#segmentstart)
+* [styles](_lottie_component_.lottiecomponent.md#styles)
+* [width](_lottie_component_.lottiecomponent.md#width)
 
 ### Methods
 
@@ -47,7 +50,7 @@
 
 ⊕ **new LottieComponent**(zone: *`NgZone`*, platformId: *`string`*, lottieEventsService: *[LottieEventsService](_lottie_events_service_.lottieeventsservice.md)*): [LottieComponent](_lottie_component_.lottiecomponent.md)
 
-*Defined in lottie.component.ts:76*
+*Defined in lottie.component.ts:136*
 
 **Parameters:**
 
@@ -63,13 +66,15 @@ ___
 
 ## Properties
 
-<a id="animationloaded"></a>
+<a id="animationcreated"></a>
 
-###  animationLoaded
+###  animationCreated
 
-**● animationLoaded**: *`EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>* =  new EventEmitter<AnimationItem>()
+**● animationCreated**: *`EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>* =  new EventEmitter<AnimationItem>()
 
-*Defined in lottie.component.ts:46*
+*Defined in lottie.component.ts:69*
+
+`animationCreated` is dispatched after calling `loadAnimation`
 
 ___
 <a id="complete"></a>
@@ -78,9 +83,9 @@ ___
 
 **● complete**: *`EventEmitter`<[BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md)>* =  new EventEmitter<BMCompleteEvent>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[complete](../interfaces/_symbols_.lottiecomponentconfigurable.md#complete)*
+*Defined in lottie.component.ts:75*
 
-*Defined in lottie.component.ts:49*
+`complete` is dispatched after completing the last frame
 
 ___
 <a id="configready"></a>
@@ -89,9 +94,9 @@ ___
 
 **● configReady**: *`EventEmitter`<`void`>* =  new EventEmitter<void>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[configReady](../interfaces/_symbols_.lottiecomponentconfigurable.md#configready)*
+*Defined in lottie.component.ts:100*
 
-*Defined in lottie.component.ts:61*
+Original event name is `config_ready`. `config_ready` is dispatched after the needed renderer is configured
 
 ___
 <a id="container"></a>
@@ -100,7 +105,16 @@ ___
 
 **● container**: *`ElementRef`<`HTMLElement`>* =  null!
 
-*Defined in lottie.component.ts:43*
+*Defined in lottie.component.ts:51*
+
+___
+<a id="containerclass"></a>
+
+###  containerClass
+
+**● containerClass**: *[ContainerClass](../modules/_symbols_.md#containerclass)* =  null
+
+*Defined in lottie.component.ts:54*
 
 ___
 <a id="datafailed"></a>
@@ -109,9 +123,9 @@ ___
 
 **● dataFailed**: *`EventEmitter`<`void`>* =  new EventEmitter<void>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[dataFailed](../interfaces/_symbols_.lottiecomponentconfigurable.md#datafailed)*
+*Defined in lottie.component.ts:115*
 
-*Defined in lottie.component.ts:67*
+Original event name is `data_failed`. `data_failed` can be dispatched if the `XMLHttpRequest`, that tried to load animation data using provided `path`, has errored
 
 ___
 <a id="dataready"></a>
@@ -120,9 +134,9 @@ ___
 
 **● dataReady**: *`EventEmitter`<`void`>* =  new EventEmitter<void>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[dataReady](../interfaces/_symbols_.lottiecomponentconfigurable.md#dataready)*
+*Defined in lottie.component.ts:107*
 
-*Defined in lottie.component.ts:64*
+Original event name is `data_ready`. `data_ready` is dispatched when all parts of the animation have been loaded
 
 ___
 <a id="destroy"></a>
@@ -131,9 +145,9 @@ ___
 
 **● destroy**: *`EventEmitter`<[BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>* =  new EventEmitter<BMDestroyEvent>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[destroy](../interfaces/_symbols_.lottiecomponentconfigurable.md#destroy)*
+*Defined in lottie.component.ts:136*
 
-*Defined in lottie.component.ts:76*
+`destroy` will be dispatched in the `ngOnDestroy` hook of the service, it's useful for releasing resources
 
 ___
 <a id="domloaded"></a>
@@ -142,9 +156,9 @@ ___
 
 **● domLoaded**: *`EventEmitter`<`void`>* =  new EventEmitter<void>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[domLoaded](../interfaces/_symbols_.lottiecomponentconfigurable.md#domloaded)*
+*Defined in lottie.component.ts:129*
 
-*Defined in lottie.component.ts:73*
+Original event name is `DOMLoaded`. `DOMLoaded` is dispatched when elements have been added to the DOM
 
 ___
 <a id="enterframe"></a>
@@ -153,9 +167,18 @@ ___
 
 **● enterFrame**: *`EventEmitter`<[BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md)>* =  new EventEmitter<BMEnterFrameEvent>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[enterFrame](../interfaces/_symbols_.lottiecomponentconfigurable.md#enterframe)*
+*Defined in lottie.component.ts:87*
 
-*Defined in lottie.component.ts:55*
+`enterFrame` is dispatched after entering the new frame
+
+___
+<a id="height"></a>
+
+###  height
+
+**● height**: *`string`* =  null!
+
+*Defined in lottie.component.ts:63*
 
 ___
 <a id="loadedimages"></a>
@@ -164,9 +187,9 @@ ___
 
 **● loadedImages**: *`EventEmitter`<`void`>* =  new EventEmitter<void>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[loadedImages](../interfaces/_symbols_.lottiecomponentconfigurable.md#loadedimages)*
+*Defined in lottie.component.ts:122*
 
-*Defined in lottie.component.ts:70*
+Original event name is `loaded_images`. `loaded_images` can be dispatched after all assets are preloaded
 
 ___
 <a id="loopcomplete"></a>
@@ -175,18 +198,18 @@ ___
 
 **● loopComplete**: *`EventEmitter`<[BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md)>* =  new EventEmitter<BMCompleteLoopEvent>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[loopComplete](../interfaces/_symbols_.lottiecomponentconfigurable.md#loopcomplete)*
+*Defined in lottie.component.ts:81*
 
-*Defined in lottie.component.ts:52*
+`loopComplete` is dispatched after completing frame loop
 
 ___
 <a id="options"></a>
 
 ###  options
 
-**● options**: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md)*
+**● options**: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null`* =  null
 
-*Defined in lottie.component.ts:40*
+*Defined in lottie.component.ts:48*
 
 ___
 <a id="segmentstart"></a>
@@ -195,9 +218,27 @@ ___
 
 **● segmentStart**: *`EventEmitter`<[BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md)>* =  new EventEmitter<BMSegmentStartEvent>()
 
-*Implementation of [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md).[segmentStart](../interfaces/_symbols_.lottiecomponentconfigurable.md#segmentstart)*
+*Defined in lottie.component.ts:93*
 
-*Defined in lottie.component.ts:58*
+`segmentStart` is dispatched when the new segment is adjusted
+
+___
+<a id="styles"></a>
+
+###  styles
+
+**● styles**: *[LottieCSSStyleDeclaration](../modules/_symbols_.md#lottiecssstyledeclaration) \| `null`* =  null
+
+*Defined in lottie.component.ts:57*
+
+___
+<a id="width"></a>
+
+###  width
+
+**● width**: *`string`* =  null!
+
+*Defined in lottie.component.ts:60*
 
 ___
 
@@ -209,7 +250,7 @@ ___
 
 ▸ **ngOnInit**(): `void`
 
-*Defined in lottie.component.ts:84*
+*Defined in lottie.component.ts:144*
 
 **Returns:** `void`
 

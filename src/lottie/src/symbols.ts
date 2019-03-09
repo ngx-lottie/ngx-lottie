@@ -47,6 +47,38 @@ export interface Lottie {
 }
 
 export interface AnimationItem {
+  animType: string;
+  animationData: any;
+  animationID: string;
+  assets: any[];
+  assetsPath: string | undefined;
+  autoloadSegments: boolean;
+  autoplay: boolean;
+  currentFrame: number;
+  currentRawFrame: number;
+  fileName: string | undefined;
+  firstFrame: number;
+  frameModifier: number;
+  frameMult: number;
+  frameRate: number;
+  isLoaded: boolean;
+  isPaused: boolean;
+  loop: boolean;
+  name: string;
+  path: string;
+  playCount: number;
+  playDirection: number;
+  playSpeed: number;
+  renderer: any | null;
+  segmentPos: number;
+  segments: any[];
+  subframeEnabled: boolean;
+  timeCompleted: number;
+  totalFrames: number;
+  wrapper: HTMLElement | HTMLCanvasElement;
+  _cbs: (() => void)[];
+  _completedLoop: boolean;
+  _idle: boolean;
   play(): void;
   stop(): void;
   pause(): void;
@@ -84,6 +116,12 @@ export interface AnimationItem {
   configAnimation(animationData: any): void;
   getAssetsPath(assetData: any): string;
   getAssetData(id: number): any | undefined;
+  loadSegments(): void;
+  loadNextSegment(): void;
+  preloadImages(): void;
+  togglePause(): void;
+  renderFrame(): void;
+  setCurrentRawFrameValue(value: number): void;
 }
 
 export type Direction = 1 | -1;

@@ -1,5 +1,5 @@
 {
-  "name": "lottie-ng6",
+  "name": "demo-app-ng6",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -7,7 +7,7 @@
     "start": "ng serve",
     "test": "ng build",
     "pretest": "yarn",
-    "postinstall": "cpx -v -C \"../../dist/ngx-lottie/**/*\" \"node_modules/ngx-lottie/\""
+    "postinstall": "cpx -v -C \"../../../dist/ngx-lottie/**/*\" \"node_modules/ngx-lottie/\""
   },
   "private": true,
   "dependencies": {

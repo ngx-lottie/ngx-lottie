@@ -16,6 +16,6 @@
         "lottie-web/build/player/lottie.js": "lottie-web/build/player/lottie.js"
       }
     },
-    "dest": "../dist/ngx-lottie"
+    "dest": "../../dist/ngx-lottie"
   }
 }

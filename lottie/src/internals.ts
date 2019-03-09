@@ -1,16 +1,18 @@
 import { NgZone, EventEmitter } from '@angular/core';
 
-const player: Lottie = require('lottie-web/build/player/lottie.js');
-
+import { LottieComponent } from './lottie.component';
 import {
   LottieOptions,
   Lottie,
   LottieEventName,
   AnimationItem,
   MappedLottieEventName,
-  LottieEvent,
-  LottieComponentConfigurable
+  LottieEvent
 } from './symbols';
+
+const getLottiePlayer = (): Promise<Lottie> => {
+  return import(/* webpackChunkName: 'lottie' */ 'lottie-web/build/player/lottie.js');
+};
 
 function resolveOptions(options: LottieOptions | null, container: HTMLElement): LottieOptions {
   const defaulOptions: LottieOptions = {
@@ -23,12 +25,13 @@ function resolveOptions(options: LottieOptions | null, container: HTMLElement): 
   return Object.assign(defaulOptions, options);
 }
 
-export function loadAnimation(
+export async function loadAnimation(
   zone: NgZone,
   options: LottieOptions | null,
   container: HTMLElement
-): AnimationItem {
+): Promise<AnimationItem> {
   options = resolveOptions(options, container);
+  const player = await getLottiePlayer();
   return zone.runOutsideAngular(() => player.loadAnimation(options!));
 }
 
@@ -58,7 +61,7 @@ function mapEventToCamelCase(name: LottieEventName): MappedLottieEventName {
 }
 
 export function getEventEmitterFromComponentInstance(
-  instance: LottieComponentConfigurable,
+  instance: LottieComponent,
   name: LottieEventName
 ) {
   return instance[mapEventToCamelCase(name)] as EventEmitter<LottieEvent>;

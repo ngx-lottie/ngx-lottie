@@ -14,7 +14,7 @@ export class LottieEventsService implements OnDestroy {
    */
   private readonly listeners = new Map<LottieEventName, (event: LottieEvent) => void>();
 
-  constructor(private zone: NgZone) {}
+  constructor(private readonly zone: NgZone) {}
 
   public ngOnDestroy(): void {
     this.dispose();
@@ -38,10 +38,10 @@ export class LottieEventsService implements OnDestroy {
     this.animationItem = animationItem;
     // `AnimationItem` triggers different events every ms, we have to listen
     // them outside Angular's context, thus it won't affect performance
-    this.zone.runOutsideAngular(() => this.setupLottieEventsListeners(instance));
+    this.zone.runOutsideAngular(() => this.setupLottieEventListeners(instance));
   }
 
-  private setupLottieEventsListeners(instance: LottieComponent): void {
+  private setupLottieEventListeners(instance: LottieComponent): void {
     lottieEvents.forEach((name) => {
       this.setupLottieEventListener(name, instance);
     });
@@ -64,6 +64,9 @@ export class LottieEventsService implements OnDestroy {
     for (const [name, callback] of this.listeners.entries()) {
       this.animationItem!.removeEventListener(name, callback);
     }
+
+    // Release listeners as we don't need them
+    this.listeners.clear();
 
     // We cannot call `destroy` before removing event listeners
     // as after calling `destroy` - `removeEventListener` becomes unavailable

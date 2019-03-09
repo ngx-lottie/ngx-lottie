@@ -154,15 +154,4 @@ export type MappedLottieEventName =
 
 export type LottieCSSStyleDeclaration = Partial<CSSStyleDeclaration>;
 
-export interface LottieComponentConfigurable {
-  complete: EventEmitter<BMCompleteEvent>;
-  loopComplete: EventEmitter<BMCompleteLoopEvent>;
-  enterFrame: EventEmitter<BMEnterFrameEvent>;
-  segmentStart: EventEmitter<BMSegmentStartEvent>;
-  configReady: EventEmitter<void>;
-  dataReady: EventEmitter<void>;
-  dataFailed: EventEmitter<void>;
-  loadedImages: EventEmitter<void>;
-  domLoaded: EventEmitter<void>;
-  destroy: EventEmitter<BMDestroyEvent>;
-}
+export type ContainerClass = string | string[] | Set<string> | { [klass: string]: any } | null;

@@ -2,8 +2,9 @@
   *ngIf="shown"
   width="600"
   height="500"
+  containerClass="moving-box"
   [options]="options"
-  (animationLoaded)="animationLoaded($event)"
+  (animationCreated)="animationCreated($event)"
   (configReady)="configReady()"
   (dataReady)="dataReady()"
   (domLoaded)="domLoaded()"
@@ -13,3 +14,8 @@
   (loopComplete)="loopComplete($event)"
   (destroy)="destroy($event)"
 ></ng-lottie>
+
+<button (click)="destroyAnimation()">Destroy</button>
+<button (click)="play()">Play</button>
+<button (click)="pause()">Pause</button>
+<button (click)="stop()">Stop</button>

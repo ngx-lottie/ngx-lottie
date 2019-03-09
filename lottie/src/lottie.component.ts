@@ -24,13 +24,20 @@ import {
   BMCompleteLoopEvent,
   BMEnterFrameEvent,
   BMSegmentStartEvent,
-  BMDestroyEvent
+  BMDestroyEvent,
+  ContainerClass
 } from './symbols';
 
 @Component({
   selector: 'ng-lottie',
   template: `
-    <div #container [style.width.px]="width" [style.height.px]="height" [ngStyle]="styles"></div>
+    <div
+      #container
+      [style.width.px]="width"
+      [style.height.px]="height"
+      [ngStyle]="styles"
+      [ngClass]="containerClass"
+    ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LottieEventsService]
@@ -41,6 +48,9 @@ export class LottieComponent implements OnInit {
 
   @ViewChild('container')
   public container: ElementRef<HTMLElement> = null!;
+
+  @Input()
+  public containerClass: ContainerClass = null;
 
   @Input()
   public styles: LottieCSSStyleDeclaration | null = null;
@@ -134,12 +144,17 @@ export class LottieComponent implements OnInit {
     this.loadAnimation();
   }
 
-  private loadAnimation(): void {
+  private async loadAnimation(): Promise<void> {
     if (isPlatformServer(this.platformId)) {
       return;
     }
 
-    const animationItem = loadAnimation(this.zone, this.options, this.container.nativeElement);
+    const animationItem = await loadAnimation(
+      this.zone,
+      this.options,
+      this.container.nativeElement
+    );
+
     this.lottieEventsService.animationCreated(animationItem, this.animationCreated);
     this.lottieEventsService.setAnimationItemAndLottieEventListeners(animationItem, this);
   }

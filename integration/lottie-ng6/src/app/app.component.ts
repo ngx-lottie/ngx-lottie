@@ -11,7 +11,8 @@ import {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   public options: LottieOptions = {
@@ -20,14 +21,11 @@ export class AppComponent {
 
   public shown = true;
 
-  constructor() {
-    setTimeout(() => {
-      this.shown = false;
-    }, 300);
-  }
+  private animationItem: AnimationItem | null = null;
 
-  public animationLoaded(animationItem: AnimationItem): void {
-    console.log('animationLoaded -> ', animationItem);
+  public animationCreated(animationItem: AnimationItem): void {
+    console.log('animationCreated -> ', animationItem);
+    this.animationItem = animationItem;
   }
 
   public configReady(): void {
@@ -60,5 +58,21 @@ export class AppComponent {
 
   public destroy(destroyEvent: BMDestroyEvent): void {
     console.log('destroy -> ', destroyEvent);
+  }
+
+  public destroyAnimation(): void {
+    this.shown = false;
+  }
+
+  public play(): void {
+    this.animationItem!.play();
+  }
+
+  public pause(): void {
+    this.animationItem!.pause();
+  }
+
+  public stop(): void {
+    this.animationItem!.stop();
   }
 }

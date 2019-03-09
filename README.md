@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/ngx-lottie/ngx-lottie/master/docs/assets/logo.png">
+  <img src="https://raw.githubusercontent.com/ngx-lottie/ngx-lottie/master/docs/assets/logo.jpg">
 </h1>
 
 <div align="center">

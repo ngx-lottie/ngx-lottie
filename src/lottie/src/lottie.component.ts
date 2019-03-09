@@ -35,6 +35,7 @@ import {
       #container
       [style.width.px]="width"
       [style.height.px]="height"
+      style="margin: 0 auto"
       [ngStyle]="styles"
       [ngClass]="containerClass"
     ></div>

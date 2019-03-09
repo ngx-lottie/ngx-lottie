@@ -23,7 +23,7 @@
 
 **● duration**: *`number`*
 
-*Defined in symbols.ts:108*
+*Defined in symbols.ts:145*
 
 ___
 <a id="type"></a>
@@ -32,7 +32,7 @@ ___
 
 **● type**: *"complete"*
 
-*Defined in symbols.ts:107*
+*Defined in symbols.ts:144*
 
 ___
 

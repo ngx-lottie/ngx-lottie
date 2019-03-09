@@ -24,7 +24,7 @@
 
 **● firstFrame**: *`number`*
 
-*Defined in symbols.ts:113*
+*Defined in symbols.ts:150*
 
 ___
 <a id="totalframes"></a>
@@ -33,7 +33,7 @@ ___
 
 **● totalFrames**: *`number`*
 
-*Defined in symbols.ts:114*
+*Defined in symbols.ts:151*
 
 ___
 <a id="type"></a>
@@ -42,7 +42,7 @@ ___
 
 **● type**: *"segmentStart"*
 
-*Defined in symbols.ts:112*
+*Defined in symbols.ts:149*
 
 ___
 

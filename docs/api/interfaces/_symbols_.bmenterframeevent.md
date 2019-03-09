@@ -25,7 +25,7 @@
 
 **● currentTime**: *`number`*
 
-*Defined in symbols.ts:93*
+*Defined in symbols.ts:130*
 
 ___
 <a id="duration"></a>
@@ -34,7 +34,7 @@ ___
 
 **● duration**: *`number`*
 
-*Defined in symbols.ts:94*
+*Defined in symbols.ts:131*
 
 ___
 <a id="totaltime"></a>
@@ -43,7 +43,7 @@ ___
 
 **● totalTime**: *`number`*
 
-*Defined in symbols.ts:95*
+*Defined in symbols.ts:132*
 
 ___
 <a id="type"></a>
@@ -52,7 +52,7 @@ ___
 
 **● type**: *"enterFrame"*
 
-*Defined in symbols.ts:96*
+*Defined in symbols.ts:133*
 
 ___
 

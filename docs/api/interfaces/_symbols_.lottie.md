@@ -30,7 +30,7 @@
 
 ▸ **destroy**(name?: *`undefined` \| `string`*): `void`
 
-*Defined in symbols.ts:47*
+*Defined in symbols.ts:46*
 
 **Parameters:**
 
@@ -47,7 +47,7 @@ ___
 
 ▸ **loadAnimation**(params: *[LottieOptions](_symbols_.lottieoptions.md)*): [AnimationItem](_symbols_.animationitem.md)
 
-*Defined in symbols.ts:40*
+*Defined in symbols.ts:39*
 
 **Parameters:**
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **play**(name?: *`undefined` \| `string`*): `void`
 
-*Defined in symbols.ts:27*
+*Defined in symbols.ts:26*
 
 **Parameters:**
 
@@ -81,7 +81,7 @@ ___
 
 ▸ **registerAnimation**(element: *`any`*, animationData?: *`any`*): [AnimationItem](_symbols_.animationitem.md)
 
-*Defined in symbols.ts:43*
+*Defined in symbols.ts:42*
 
 **Parameters:**
 
@@ -99,7 +99,7 @@ ___
 
 ▸ **searchAnimations**(animationData?: *`any`*, standalone?: *`undefined` \| `false` \| `true`*, renderer?: *`undefined` \| `string`*): `void`
 
-*Defined in symbols.ts:45*
+*Defined in symbols.ts:44*
 
 **Parameters:**
 
@@ -118,7 +118,7 @@ ___
 
 ▸ **setDirection**(direction: *`number`*, name?: *`undefined` \| `string`*): `void`
 
-*Defined in symbols.ts:35*
+*Defined in symbols.ts:34*
 
 **Parameters:**
 
@@ -136,7 +136,7 @@ ___
 
 ▸ **setQuality**(quality: *"high" \| "medium" \| "low" \| `number`*): `void`
 
-*Defined in symbols.ts:38*
+*Defined in symbols.ts:37*
 
 **Parameters:**
 
@@ -153,7 +153,7 @@ ___
 
 ▸ **setSpeed**(speed: *`number`*, name?: *`undefined` \| `string`*): `void`
 
-*Defined in symbols.ts:32*
+*Defined in symbols.ts:31*
 
 **Parameters:**
 
@@ -171,7 +171,7 @@ ___
 
 ▸ **stop**(name?: *`undefined` \| `string`*): `void`
 
-*Defined in symbols.ts:29*
+*Defined in symbols.ts:28*
 
 **Parameters:**
 

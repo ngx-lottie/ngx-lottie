@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "ngx-lottie": ["projects/lottie/index"],
-      "ngx-lottie/*": ["projects/lottie/src/*"]
+      "ngx-lottie": ["src/lottie/index"],
+      "ngx-lottie/*": ["src/lottie/src/*"]
     },
     "target": "es5",
     "lib": ["es2017", "dom"],

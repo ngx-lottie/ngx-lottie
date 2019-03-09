@@ -18,7 +18,7 @@
 
 ### Methods
 
-* [animationLoaded](_lottie_events_service_.lottieeventsservice.md#animationloaded)
+* [animationCreated](_lottie_events_service_.lottieeventsservice.md#animationcreated)
 * [ngOnDestroy](_lottie_events_service_.lottieeventsservice.md#ngondestroy)
 * [setAnimationItemAndLottieEventListeners](_lottie_events_service_.lottieeventsservice.md#setanimationitemandlottieeventlisteners)
 
@@ -32,7 +32,7 @@
 
 ⊕ **new LottieEventsService**(zone: *`NgZone`*): [LottieEventsService](_lottie_events_service_.lottieeventsservice.md)
 
-*Defined in lottie-events.service.ts:19*
+*Defined in lottie-events.service.ts:15*
 
 **Parameters:**
 
@@ -46,13 +46,13 @@ ___
 
 ## Methods
 
-<a id="animationloaded"></a>
+<a id="animationcreated"></a>
 
-###  animationLoaded
+###  animationCreated
 
-▸ **animationLoaded**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, animationLoaded: *`EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>*): `void`
+▸ **animationCreated**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, animationCreated: *`EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>*): `void`
 
-*Defined in lottie-events.service.ts:31*
+*Defined in lottie-events.service.ts:27*
 
 This method is invoked after calling `loadAnimation` and dispatches the new one created `AnimationItem` instance
 
@@ -61,7 +61,7 @@ This method is invoked after calling `loadAnimation` and dispatches the new one 
 | Name | Type |
 | ------ | ------ |
 | animationItem | [AnimationItem](../interfaces/_symbols_.animationitem.md) |
-| animationLoaded | `EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)> |
+| animationCreated | `EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)> |
 
 **Returns:** `void`
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **ngOnDestroy**(): `void`
 
-*Defined in lottie-events.service.ts:23*
+*Defined in lottie-events.service.ts:19*
 
 **Returns:** `void`
 
@@ -81,16 +81,16 @@ ___
 
 ###  setAnimationItemAndLottieEventListeners
 
-▸ **setAnimationItemAndLottieEventListeners**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, instance: *[LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md)*): `void`
+▸ **setAnimationItemAndLottieEventListeners**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, instance: *[LottieComponent](_lottie_component_.lottiecomponent.md)*): `void`
 
-*Defined in lottie-events.service.ts:38*
+*Defined in lottie-events.service.ts:34*
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
 | animationItem | [AnimationItem](../interfaces/_symbols_.animationitem.md) |
-| instance | [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md) |
+| instance | [LottieComponent](_lottie_component_.lottiecomponent.md) |
 
 **Returns:** `void`
 

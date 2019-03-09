@@ -7,11 +7,11 @@
 ### Variables
 
 * [lottieEvents](_internals_.md#lottieevents)
-* [player](_internals_.md#player)
 
 ### Functions
 
 * [getEventEmitterFromComponentInstance](_internals_.md#geteventemitterfromcomponentinstance)
+* [getLottiePlayer](_internals_.md#getlottieplayer)
 * [loadAnimation](_internals_.md#loadanimation)
 * [mapEventToCamelCase](_internals_.md#mapeventtocamelcase)
 * [resolveOptions](_internals_.md#resolveoptions)
@@ -41,20 +41,11 @@
   'destroy'
 ]
 
-*Defined in internals.ts:66*
+*Defined in internals.ts:74*
 
 Events that can be dispatched by `Animationitem`
 
 *__see__*: [https://github.com/airbnb/lottie-web#events](https://github.com/airbnb/lottie-web#events)
-
-___
-<a id="player"></a>
-
-### `<Const>` player
-
-**● player**: *[Lottie](../interfaces/_symbols_.lottie.md)* =  require('lottie-web/build/player/lottie.js')
-
-*Defined in internals.ts:3*
 
 ___
 
@@ -64,36 +55,48 @@ ___
 
 ###  getEventEmitterFromComponentInstance
 
-▸ **getEventEmitterFromComponentInstance**(instance: *[LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md)*, name: *[LottieEventName](_symbols_.md#lottieeventname)*): `EventEmitter`<`void` \| [BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>
+▸ **getEventEmitterFromComponentInstance**(instance: *[LottieComponent](../classes/_lottie_component_.lottiecomponent.md)*, name: *[LottieEventName](_symbols_.md#lottieeventname)*): `EventEmitter`<`void` \| [BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>
 
-*Defined in internals.ts:55*
+*Defined in internals.ts:63*
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
-| instance | [LottieComponentConfigurable](../interfaces/_symbols_.lottiecomponentconfigurable.md) |
+| instance | [LottieComponent](../classes/_lottie_component_.lottiecomponent.md) |
 | name | [LottieEventName](_symbols_.md#lottieeventname) |
 
 **Returns:** `EventEmitter`<`void` \| [BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>
+
+___
+<a id="getlottieplayer"></a>
+
+### `<Const>` getLottiePlayer
+
+▸ **getLottiePlayer**(): `Promise`<[Lottie](../interfaces/_symbols_.lottie.md)>
+
+*Defined in internals.ts:13*
+
+**Returns:** `Promise`<[Lottie](../interfaces/_symbols_.lottie.md)>
 
 ___
 <a id="loadanimation"></a>
 
 ###  loadAnimation
 
-▸ **loadAnimation**(zone: *`NgZone`*, options: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md)*): [AnimationItem](../interfaces/_symbols_.animationitem.md)
+▸ **loadAnimation**(zone: *`NgZone`*, options: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null`*, container: *`HTMLElement`*): `Promise`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>
 
-*Defined in internals.ts:26*
+*Defined in internals.ts:28*
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
 | zone | `NgZone` |
-| options | [LottieOptions](../interfaces/_symbols_.lottieoptions.md) |
+| options | [LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null` |
+| container | `HTMLElement` |
 
-**Returns:** [AnimationItem](../interfaces/_symbols_.animationitem.md)
+**Returns:** `Promise`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>
 
 ___
 <a id="mapeventtocamelcase"></a>
@@ -102,7 +105,7 @@ ___
 
 ▸ **mapEventToCamelCase**(name: *[LottieEventName](_symbols_.md#lottieeventname)*): [MappedLottieEventName](_symbols_.md#mappedlottieeventname)
 
-*Defined in internals.ts:51*
+*Defined in internals.ts:59*
 
 **Parameters:**
 
@@ -118,15 +121,15 @@ ___
 
 ###  resolveOptions
 
-▸ **resolveOptions**(options: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md)*, container: *`HTMLElement`*): [LottieOptions](../interfaces/_symbols_.lottieoptions.md)
+▸ **resolveOptions**(options: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null`*, container: *`HTMLElement`*): [LottieOptions](../interfaces/_symbols_.lottieoptions.md)
 
-*Defined in internals.ts:15*
+*Defined in internals.ts:17*
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
-| options | [LottieOptions](../interfaces/_symbols_.lottieoptions.md) |
+| options | [LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null` |
 | container | `HTMLElement` |
 
 **Returns:** [LottieOptions](../interfaces/_symbols_.lottieoptions.md)
@@ -141,7 +144,7 @@ ___
 
 **eventsMap**: *`object`*
 
-*Defined in internals.ts:34*
+*Defined in internals.ts:42*
 
 Some dispatched events are in the `snake_case` registry, for convenience, we create this object that will map event name to the `camelCase` registry
 
@@ -151,7 +154,7 @@ Some dispatched events are in the `snake_case` registry, for convenience, we cre
 
 **● DOMLoaded**: *"domLoaded"* = "domLoaded"
 
-*Defined in internals.ts:43*
+*Defined in internals.ts:51*
 
 ___
 <a id="eventsmap.complete"></a>
@@ -160,7 +163,7 @@ ___
 
 **● complete**: *"complete"* = "complete"
 
-*Defined in internals.ts:35*
+*Defined in internals.ts:43*
 
 ___
 <a id="eventsmap.config_ready"></a>
@@ -169,7 +172,7 @@ ___
 
 **● config_ready**: *"configReady"* = "configReady"
 
-*Defined in internals.ts:39*
+*Defined in internals.ts:47*
 
 ___
 <a id="eventsmap.data_failed"></a>
@@ -178,7 +181,7 @@ ___
 
 **● data_failed**: *"dataFailed"* = "dataFailed"
 
-*Defined in internals.ts:41*
+*Defined in internals.ts:49*
 
 ___
 <a id="eventsmap.data_ready"></a>
@@ -187,7 +190,7 @@ ___
 
 **● data_ready**: *"dataReady"* = "dataReady"
 
-*Defined in internals.ts:40*
+*Defined in internals.ts:48*
 
 ___
 <a id="eventsmap.destroy"></a>
@@ -196,7 +199,7 @@ ___
 
 **● destroy**: *"destroy"* = "destroy"
 
-*Defined in internals.ts:44*
+*Defined in internals.ts:52*
 
 ___
 <a id="eventsmap.enterframe"></a>
@@ -205,7 +208,7 @@ ___
 
 **● enterFrame**: *"enterFrame"* = "enterFrame"
 
-*Defined in internals.ts:37*
+*Defined in internals.ts:45*
 
 ___
 <a id="eventsmap.loaded_images"></a>
@@ -214,7 +217,7 @@ ___
 
 **● loaded_images**: *"loadedImages"* = "loadedImages"
 
-*Defined in internals.ts:42*
+*Defined in internals.ts:50*
 
 ___
 <a id="eventsmap.loopcomplete"></a>
@@ -223,7 +226,7 @@ ___
 
 **● loopComplete**: *"loopComplete"* = "loopComplete"
 
-*Defined in internals.ts:36*
+*Defined in internals.ts:44*
 
 ___
 <a id="eventsmap.segmentstart"></a>
@@ -232,7 +235,7 @@ ___
 
 **● segmentStart**: *"segmentStart"* = "segmentStart"
 
-*Defined in internals.ts:38*
+*Defined in internals.ts:46*
 
 ___
 

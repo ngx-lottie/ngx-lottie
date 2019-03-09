@@ -11,6 +11,7 @@
 ### Properties
 
 * [animationData](_symbols_.lottieoptions.md#animationdata)
+* [autoloadSegments](_symbols_.lottieoptions.md#autoloadsegments)
 * [autoplay](_symbols_.lottieoptions.md#autoplay)
 * [container](_symbols_.lottieoptions.md#container)
 * [loop](_symbols_.lottieoptions.md#loop)
@@ -29,7 +30,16 @@
 
 **● animationData**: *`any`*
 
-*Defined in symbols.ts:4*
+*Defined in symbols.ts:2*
+
+___
+<a id="autoloadsegments"></a>
+
+### `<Optional>` autoloadSegments
+
+**● autoloadSegments**: *`undefined` \| `false` \| `true`*
+
+*Defined in symbols.ts:5*
 
 ___
 <a id="autoplay"></a>
@@ -38,7 +48,7 @@ ___
 
 **● autoplay**: *`undefined` \| `false` \| `true`*
 
-*Defined in symbols.ts:8*
+*Defined in symbols.ts:7*
 
 ___
 <a id="container"></a>
@@ -47,7 +57,7 @@ ___
 
 **● container**: *`HTMLElement`*
 
-*Defined in symbols.ts:5*
+*Defined in symbols.ts:3*
 
 ___
 <a id="loop"></a>
@@ -56,7 +66,7 @@ ___
 
 **● loop**: *`boolean` \| `number`*
 
-*Defined in symbols.ts:7*
+*Defined in symbols.ts:6*
 
 ___
 <a id="name"></a>
@@ -65,7 +75,7 @@ ___
 
 **● name**: *`undefined` \| `string`*
 
-*Defined in symbols.ts:9*
+*Defined in symbols.ts:8*
 
 ___
 <a id="path"></a>
@@ -74,7 +84,7 @@ ___
 
 **● path**: *`undefined` \| `string`*
 
-*Defined in symbols.ts:10*
+*Defined in symbols.ts:9*
 
 ___
 <a id="rendersettings"></a>
@@ -83,7 +93,7 @@ ___
 
 **● renderSettings**: *`undefined` \| `object`*
 
-*Defined in symbols.ts:11*
+*Defined in symbols.ts:10*
 
 ___
 <a id="renderer"></a>
@@ -92,7 +102,7 @@ ___
 
 **● renderer**: *"svg" \| "canvas" \| "html"*
 
-*Defined in symbols.ts:6*
+*Defined in symbols.ts:4*
 
 ___
 

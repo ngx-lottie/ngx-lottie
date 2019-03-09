@@ -21,7 +21,7 @@ export class AppComponent {
 
   public shown = true;
 
-  private animationItem: AnimationItem | null = null;
+  private animationItem: AnimationItem = null!;
 
   public animationCreated(animationItem: AnimationItem): void {
     console.log('animationCreated -> ', animationItem);
@@ -62,17 +62,36 @@ export class AppComponent {
 
   public destroyAnimation(): void {
     this.shown = false;
+    this.animationItem = null!;
+  }
+
+  public setSpeed(speed: number): void {
+    this.skipIfDestroyed(() => {
+      this.animationItem.setSpeed(speed);
+    });
   }
 
   public play(): void {
-    this.animationItem!.play();
+    this.skipIfDestroyed(() => {
+      this.animationItem.play();
+    });
   }
 
   public pause(): void {
-    this.animationItem!.pause();
+    this.skipIfDestroyed(() => {
+      this.animationItem.pause();
+    });
   }
 
   public stop(): void {
-    this.animationItem!.stop();
+    this.skipIfDestroyed(() => {
+      this.animationItem.stop();
+    });
+  }
+
+  private skipIfDestroyed(callback: () => void): void {
+    if (this.animationItem) {
+      callback();
+    }
   }
 }

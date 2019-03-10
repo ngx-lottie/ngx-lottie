@@ -60,6 +60,10 @@ export class AppComponent {
     console.log('destroy -> ', destroyEvent);
   }
 
+  public showAnimation(): void {
+    this.shown = true;
+  }
+
   public destroyAnimation(): void {
     this.shown = false;
     this.animationItem = null!;

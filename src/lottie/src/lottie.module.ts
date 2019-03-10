@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LottieComponent } from './lottie.component';
+import { BaseDirective } from './directives/base.directive';
+import { LottieDirective } from './directives/lottie.directive';
+import { LottieComponent } from './components/lottie.component';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [LottieComponent],
-  exports: [LottieComponent]
+  declarations: [BaseDirective, LottieDirective, LottieComponent],
+  exports: [BaseDirective, LottieDirective, LottieComponent]
 })
 export class LottieModule {}

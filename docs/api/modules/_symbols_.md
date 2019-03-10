@@ -17,9 +17,9 @@
 
 ### Type aliases
 
-* [ContainerClass](_symbols_.md#containerclass)
 * [Direction](_symbols_.md#direction)
 * [LottieCSSStyleDeclaration](_symbols_.md#lottiecssstyledeclaration)
+* [LottieContainerClass](_symbols_.md#lottiecontainerclass)
 * [LottieEvent](_symbols_.md#lottieevent)
 * [LottieEventName](_symbols_.md#lottieeventname)
 * [MappedLottieEventName](_symbols_.md#mappedlottieeventname)
@@ -28,22 +28,13 @@
 
 ## Type aliases
 
-<a id="containerclass"></a>
-
-###  ContainerClass
-
-**Ƭ ContainerClass**: *`string` \| `string`[] \| `Set`<`string`> \| `object` \| `null`*
-
-*Defined in symbols.ts:193*
-
-___
 <a id="direction"></a>
 
 ###  Direction
 
 **Ƭ Direction**: *`1` \| `-1`*
 
-*Defined in symbols.ts:127*
+*Defined in [symbols.ts:127](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L127)*
 
 ___
 <a id="lottiecssstyledeclaration"></a>
@@ -52,7 +43,16 @@ ___
 
 **Ƭ LottieCSSStyleDeclaration**: *`Partial`<`CSSStyleDeclaration`>*
 
-*Defined in symbols.ts:191*
+*Defined in [symbols.ts:191](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L191)*
+
+___
+<a id="lottiecontainerclass"></a>
+
+###  LottieContainerClass
+
+**Ƭ LottieContainerClass**: *`string` \| `string`[] \| `Set`<`string`> \| `object` \| `null`*
+
+*Defined in [symbols.ts:193](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L193)*
 
 ___
 <a id="lottieevent"></a>
@@ -61,7 +61,7 @@ ___
 
 **Ƭ LottieEvent**: *[BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md) \| `void`*
 
-*Defined in symbols.ts:159*
+*Defined in [symbols.ts:159](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L159)*
 
 ___
 <a id="lottieeventname"></a>
@@ -70,7 +70,7 @@ ___
 
 **Ƭ LottieEventName**: *"complete" \| "loopComplete" \| "enterFrame" \| "segmentStart" \| "config_ready" \| "data_ready" \| "data_failed" \| "loaded_images" \| "DOMLoaded" \| "destroy"*
 
-*Defined in symbols.ts:167*
+*Defined in [symbols.ts:167](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L167)*
 
 ___
 <a id="mappedlottieeventname"></a>
@@ -79,7 +79,7 @@ ___
 
 **Ƭ MappedLottieEventName**: *"complete" \| "loopComplete" \| "enterFrame" \| "segmentStart" \| "configReady" \| "dataReady" \| "dataFailed" \| "loadedImages" \| "domLoaded" \| "destroy"*
 
-*Defined in symbols.ts:179*
+*Defined in [symbols.ts:179](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L179)*
 
 ___
 

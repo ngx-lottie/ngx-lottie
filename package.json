@@ -27,7 +27,7 @@
     "lottie:lint": "ng lint",
     "lottie:test": "ng test --silent",
     "lottie:build": "ts-node ./tools/build && ts-node ./tools/copy-readme",
-    "format": "prettier --write \"{lottie,integration}/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "docs": "typedoc src/lottie/src --options typedoc.json",
     "// - CI": "CI pipelines",
     "ci:pipelines": "npm-run-all lottie:* && yarn integration:ng6",

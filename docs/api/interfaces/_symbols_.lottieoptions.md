@@ -30,7 +30,7 @@
 
 **● animationData**: *`any`*
 
-*Defined in symbols.ts:2*
+*Defined in [symbols.ts:2](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L2)*
 
 ___
 <a id="autoloadsegments"></a>
@@ -39,7 +39,7 @@ ___
 
 **● autoloadSegments**: *`undefined` \| `false` \| `true`*
 
-*Defined in symbols.ts:5*
+*Defined in [symbols.ts:5](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L5)*
 
 ___
 <a id="autoplay"></a>
@@ -48,7 +48,7 @@ ___
 
 **● autoplay**: *`undefined` \| `false` \| `true`*
 
-*Defined in symbols.ts:7*
+*Defined in [symbols.ts:7](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L7)*
 
 ___
 <a id="container"></a>
@@ -57,7 +57,7 @@ ___
 
 **● container**: *`HTMLElement`*
 
-*Defined in symbols.ts:3*
+*Defined in [symbols.ts:3](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L3)*
 
 ___
 <a id="loop"></a>
@@ -66,7 +66,7 @@ ___
 
 **● loop**: *`boolean` \| `number`*
 
-*Defined in symbols.ts:6*
+*Defined in [symbols.ts:6](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L6)*
 
 ___
 <a id="name"></a>
@@ -75,7 +75,7 @@ ___
 
 **● name**: *`undefined` \| `string`*
 
-*Defined in symbols.ts:8*
+*Defined in [symbols.ts:8](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L8)*
 
 ___
 <a id="path"></a>
@@ -84,7 +84,7 @@ ___
 
 **● path**: *`undefined` \| `string`*
 
-*Defined in symbols.ts:9*
+*Defined in [symbols.ts:9](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L9)*
 
 ___
 <a id="rendersettings"></a>
@@ -93,7 +93,7 @@ ___
 
 **● renderSettings**: *`undefined` \| `object`*
 
-*Defined in symbols.ts:10*
+*Defined in [symbols.ts:10](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L10)*
 
 ___
 <a id="renderer"></a>
@@ -102,7 +102,7 @@ ___
 
 **● renderer**: *"svg" \| "canvas" \| "html"*
 
-*Defined in symbols.ts:4*
+*Defined in [symbols.ts:4](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L4)*
 
 ___
 

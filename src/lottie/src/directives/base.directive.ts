@@ -1,21 +1,8 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  OnInit,
-  Inject,
-  NgZone,
-  ElementRef,
-  ViewChild,
-  Self,
-  PLATFORM_ID,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Directive, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-import { loadAnimation } from './internals';
-import { LottieEventsService } from './lottie-events.service';
+import { loadAnimation } from '../internals';
+import { LottieEventsService } from '../services/lottie-events.service';
 import {
   LottieOptions,
   LottieCSSStyleDeclaration,
@@ -25,33 +12,18 @@ import {
   BMEnterFrameEvent,
   BMSegmentStartEvent,
   BMDestroyEvent,
-  ContainerClass
-} from './symbols';
+  LottieContainerClass
+} from '../symbols';
+import { LottieComponent } from '../components/lottie.component';
+import { LottieDirective } from './lottie.directive';
 
-@Component({
-  selector: 'ng-lottie',
-  template: `
-    <div
-      #container
-      [style.width.px]="width"
-      [style.height.px]="height"
-      style="margin: 0 auto"
-      [ngStyle]="styles"
-      [ngClass]="containerClass"
-    ></div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [LottieEventsService]
-})
-export class LottieComponent implements OnInit {
+@Directive({ selector: '[lottie]' })
+export class BaseDirective {
   @Input()
   public options: LottieOptions | null = null;
 
-  @ViewChild('container')
-  public container: ElementRef<HTMLElement> = null!;
-
   @Input()
-  public containerClass: ContainerClass = null;
+  public containerClass: LottieContainerClass = null;
 
   @Input()
   public styles: LottieCSSStyleDeclaration | null = null;
@@ -135,28 +107,19 @@ export class LottieComponent implements OnInit {
   @Output()
   public readonly destroy = new EventEmitter<BMDestroyEvent>();
 
-  constructor(
-    private readonly zone: NgZone,
-    @Inject(PLATFORM_ID) private readonly platformId: string,
-    @Self() private readonly lottieEventsService: LottieEventsService
-  ) {}
-
-  public ngOnInit(): void {
-    this.loadAnimation();
-  }
-
-  private async loadAnimation(): Promise<void> {
-    if (isPlatformServer(this.platformId)) {
+  protected async loadAnimation(
+    zone: NgZone,
+    platformId: string,
+    lottieEventsService: LottieEventsService,
+    container: HTMLElement | HTMLCanvasElement,
+    instance: LottieComponent | LottieDirective
+  ): Promise<void> {
+    if (isPlatformServer(platformId)) {
       return;
     }
 
-    const animationItem = await loadAnimation(
-      this.zone,
-      this.options,
-      this.container.nativeElement
-    );
-
-    this.lottieEventsService.animationCreated(animationItem, this.animationCreated);
-    this.lottieEventsService.setAnimationItemAndLottieEventListeners(animationItem, this);
+    const animationItem = await loadAnimation(zone, this.options, container);
+    lottieEventsService.animationCreated(animationItem, this.animationCreated);
+    lottieEventsService.setAnimationItemAndLottieEventListeners(animationItem, instance);
   }
 }

@@ -25,7 +25,7 @@
 
 **● frameMult**: *`number`*
 
-*Defined in symbols.ts:140*
+*Defined in [symbols.ts:140](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L140)*
 
 ___
 <a id="loop"></a>
@@ -34,7 +34,7 @@ ___
 
 **● loop**: *`number`*
 
-*Defined in symbols.ts:138*
+*Defined in [symbols.ts:138](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L138)*
 
 ___
 <a id="playcount"></a>
@@ -43,7 +43,7 @@ ___
 
 **● playCount**: *`number`*
 
-*Defined in symbols.ts:139*
+*Defined in [symbols.ts:139](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L139)*
 
 ___
 <a id="type"></a>
@@ -52,7 +52,7 @@ ___
 
 **● type**: *"loopComplete"*
 
-*Defined in symbols.ts:137*
+*Defined in [symbols.ts:137](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L137)*
 
 ___
 

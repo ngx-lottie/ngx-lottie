@@ -4,59 +4,17 @@ import { TestBed, tick, fakeAsync, ComponentFixture } from '@angular/core/testin
 import {
   LottieModule,
   LottieComponent,
+  LottieDirective,
   LottieOptions,
   AnimationItem,
   BMDestroyEvent,
   LottieCSSStyleDeclaration
 } from '../';
-import { LottieEventsService } from '../src/lottie-events.service';
+import { LottieEventsService } from '../src/services/lottie-events.service';
 
 import animationData = require('./data.json');
 
 describe('lottie', () => {
-  @Component({
-    template: `
-      <ng-lottie
-        width="500"
-        height="500"
-        [options]="options"
-        [styles]="styles"
-        (animationCreated)="animationCreated($event)"
-        (domLoaded)="domLoaded()"
-        (destroy)="destroy($event)"
-      ></ng-lottie>
-    `
-  })
-  class MockComponent {
-    public options: LottieOptions = {
-      animationData,
-      loop: true,
-      autoplay: true
-    };
-
-    public styles: LottieCSSStyleDeclaration = {
-      display: 'flex'
-    };
-
-    public isDomLoaded = false;
-
-    public animationItem: AnimationItem = null!;
-
-    public destroyEvent: BMDestroyEvent = null!;
-
-    public animationCreated(animationItem: AnimationItem): void {
-      this.animationItem = animationItem;
-    }
-
-    public domLoaded(): void {
-      this.isDomLoaded = true;
-    }
-
-    public destroy(destroyEvent: BMDestroyEvent): void {
-      this.destroyEvent = destroyEvent;
-    }
-  }
-
   beforeAll(() => {
     Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
       value: jest.fn(() => {
@@ -70,85 +28,215 @@ describe('lottie', () => {
     });
   });
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [LottieModule],
-      declarations: [MockComponent]
+  describe(LottieComponent.name, () => {
+    @Component({
+      template: `
+        <ng-lottie
+          width="500"
+          height="500"
+          [options]="options"
+          [styles]="styles"
+          (animationCreated)="animationCreated($event)"
+          (domLoaded)="domLoaded()"
+          (destroy)="destroy($event)"
+        ></ng-lottie>
+      `
+    })
+    class MockComponent {
+      public options: LottieOptions = {
+        animationData,
+        loop: true,
+        autoplay: true
+      };
+
+      public styles: LottieCSSStyleDeclaration = {
+        display: 'flex'
+      };
+
+      public isDomLoaded = false;
+
+      public animationItem: AnimationItem = null!;
+
+      public destroyEvent: BMDestroyEvent = null!;
+
+      public animationCreated(animationItem: AnimationItem): void {
+        this.animationItem = animationItem;
+      }
+
+      public domLoaded(): void {
+        this.isDomLoaded = true;
+      }
+
+      public destroy(destroyEvent: BMDestroyEvent): void {
+        this.destroyEvent = destroyEvent;
+      }
+    }
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [LottieModule],
+        declarations: [MockComponent]
+      });
     });
+
+    it('should render "svg" element successfully', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
+
+      // Act
+      const svg = query(fixture.debugElement.nativeElement, 'svg')!;
+
+      // Assert
+      expect(svg).toBeTruthy();
+      expect(svg instanceof SVGSVGElement).toBeTruthy();
+    }));
+
+    it('should set custom width and height', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
+
+      // Act
+      const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
+      const { height, width } = lottie.style;
+
+      // Assert
+      expect(height).toBe('500px');
+      expect(width).toBe('500px');
+    }));
+
+    it('should set custom styles', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
+
+      // Act
+      const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
+      const { display } = lottie.style;
+
+      // Assert
+      expect(display).toBe('flex');
+    }));
+
+    it('should emit "animationCreated" event', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
+
+      // Act
+      const { animationItem } = fixture.componentInstance;
+
+      // Assert
+      expect(animationItem).toBeTruthy();
+      expect(typeof animationItem.addEventListener).toBe('function');
+    }));
+
+    it('should emit "domLoaded" event when the svg is ready', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
+
+      // Assert
+      expect(fixture.componentInstance.isDomLoaded).toBeTruthy();
+    }));
+
+    it('should emit "destroy" event', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
+
+      // Act
+      fixture.destroy();
+      const { destroyEvent } = fixture.componentInstance;
+
+      // Assert
+      expect(destroyEvent).toBeTruthy();
+      expect(destroyEvent.type).toBe('destroy');
+      expect(destroyEvent.target.constructor.name).toBe('AnimationItem');
+    }));
   });
 
-  it('should render "svg" element successfully', fakeAsync(() => {
-    // Arrange
-    const fixture = createFixture(MockComponent);
+  describe(LottieDirective.name, () => {
+    @Component({
+      template: `
+        <main
+          lottie
+          [options]="options"
+          (animationCreated)="animationCreated($event)"
+          (domLoaded)="domLoaded()"
+          (destroy)="destroy($event)"
+        ></main>
+      `
+    })
+    class MockComponent {
+      public options: LottieOptions = {
+        animationData,
+        loop: true,
+        autoplay: true
+      };
 
-    // Act
-    const svg = query(fixture.debugElement.nativeElement, 'svg')!;
+      public styles: LottieCSSStyleDeclaration = {
+        display: 'flex'
+      };
 
-    // Assert
-    expect(svg).toBeTruthy();
-    expect(svg instanceof SVGSVGElement).toBeTruthy();
-  }));
+      public isDomLoaded = false;
 
-  it('should set custom width and height', fakeAsync(() => {
-    // Arrange
-    const fixture = createFixture(MockComponent);
+      public animationItem: AnimationItem = null!;
 
-    // Act
-    const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
-    const { height, width } = lottie.style;
+      public destroyEvent: BMDestroyEvent = null!;
 
-    // Assert
-    expect(height).toBe('500px');
-    expect(width).toBe('500px');
-  }));
+      public animationCreated(animationItem: AnimationItem): void {
+        this.animationItem = animationItem;
+      }
 
-  it('should set custom styles', fakeAsync(() => {
-    // Arrange
-    const fixture = createFixture(MockComponent);
+      public domLoaded(): void {
+        this.isDomLoaded = true;
+      }
 
-    // Act
-    const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
-    const { display } = lottie.style;
+      public destroy(destroyEvent: BMDestroyEvent): void {
+        this.destroyEvent = destroyEvent;
+      }
+    }
 
-    // Assert
-    expect(display).toBe('flex');
-  }));
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [LottieModule],
+        declarations: [MockComponent]
+      });
+    });
 
-  it('should emit "animationCreated" event', fakeAsync(() => {
-    // Arrange
-    const fixture = createFixture(MockComponent);
+    it('should create directive on the provided container', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
 
-    // Act
-    const { animationItem } = fixture.componentInstance;
+      // Act
+      const main = query(fixture.debugElement.nativeElement, 'main')!;
+      const svg = query(main, 'svg')!;
 
-    // Assert
-    expect(animationItem).toBeTruthy();
-    expect(typeof animationItem.addEventListener).toBe('function');
-  }));
+      // Assert
+      expect(main.localName).toEqual('main');
+      expect(main instanceof HTMLElement).toBeTruthy();
+      expect(svg instanceof SVGSVGElement).toBeTruthy();
+    }));
 
-  it('should emit "domLoaded" event when the svg is ready', fakeAsync(() => {
-    // Arrange
-    const fixture = createFixture(MockComponent);
+    it('should emit necessary events', fakeAsync(() => {
+      // Arrange
+      const fixture = createFixture(MockComponent);
 
-    // Assert
-    expect(fixture.componentInstance.isDomLoaded).toBeTruthy();
-  }));
+      // Act
+      const { animationItem, isDomLoaded } = fixture.componentInstance;
 
-  it('should emit "destroy" event', fakeAsync(() => {
-    // Arrange
-    const fixture = createFixture(MockComponent);
+      expect(animationItem).toBeTruthy();
+      expect(isDomLoaded).toBeTruthy();
 
-    // Act
-    fixture.destroy();
-    const { destroyEvent } = fixture.componentInstance;
+      fixture.destroy();
 
-    // Assert
-    expect(destroyEvent).toBeTruthy();
-    expect(destroyEvent.type).toBe('destroy');
-    expect(destroyEvent.target.constructor.name).toBe('AnimationItem');
-  }));
+      expect(fixture.componentInstance.destroyEvent).toBeTruthy();
+    }));
+  });
 
   describe(LottieEventsService.name, () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [LottieModule]
+      });
+    });
+
     it('should listen to events exposed by lottie', fakeAsync(() => {
       // Arrange
       const fixture = createFixture(LottieComponent);

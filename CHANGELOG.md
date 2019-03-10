@@ -1,3 +1,9 @@
+#### 1.0.2 (2019-03-10)
+
+##### Bug Fixes
+
+*  force users to install `lottie-web` ([#7](https://github.com/ngx-lottie/ngx-lottie/pull/7)) ([ccdfce94](https://github.com/ngx-lottie/ngx-lottie/commit/ccdfce94498fe7360bf4ab306c8f6911a74fd16b))
+
 #### 1.0.1 (2019-03-10)
 
 ##### New Features

@@ -30,7 +30,7 @@
 
 ▸ **destroy**(name?: *`undefined` \| `string`*): `void`
 
-*Defined in [symbols.ts:46](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L46)*
+*Defined in [symbols.ts:46](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L46)*
 
 **Parameters:**
 
@@ -47,7 +47,7 @@ ___
 
 ▸ **loadAnimation**(params: *[LottieOptions](_symbols_.lottieoptions.md)*): [AnimationItem](_symbols_.animationitem.md)
 
-*Defined in [symbols.ts:39](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L39)*
+*Defined in [symbols.ts:39](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L39)*
 
 **Parameters:**
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **play**(name?: *`undefined` \| `string`*): `void`
 
-*Defined in [symbols.ts:26](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L26)*
+*Defined in [symbols.ts:26](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L26)*
 
 **Parameters:**
 
@@ -81,7 +81,7 @@ ___
 
 ▸ **registerAnimation**(element: *`any`*, animationData?: *`any`*): [AnimationItem](_symbols_.animationitem.md)
 
-*Defined in [symbols.ts:42](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L42)*
+*Defined in [symbols.ts:42](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L42)*
 
 **Parameters:**
 
@@ -99,7 +99,7 @@ ___
 
 ▸ **searchAnimations**(animationData?: *`any`*, standalone?: *`undefined` \| `false` \| `true`*, renderer?: *`undefined` \| `string`*): `void`
 
-*Defined in [symbols.ts:44](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L44)*
+*Defined in [symbols.ts:44](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L44)*
 
 **Parameters:**
 
@@ -118,7 +118,7 @@ ___
 
 ▸ **setDirection**(direction: *`number`*, name?: *`undefined` \| `string`*): `void`
 
-*Defined in [symbols.ts:34](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L34)*
+*Defined in [symbols.ts:34](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L34)*
 
 **Parameters:**
 
@@ -136,7 +136,7 @@ ___
 
 ▸ **setQuality**(quality: *"high" \| "medium" \| "low" \| `number`*): `void`
 
-*Defined in [symbols.ts:37](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L37)*
+*Defined in [symbols.ts:37](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L37)*
 
 **Parameters:**
 
@@ -153,7 +153,7 @@ ___
 
 ▸ **setSpeed**(speed: *`number`*, name?: *`undefined` \| `string`*): `void`
 
-*Defined in [symbols.ts:31](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L31)*
+*Defined in [symbols.ts:31](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L31)*
 
 **Parameters:**
 
@@ -171,7 +171,7 @@ ___
 
 ▸ **stop**(name?: *`undefined` \| `string`*): `void`
 
-*Defined in [symbols.ts:28](https://github.com/ngx-lottie/ngx-lottie/blob/2a463f9/src/lottie/src/symbols.ts#L28)*
+*Defined in [symbols.ts:28](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L28)*
 
 **Parameters:**
 

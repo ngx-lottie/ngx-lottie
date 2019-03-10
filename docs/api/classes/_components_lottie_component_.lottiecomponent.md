@@ -53,7 +53,7 @@
 
 ⊕ **new LottieComponent**(zone: *`NgZone`*, platformId: *`string`*, lottieEventsService: *[LottieEventsService](_services_lottie_events_service_.lottieeventsservice.md)*): [LottieComponent](_components_lottie_component_.lottiecomponent.md)
 
-*Defined in components/lottie.component.ts:33*
+*Defined in [components/lottie.component.ts:33](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/components/lottie.component.ts#L33)*
 
 **Parameters:**
 
@@ -77,7 +77,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[animationCreated](_directives_base_directive_.basedirective.md#animationcreated)*
 
-*Defined in directives/base.directive.ts:41*
+*Defined in [directives/base.directive.ts:41](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L41)*
 
 `animationCreated` is dispatched after calling `loadAnimation`
 
@@ -90,7 +90,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[complete](_directives_base_directive_.basedirective.md#complete)*
 
-*Defined in directives/base.directive.ts:47*
+*Defined in [directives/base.directive.ts:47](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L47)*
 
 `complete` is dispatched after completing the last frame
 
@@ -103,7 +103,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[configReady](_directives_base_directive_.basedirective.md#configready)*
 
-*Defined in directives/base.directive.ts:72*
+*Defined in [directives/base.directive.ts:72](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L72)*
 
 Original event name is `config_ready`. `config_ready` is dispatched after the needed renderer is configured
 
@@ -114,7 +114,7 @@ ___
 
 **● container**: *`ElementRef`<`HTMLElement`>* =  null!
 
-*Defined in components/lottie.component.ts:33*
+*Defined in [components/lottie.component.ts:33](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/components/lottie.component.ts#L33)*
 
 ___
 <a id="containerclass"></a>
@@ -125,7 +125,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[containerClass](_directives_base_directive_.basedirective.md#containerclass)*
 
-*Defined in directives/base.directive.ts:26*
+*Defined in [directives/base.directive.ts:26](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L26)*
 
 ___
 <a id="datafailed"></a>
@@ -136,7 +136,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[dataFailed](_directives_base_directive_.basedirective.md#datafailed)*
 
-*Defined in directives/base.directive.ts:87*
+*Defined in [directives/base.directive.ts:87](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L87)*
 
 Original event name is `data_failed`. `data_failed` can be dispatched if the `XMLHttpRequest`, that tried to load animation data using provided `path`, has errored
 
@@ -149,7 +149,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[dataReady](_directives_base_directive_.basedirective.md#dataready)*
 
-*Defined in directives/base.directive.ts:79*
+*Defined in [directives/base.directive.ts:79](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L79)*
 
 Original event name is `data_ready`. `data_ready` is dispatched when all parts of the animation have been loaded
 
@@ -162,7 +162,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[destroy](_directives_base_directive_.basedirective.md#destroy)*
 
-*Defined in directives/base.directive.ts:108*
+*Defined in [directives/base.directive.ts:108](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L108)*
 
 `destroy` will be dispatched in the `ngOnDestroy` hook of the service, it's useful for releasing resources
 
@@ -175,7 +175,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[domLoaded](_directives_base_directive_.basedirective.md#domloaded)*
 
-*Defined in directives/base.directive.ts:101*
+*Defined in [directives/base.directive.ts:101](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L101)*
 
 Original event name is `DOMLoaded`. `DOMLoaded` is dispatched when elements have been added to the DOM
 
@@ -188,7 +188,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[enterFrame](_directives_base_directive_.basedirective.md#enterframe)*
 
-*Defined in directives/base.directive.ts:59*
+*Defined in [directives/base.directive.ts:59](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L59)*
 
 `enterFrame` is dispatched after entering the new frame
 
@@ -201,7 +201,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[height](_directives_base_directive_.basedirective.md#height)*
 
-*Defined in directives/base.directive.ts:35*
+*Defined in [directives/base.directive.ts:35](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L35)*
 
 ___
 <a id="loadedimages"></a>
@@ -212,7 +212,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[loadedImages](_directives_base_directive_.basedirective.md#loadedimages)*
 
-*Defined in directives/base.directive.ts:94*
+*Defined in [directives/base.directive.ts:94](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L94)*
 
 Original event name is `loaded_images`. `loaded_images` can be dispatched after all assets are preloaded
 
@@ -225,7 +225,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[loopComplete](_directives_base_directive_.basedirective.md#loopcomplete)*
 
-*Defined in directives/base.directive.ts:53*
+*Defined in [directives/base.directive.ts:53](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L53)*
 
 `loopComplete` is dispatched after completing frame loop
 
@@ -238,7 +238,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[options](_directives_base_directive_.basedirective.md#options)*
 
-*Defined in directives/base.directive.ts:23*
+*Defined in [directives/base.directive.ts:23](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L23)*
 
 ___
 <a id="segmentstart"></a>
@@ -249,7 +249,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[segmentStart](_directives_base_directive_.basedirective.md#segmentstart)*
 
-*Defined in directives/base.directive.ts:65*
+*Defined in [directives/base.directive.ts:65](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L65)*
 
 `segmentStart` is dispatched when the new segment is adjusted
 
@@ -262,7 +262,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[styles](_directives_base_directive_.basedirective.md#styles)*
 
-*Defined in directives/base.directive.ts:29*
+*Defined in [directives/base.directive.ts:29](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L29)*
 
 ___
 <a id="width"></a>
@@ -273,7 +273,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[width](_directives_base_directive_.basedirective.md#width)*
 
-*Defined in directives/base.directive.ts:32*
+*Defined in [directives/base.directive.ts:32](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L32)*
 
 ___
 
@@ -287,7 +287,7 @@ ___
 
 *Inherited from [BaseDirective](_directives_base_directive_.basedirective.md).[loadAnimation](_directives_base_directive_.basedirective.md#loadanimation)*
 
-*Defined in directives/base.directive.ts:110*
+*Defined in [directives/base.directive.ts:110](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/directives/base.directive.ts#L110)*
 
 **Parameters:**
 
@@ -308,7 +308,7 @@ ___
 
 ▸ **ngOnInit**(): `void`
 
-*Defined in components/lottie.component.ts:43*
+*Defined in [components/lottie.component.ts:43](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/components/lottie.component.ts#L43)*
 
 **Returns:** `void`
 

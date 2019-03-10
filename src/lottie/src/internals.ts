@@ -1,6 +1,5 @@
 import { NgZone, EventEmitter } from '@angular/core';
 
-import { LottieComponent } from './components/lottie.component';
 import {
   LottieOptions,
   Lottie,
@@ -9,7 +8,7 @@ import {
   MappedLottieEventName,
   LottieEvent
 } from './symbols';
-import { LottieDirective } from './directives/lottie.directive';
+import { BaseDirective } from './directives/base.directive';
 
 const getLottiePlayer = (): Promise<Lottie> => {
   return import(/* webpackChunkName: 'lottie' */ 'lottie-web/build/player/lottie.js');
@@ -62,7 +61,7 @@ function mapEventToCamelCase(name: LottieEventName): MappedLottieEventName {
 }
 
 export function getEventEmitterFromDirectiveInstance(
-  instance: LottieComponent | LottieDirective,
+  instance: BaseDirective,
   name: LottieEventName
 ) {
   return instance[mapEventToCamelCase(name)] as EventEmitter<LottieEvent>;

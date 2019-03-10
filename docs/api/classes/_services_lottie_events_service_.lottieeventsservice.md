@@ -32,7 +32,7 @@
 
 ⊕ **new LottieEventsService**(zone: *`NgZone`*): [LottieEventsService](_services_lottie_events_service_.lottieeventsservice.md)
 
-*Defined in services/lottie-events.service.ts:16*
+*Defined in [services/lottie-events.service.ts:15](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/services/lottie-events.service.ts#L15)*
 
 **Parameters:**
 
@@ -52,7 +52,7 @@ ___
 
 ▸ **animationCreated**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, animationCreated: *`EventEmitter`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>*): `void`
 
-*Defined in services/lottie-events.service.ts:28*
+*Defined in [services/lottie-events.service.ts:27](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/services/lottie-events.service.ts#L27)*
 
 This method is invoked after calling `loadAnimation` and dispatches the new one created `AnimationItem` instance
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **ngOnDestroy**(): `void`
 
-*Defined in services/lottie-events.service.ts:20*
+*Defined in [services/lottie-events.service.ts:19](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/services/lottie-events.service.ts#L19)*
 
 **Returns:** `void`
 
@@ -81,16 +81,16 @@ ___
 
 ###  setAnimationItemAndLottieEventListeners
 
-▸ **setAnimationItemAndLottieEventListeners**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, instance: *[LottieComponent](_components_lottie_component_.lottiecomponent.md) \| [LottieDirective](_directives_lottie_directive_.lottiedirective.md)*): `void`
+▸ **setAnimationItemAndLottieEventListeners**(animationItem: *[AnimationItem](../interfaces/_symbols_.animationitem.md)*, instance: *[BaseDirective](_directives_base_directive_.basedirective.md)*): `void`
 
-*Defined in services/lottie-events.service.ts:35*
+*Defined in [services/lottie-events.service.ts:34](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/services/lottie-events.service.ts#L34)*
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
 | animationItem | [AnimationItem](../interfaces/_symbols_.animationitem.md) |
-| instance | [LottieComponent](_components_lottie_component_.lottiecomponent.md) \| [LottieDirective](_directives_lottie_directive_.lottiedirective.md) |
+| instance | [BaseDirective](_directives_base_directive_.basedirective.md) |
 
 **Returns:** `void`
 

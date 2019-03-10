@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "name": "ngx-lottie",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "sideEffects": true,
   "peerDependencies": {
     "@angular/core": ">=6.0.0 <8.0.0",

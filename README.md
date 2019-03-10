@@ -66,9 +66,9 @@
 To install `ngx-lottie` run the following command:
 
 ```console
-npm i ngx-lottie
+npm i lottie-web ngx-lottie
 # or if you're using yarn
-yarn add ngx-lottie
+yarn add lottie-web ngx-lottie
 ```
 
 ## Usage

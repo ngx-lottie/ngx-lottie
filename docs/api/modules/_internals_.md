@@ -10,7 +10,7 @@
 
 ### Functions
 
-* [getEventEmitterFromComponentInstance](_internals_.md#geteventemitterfromcomponentinstance)
+* [getEventEmitterFromDirectiveInstance](_internals_.md#geteventemitterfromdirectiveinstance)
 * [getLottiePlayer](_internals_.md#getlottieplayer)
 * [loadAnimation](_internals_.md#loadanimation)
 * [mapEventToCamelCase](_internals_.md#mapeventtocamelcase)
@@ -41,7 +41,7 @@
   'destroy'
 ]
 
-*Defined in internals.ts:74*
+*Defined in [internals.ts:74](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L74)*
 
 Events that can be dispatched by `Animationitem`
 
@@ -51,19 +51,19 @@ ___
 
 ## Functions
 
-<a id="geteventemitterfromcomponentinstance"></a>
+<a id="geteventemitterfromdirectiveinstance"></a>
 
-###  getEventEmitterFromComponentInstance
+###  getEventEmitterFromDirectiveInstance
 
-▸ **getEventEmitterFromComponentInstance**(instance: *[LottieComponent](../classes/_lottie_component_.lottiecomponent.md)*, name: *[LottieEventName](_symbols_.md#lottieeventname)*): `EventEmitter`<`void` \| [BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>
+▸ **getEventEmitterFromDirectiveInstance**(instance: *[BaseDirective](../classes/_directives_base_directive_.basedirective.md)*, name: *[LottieEventName](_symbols_.md#lottieeventname)*): `EventEmitter`<`void` \| [BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>
 
-*Defined in internals.ts:63*
+*Defined in [internals.ts:63](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L63)*
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
-| instance | [LottieComponent](../classes/_lottie_component_.lottiecomponent.md) |
+| instance | [BaseDirective](../classes/_directives_base_directive_.basedirective.md) |
 | name | [LottieEventName](_symbols_.md#lottieeventname) |
 
 **Returns:** `EventEmitter`<`void` \| [BMEnterFrameEvent](../interfaces/_symbols_.bmenterframeevent.md) \| [BMCompleteLoopEvent](../interfaces/_symbols_.bmcompleteloopevent.md) \| [BMCompleteEvent](../interfaces/_symbols_.bmcompleteevent.md) \| [BMSegmentStartEvent](../interfaces/_symbols_.bmsegmentstartevent.md) \| [BMDestroyEvent](../interfaces/_symbols_.bmdestroyevent.md)>
@@ -75,7 +75,7 @@ ___
 
 ▸ **getLottiePlayer**(): `Promise`<[Lottie](../interfaces/_symbols_.lottie.md)>
 
-*Defined in internals.ts:13*
+*Defined in [internals.ts:13](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L13)*
 
 **Returns:** `Promise`<[Lottie](../interfaces/_symbols_.lottie.md)>
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **loadAnimation**(zone: *`NgZone`*, options: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null`*, container: *`HTMLElement`*): `Promise`<[AnimationItem](../interfaces/_symbols_.animationitem.md)>
 
-*Defined in internals.ts:28*
+*Defined in [internals.ts:28](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L28)*
 
 **Parameters:**
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **mapEventToCamelCase**(name: *[LottieEventName](_symbols_.md#lottieeventname)*): [MappedLottieEventName](_symbols_.md#mappedlottieeventname)
 
-*Defined in internals.ts:59*
+*Defined in [internals.ts:59](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L59)*
 
 **Parameters:**
 
@@ -123,7 +123,7 @@ ___
 
 ▸ **resolveOptions**(options: *[LottieOptions](../interfaces/_symbols_.lottieoptions.md) \| `null`*, container: *`HTMLElement`*): [LottieOptions](../interfaces/_symbols_.lottieoptions.md)
 
-*Defined in internals.ts:17*
+*Defined in [internals.ts:17](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L17)*
 
 **Parameters:**
 
@@ -144,7 +144,7 @@ ___
 
 **eventsMap**: *`object`*
 
-*Defined in internals.ts:42*
+*Defined in [internals.ts:42](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L42)*
 
 Some dispatched events are in the `snake_case` registry, for convenience, we create this object that will map event name to the `camelCase` registry
 
@@ -154,7 +154,7 @@ Some dispatched events are in the `snake_case` registry, for convenience, we cre
 
 **● DOMLoaded**: *"domLoaded"* = "domLoaded"
 
-*Defined in internals.ts:51*
+*Defined in [internals.ts:51](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L51)*
 
 ___
 <a id="eventsmap.complete"></a>
@@ -163,7 +163,7 @@ ___
 
 **● complete**: *"complete"* = "complete"
 
-*Defined in internals.ts:43*
+*Defined in [internals.ts:43](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L43)*
 
 ___
 <a id="eventsmap.config_ready"></a>
@@ -172,7 +172,7 @@ ___
 
 **● config_ready**: *"configReady"* = "configReady"
 
-*Defined in internals.ts:47*
+*Defined in [internals.ts:47](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L47)*
 
 ___
 <a id="eventsmap.data_failed"></a>
@@ -181,7 +181,7 @@ ___
 
 **● data_failed**: *"dataFailed"* = "dataFailed"
 
-*Defined in internals.ts:49*
+*Defined in [internals.ts:49](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L49)*
 
 ___
 <a id="eventsmap.data_ready"></a>
@@ -190,7 +190,7 @@ ___
 
 **● data_ready**: *"dataReady"* = "dataReady"
 
-*Defined in internals.ts:48*
+*Defined in [internals.ts:48](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L48)*
 
 ___
 <a id="eventsmap.destroy"></a>
@@ -199,7 +199,7 @@ ___
 
 **● destroy**: *"destroy"* = "destroy"
 
-*Defined in internals.ts:52*
+*Defined in [internals.ts:52](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L52)*
 
 ___
 <a id="eventsmap.enterframe"></a>
@@ -208,7 +208,7 @@ ___
 
 **● enterFrame**: *"enterFrame"* = "enterFrame"
 
-*Defined in internals.ts:45*
+*Defined in [internals.ts:45](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L45)*
 
 ___
 <a id="eventsmap.loaded_images"></a>
@@ -217,7 +217,7 @@ ___
 
 **● loaded_images**: *"loadedImages"* = "loadedImages"
 
-*Defined in internals.ts:50*
+*Defined in [internals.ts:50](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L50)*
 
 ___
 <a id="eventsmap.loopcomplete"></a>
@@ -226,7 +226,7 @@ ___
 
 **● loopComplete**: *"loopComplete"* = "loopComplete"
 
-*Defined in internals.ts:44*
+*Defined in [internals.ts:44](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L44)*
 
 ___
 <a id="eventsmap.segmentstart"></a>
@@ -235,7 +235,7 @@ ___
 
 **● segmentStart**: *"segmentStart"* = "segmentStart"
 
-*Defined in internals.ts:46*
+*Defined in [internals.ts:46](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/internals.ts#L46)*
 
 ___
 

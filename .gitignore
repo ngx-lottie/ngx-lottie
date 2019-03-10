@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 .cache/
-integration/**/yarn.lock
+src/apps/**/*.lock

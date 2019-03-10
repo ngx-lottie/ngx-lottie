@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "integration": {
+    "demo-app-ng6": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -12,7 +12,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/integration",
+            "outputPath": "dist/demo-app-ng6",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,16 +52,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "integration:build"
+            "browserTarget": "demo-app-ng6:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "integration:build:production"
+              "browserTarget": "demo-app-ng6:build:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "integration"
+  "defaultProject": "demo-app-ng6"
 }

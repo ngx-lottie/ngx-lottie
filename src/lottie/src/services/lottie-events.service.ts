@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy, NgZone, EventEmitter } from '@angular/core';
 
-import { AnimationItem, LottieEvent, LottieEventName } from './symbols';
-import { lottieEvents, getEventEmitterFromComponentInstance } from './internals';
-import { LottieComponent } from './lottie.component';
+import { AnimationItem, LottieEvent, LottieEventName } from '../symbols';
+import { lottieEvents, getEventEmitterFromDirectiveInstance } from '../internals';
+import { BaseDirective } from '../directives/base.directive';
 
 @Injectable()
 export class LottieEventsService implements OnDestroy {
@@ -33,7 +33,7 @@ export class LottieEventsService implements OnDestroy {
 
   public setAnimationItemAndLottieEventListeners(
     animationItem: AnimationItem,
-    instance: LottieComponent
+    instance: BaseDirective
   ): void {
     this.animationItem = animationItem;
     // `AnimationItem` triggers different events every ms, we have to listen
@@ -41,14 +41,14 @@ export class LottieEventsService implements OnDestroy {
     this.zone.runOutsideAngular(() => this.setupLottieEventListeners(instance));
   }
 
-  private setupLottieEventListeners(instance: LottieComponent): void {
+  private setupLottieEventListeners(instance: BaseDirective): void {
     lottieEvents.forEach((name) => {
       this.setupLottieEventListener(name, instance);
     });
   }
 
-  private setupLottieEventListener(name: LottieEventName, instance: LottieComponent): void {
-    const emitter: EventEmitter<LottieEvent> = getEventEmitterFromComponentInstance(instance, name);
+  private setupLottieEventListener(name: LottieEventName, instance: BaseDirective): void {
+    const emitter: EventEmitter<LottieEvent> = getEventEmitterFromDirectiveInstance(instance, name);
     const listener = (event: LottieEvent): void => emitter.emit(event);
 
     this.animationItem!.addEventListener(name, listener);

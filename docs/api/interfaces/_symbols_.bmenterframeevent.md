@@ -25,7 +25,7 @@
 
 **● currentTime**: *`number`*
 
-*Defined in symbols.ts:130*
+*Defined in [symbols.ts:130](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L130)*
 
 ___
 <a id="duration"></a>
@@ -34,7 +34,7 @@ ___
 
 **● duration**: *`number`*
 
-*Defined in symbols.ts:131*
+*Defined in [symbols.ts:131](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L131)*
 
 ___
 <a id="totaltime"></a>
@@ -43,7 +43,7 @@ ___
 
 **● totalTime**: *`number`*
 
-*Defined in symbols.ts:132*
+*Defined in [symbols.ts:132](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L132)*
 
 ___
 <a id="type"></a>
@@ -52,7 +52,7 @@ ___
 
 **● type**: *"enterFrame"*
 
-*Defined in symbols.ts:133*
+*Defined in [symbols.ts:133](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L133)*
 
 ___
 

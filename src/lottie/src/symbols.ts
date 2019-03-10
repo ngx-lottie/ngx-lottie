@@ -76,7 +76,7 @@ export interface AnimationItem {
   timeCompleted: number;
   totalFrames: number;
   wrapper: HTMLElement | HTMLCanvasElement;
-  _cbs: (() => void)[];
+  _cbs: ((event?: LottieEvent) => void)[];
   _completedLoop: boolean;
   _idle: boolean;
   play(): void;
@@ -190,4 +190,9 @@ export type MappedLottieEventName =
 
 export type LottieCSSStyleDeclaration = Partial<CSSStyleDeclaration>;
 
-export type ContainerClass = string | string[] | Set<string> | { [klass: string]: any } | null;
+export type LottieContainerClass =
+  | string
+  | string[]
+  | Set<string>
+  | { [klass: string]: any }
+  | null;

@@ -1,5 +1,6 @@
 export { LottieModule } from './lottie.module';
-export { LottieComponent } from './lottie.component';
+export { LottieDirective } from './directives/lottie.directive';
+export { LottieComponent } from './components/lottie.component';
 export {
   LottieOptions,
   Lottie,
@@ -9,5 +10,7 @@ export {
   BMCompleteEvent,
   BMSegmentStartEvent,
   BMDestroyEvent,
-  LottieCSSStyleDeclaration
+  LottieEvent,
+  LottieCSSStyleDeclaration,
+  LottieContainerClass
 } from './symbols';

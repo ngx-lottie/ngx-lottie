@@ -1,7 +1,24 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "name": "ngx-lottie",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngx-lottie/ngx-lottie.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ngx-lottie/ngx-lottie#readme",
+  "bugs": {
+    "url": "git+https://github.com/ngx-lottie/ngx-lottie/issues"
+  },
+  "keywords": [
+    "animation",
+    "canvas",
+    "svg",
+    "after effects",
+    "plugin",
+    "angular"
+  ],
   "sideEffects": true,
   "peerDependencies": {
     "@angular/core": ">=6.0.0 <8.0.0",

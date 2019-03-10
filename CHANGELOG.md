@@ -1,3 +1,14 @@
+#### 1.0.1 (2019-03-10)
+
+##### New Features
+
+*  update README.md ([73f6abfa](https://github.com/ngx-lottie/ngx-lottie/commit/73f6abfac850bf499fb248213ce9b07c82b4f8d1))
+*  first release ([365d5d85](https://github.com/ngx-lottie/ngx-lottie/commit/365d5d85e93b600a761138a3345faafb741f4913))
+
+##### Bug Fixes
+
+*  add package info ([#6](https://github.com/ngx-lottie/ngx-lottie/pull/6)) ([f4999fa6](https://github.com/ngx-lottie/ngx-lottie/commit/f4999fa6460c3a11fa8ab1348094a267df3a7451))
+
 ## 1.0.0 (2019-03-10)
 
 ##### New Features

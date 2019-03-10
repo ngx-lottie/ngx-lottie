@@ -36,7 +36,7 @@
     "release:major": "changelog -M && yarn release:lottie && yarn version --major && yarn release",
     "release:minor": "changelog -m && yarn release:lottie && yarn version --minor && yarn release",
     "release:patch": "changelog -p && yarn release:lottie && yarn version --patch && yarn release",
-    "release:lottie": "git add . && git commit -m 'chore: update CHANGELOG.md'",
+    "release:lottie": "git add . && git commit -m 'feat: update CHANGELOG.md'",
     "// - INTEGRATION": "Integration builds",
     "integration:ng6": "cd src/apps/demo-app-ng6 && yarn test"
   },

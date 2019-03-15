@@ -8,7 +8,7 @@ import {
   MappedLottieEventName,
   LottieEvent
 } from './symbols';
-import { BaseDirective } from './directives/base.directive';
+import { BaseDirective } from './core/directives/base.directive';
 
 const getLottiePlayer = (): Promise<Lottie> => {
   return import(/* webpackChunkName: 'lottie' */ 'lottie-web/build/player/lottie.js');

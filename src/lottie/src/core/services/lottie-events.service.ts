@@ -1,8 +1,9 @@
-import { Injectable, OnDestroy, NgZone, EventEmitter } from '@angular/core';
+import { Injectable, OnDestroy, NgZone, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
 
-import { AnimationItem, LottieEvent, LottieEventName } from '../symbols';
-import { lottieEvents, getEventEmitterFromDirectiveInstance } from '../internals';
+import { AnimationItem, LottieEvent, LottieEventName } from '../../symbols';
+import { lottieEvents, getEventEmitterFromDirectiveInstance } from '../../internals';
 import { BaseDirective } from '../directives/base.directive';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class LottieEventsService implements OnDestroy {
@@ -14,7 +15,10 @@ export class LottieEventsService implements OnDestroy {
    */
   private readonly listeners = new Map<LottieEventName, (event: LottieEvent) => void>();
 
-  constructor(private readonly zone: NgZone) {}
+  constructor(
+    private readonly zone: NgZone,
+    @Inject(PLATFORM_ID) private readonly platformId: string
+  ) {}
 
   public ngOnDestroy(): void {
     this.dispose();
@@ -61,6 +65,10 @@ export class LottieEventsService implements OnDestroy {
   }
 
   private dispose(): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
     for (const [name, callback] of this.listeners.entries()) {
       this.animationItem!.removeEventListener(name, callback);
     }

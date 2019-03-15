@@ -23,7 +23,7 @@
 
 **● target**: *[AnimationItem](_symbols_.animationitem.md)*
 
-*Defined in [symbols.ts:155](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L155)*
+*Defined in [symbols.ts:155](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L155)*
 
 ___
 <a id="type"></a>
@@ -32,7 +32,7 @@ ___
 
 **● type**: *"destroy"*
 
-*Defined in [symbols.ts:156](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L156)*
+*Defined in [symbols.ts:156](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L156)*
 
 ___
 

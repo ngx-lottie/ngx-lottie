@@ -196,3 +196,5 @@ export type LottieContainerClass =
   | Set<string>
   | { [klass: string]: any }
   | null;
+
+export type AnimationFilename = string;

@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy, NgZone, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 
 import { AnimationItem, LottieEvent, LottieEventName } from '../../symbols';
 import { lottieEvents, getEventEmitterFromDirectiveInstance } from '../../internals';
 import { BaseDirective } from '../directives/base.directive';
-import { isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class LottieEventsService implements OnDestroy {

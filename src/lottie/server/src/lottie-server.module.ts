@@ -8,10 +8,9 @@ export const LOTTIE_SERVER_OPTIONS = new InjectionToken<LottieServerOptions>(
   'LOTTIE_SERVER_OPTIONS'
 );
 
-// @dynamic
 @NgModule()
 export class LottieServerModule {
-  public static forRoot(options?: LottieServerOptions): ModuleWithProviders<LottieServerModule> {
+  public static forRoot(options: LottieServerOptions): ModuleWithProviders<LottieServerModule> {
     return {
       ngModule: LottieServerModule,
       providers: [

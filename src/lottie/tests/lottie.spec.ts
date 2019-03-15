@@ -10,7 +10,7 @@ import {
   BMDestroyEvent,
   LottieCSSStyleDeclaration
 } from '../';
-import { LottieEventsService } from '../src/services/lottie-events.service';
+import { LottieEventsService } from '../src/core/services/lottie-events.service';
 
 import animationData = require('./data.json');
 

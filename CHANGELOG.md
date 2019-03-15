@@ -1,3 +1,13 @@
+### 1.1.0 (2019-03-15)
+
+##### New Features
+
+*  add server side support ([#8](https://github.com/ngx-lottie/ngx-lottie/pull/8)) ([8cd74183](https://github.com/ngx-lottie/ngx-lottie/commit/8cd74183c1376398cb91923b5f3b8e4ac032820f))
+
+##### Bug Fixes
+
+*  change `jpg` to `png` ([#9](https://github.com/ngx-lottie/ngx-lottie/pull/9)) ([80ae0414](https://github.com/ngx-lottie/ngx-lottie/commit/80ae0414ebb618f85c2dd5b9cc31a1552c9f794f))
+
 #### 1.0.2 (2019-03-10)
 
 ##### Bug Fixes

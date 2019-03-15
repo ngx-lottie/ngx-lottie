@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/ngx-lottie/ngx-lottie/master/docs/assets/logo.jpg">
+  <img src="https://raw.githubusercontent.com/ngx-lottie/ngx-lottie/master/docs/assets/icon_lottie.jpg">
 </h1>
 
 <div align="center">
@@ -35,6 +35,7 @@
 - [Usage](#usage)
 - [API](#api)
 - [Optimizations](#optimizations)
+- [Server side rendering](#server-side-rendering)
 
 ## Features
 - __rich:__ `ngx-lottie` provides more opportunities to work with API exposed by Lottie
@@ -146,11 +147,11 @@ export class AppComponent {
 
 | @Input() | Type | Required | Default | Description
 | --- | --- | --- | --- | --- |
-| options | LottieOptions | required | `{ renderer: 'svg', loop: true, autoplay: true }` | Configuration that's used by `AnimationItem`
-| width | string | optional | null | Custom container width
-| height | string | optional | null | Custom container height
-| styles | LottieCSSStyleDeclaration | optional | null | Custom container styles
-| containerClass | LottieContainerClass | optional | null | Custom class applied to the container
+| options | `LottieOptions` | required | `{ renderer: 'svg', loop: true, autoplay: true }` | Configuration that's used by `AnimationItem`
+| width | `string` | optional | `null` | Custom container width
+| height | `string` | optional | `null` | Custom container height
+| styles | `LottieCSSStyleDeclaration` | optional | `null` | Custom container styles
+| containerClass | `LottieContainerClass` | optional | `null` | Custom class applied to the container
 
 ### Events
 
@@ -170,6 +171,97 @@ export class AppComponent {
 
 ## Optimizations
 
-The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected - you would like to avoid checking this component, as it's not necessary.
+The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
 Also, events, dispatched by `AnimationItem`, are listened outside Angular's zone, thus you shouldn't worry that every dispatch will be intercepted by Angular's zone.
+
+## Server side rendering
+
+By default, `lottie` will load your `json` file with animation data every time you create an animation. You may have some problems with the connection, so there may be some delay or even timeout. It's worth loading animation data only once and cache it on the client side, so every time you create an animation — the animation data will be retrieved from cache.
+
+`ngx-lottie/server` package gives you the opportunity to preload animation data and cache it using `TransferState`.
+
+### How2?
+
+Import the `LottieServerModule` into your `AppServerModule`:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
+import { LottieServerModule } from 'ngx-lottie/server';
+
+import { AppModule } from './app.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [
+    // `AppModule` first as you know
+    AppModule,
+    ServerModule,
+    ServerTransferStateModule,
+    LottieServerModule.forRoot({
+      preloadAnimations: {
+        folder: 'dist/assets',
+        animations: ['data.json']
+      }
+    })
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppServerModule {}
+```
+
+Also, don't forget to import `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of `json` files, that contain animation data, that should be read on the server side, cached and transfered on the client. `folder` is a path where your `json` files are located, but you should use it properly, this path is joined with the `process.cwd()`. Imagine such project structure:
+
+```
+-- dist (here you store your output artifacts)
+  -- project-name
+    -- assets
+    -- index.html
+    -- main.hash.js
+-- dist-server
+  -- server.js
+-- src (here is your app)
+-- angular.json
+-- package.json
+-- webpack.config.js
+```
+
+If you start a server from the root folder like `node dist-server/server`, thus the `folder` property should equal `dist/project-name/assets`.
+
+After installing `LottieServerModule` - now you have to import `LottieTransferState` from the `ngx-lottie` package. Don't worry, this service is tree-shakable and won't be bundled if you don't inject it anywhere.
+
+Inject this service into your component where you declare animation options:
+
+```typescript
+import { Component } from '@angular/core';
+import { LottieOptions, LottieTransferState } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie [options]="options"></ng-lottie>
+  `
+})
+export class AppComponent {
+  public options: LottieOptions = {
+    animationData: this.lottieTransferState.get('data.json')
+  };
+
+  constructor(private lottieTransferState: LottieTransferState) {}
+}
+```
+
+Notice, `data.json` is a filename that you pass to the `preloadAnimations.animations` property. Finally change this:
+
+```typescript
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+To this:
+
+```typescript
+document.addEventListener('DOMContentLoaded', () => {
+  platformBrowserDynamic().bootstrapModule(AppModule);
+});
+```

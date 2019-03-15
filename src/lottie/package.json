@@ -29,8 +29,8 @@
     "lib": {
       "flatModuleFile": "ngx-lottie",
       "entryFile": "index.ts",
-      "externals": {
-        "lottie-web/build/player/lottie.js": "lottie-web/build/player/lottie.js"
+      "umdModuleIds": {
+        "@ngx-lottie/server": "ngx-lottie-server"
       }
     },
     "dest": "../../dist/ngx-lottie"

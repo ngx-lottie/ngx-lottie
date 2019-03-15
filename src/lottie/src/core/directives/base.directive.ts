@@ -1,7 +1,7 @@
 import { Directive, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-import { loadAnimation } from '../internals';
+import { loadAnimation } from '../../internals';
 import { LottieEventsService } from '../services/lottie-events.service';
 import {
   LottieOptions,
@@ -13,9 +13,7 @@ import {
   BMSegmentStartEvent,
   BMDestroyEvent,
   LottieContainerClass
-} from '../symbols';
-import { LottieComponent } from '../components/lottie.component';
-import { LottieDirective } from './lottie.directive';
+} from '../../symbols';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective {
@@ -112,7 +110,7 @@ export class BaseDirective {
     platformId: string,
     lottieEventsService: LottieEventsService,
     container: HTMLElement | HTMLCanvasElement,
-    instance: LottieComponent | LottieDirective
+    instance: BaseDirective
   ): Promise<void> {
     if (isPlatformServer(platformId)) {
       return;

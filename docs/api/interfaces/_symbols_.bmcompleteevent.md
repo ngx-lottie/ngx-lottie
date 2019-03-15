@@ -23,7 +23,7 @@
 
 **● duration**: *`number`*
 
-*Defined in [symbols.ts:145](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L145)*
+*Defined in [symbols.ts:145](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L145)*
 
 ___
 <a id="type"></a>
@@ -32,7 +32,7 @@ ___
 
 **● type**: *"complete"*
 
-*Defined in [symbols.ts:144](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L144)*
+*Defined in [symbols.ts:144](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L144)*
 
 ___
 

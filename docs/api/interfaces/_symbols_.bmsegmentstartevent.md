@@ -24,7 +24,7 @@
 
 **● firstFrame**: *`number`*
 
-*Defined in [symbols.ts:150](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L150)*
+*Defined in [symbols.ts:150](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L150)*
 
 ___
 <a id="totalframes"></a>
@@ -33,7 +33,7 @@ ___
 
 **● totalFrames**: *`number`*
 
-*Defined in [symbols.ts:151](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L151)*
+*Defined in [symbols.ts:151](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L151)*
 
 ___
 <a id="type"></a>
@@ -42,7 +42,7 @@ ___
 
 **● type**: *"segmentStart"*
 
-*Defined in [symbols.ts:149](https://github.com/ngx-lottie/ngx-lottie/blob/c0534fc/src/lottie/src/symbols.ts#L149)*
+*Defined in [symbols.ts:149](https://github.com/ngx-lottie/ngx-lottie/blob/1389b69/src/lottie/src/symbols.ts#L149)*
 
 ___
 

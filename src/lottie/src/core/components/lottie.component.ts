@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   Inject,
+  ChangeDetectorRef,
   NgZone,
   ElementRef,
   ViewChild,
@@ -33,6 +34,7 @@ export class LottieComponent extends BaseDirective implements OnInit {
   public container: ElementRef<HTMLElement> = null!;
 
   constructor(
+    private readonly ref: ChangeDetectorRef,
     private readonly zone: NgZone,
     @Inject(PLATFORM_ID) private readonly platformId: string,
     @Self() private readonly lottieEventsService: LottieEventsService
@@ -42,6 +44,7 @@ export class LottieComponent extends BaseDirective implements OnInit {
 
   public ngOnInit(): void {
     super.loadAnimation(
+      this.ref,
       this.zone,
       this.platformId,
       this.lottieEventsService,

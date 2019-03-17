@@ -1,4 +1,4 @@
-import { Directive, Input, Output, EventEmitter, NgZone } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, NgZone, ChangeDetectorRef } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
 import { loadAnimation } from '../../internals';
@@ -31,6 +31,9 @@ export class BaseDirective {
 
   @Input()
   public height: string = null!;
+
+  @Input()
+  public detach = false;
 
   /**
    * `animationCreated` is dispatched after calling `loadAnimation`
@@ -106,6 +109,7 @@ export class BaseDirective {
   public readonly destroy = new EventEmitter<BMDestroyEvent>();
 
   protected async loadAnimation(
+    ref: ChangeDetectorRef,
     zone: NgZone,
     platformId: string,
     lottieEventsService: LottieEventsService,
@@ -119,5 +123,9 @@ export class BaseDirective {
     const animationItem = await loadAnimation(zone, this.options, container);
     lottieEventsService.animationCreated(animationItem, this.animationCreated);
     lottieEventsService.setAnimationItemAndLottieEventListeners(animationItem, instance);
+    // Basically make this view static and never check it in the future
+    if (this.detach) {
+      ref.detach();
+    }
   }
 }

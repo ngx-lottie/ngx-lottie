@@ -152,6 +152,7 @@ export class AppComponent {
 | height | `string` | optional | `null` | Custom container height
 | styles | `LottieCSSStyleDeclaration` | optional | `null` | Custom container styles
 | containerClass | `LottieContainerClass` | optional | `null` | Custom class applied to the container
+| detach | `boolean` | optional | `false` | Determines whether to detach view from the change-detection tree or not
 
 ### Events
 
@@ -174,6 +175,14 @@ export class AppComponent {
 The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
 Also, events, dispatched by `AnimationItem`, are listened outside Angular's zone, thus you shouldn't worry that every dispatch will be intercepted by Angular's zone.
+
+Also you can provide a `detach` binding:
+
+```html
+<ng-lottie [options]="options" [detach]="true"></ng-lottie>
+```
+
+This will tell `ng-lottie` component or `lottie` directive to detach its view from the change-detection tree, so this component or directive will never be checked.
 
 ## Server side rendering
 

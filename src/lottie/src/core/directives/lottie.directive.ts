@@ -1,4 +1,13 @@
-import { Directive, OnInit, NgZone, Inject, Self, PLATFORM_ID, ElementRef } from '@angular/core';
+import {
+  Directive,
+  OnInit,
+  ChangeDetectorRef,
+  NgZone,
+  Inject,
+  Self,
+  PLATFORM_ID,
+  ElementRef
+} from '@angular/core';
 
 import { LottieEventsService } from '../services/lottie-events.service';
 import { BaseDirective } from './base.directive';
@@ -9,6 +18,7 @@ import { BaseDirective } from './base.directive';
 })
 export class LottieDirective extends BaseDirective implements OnInit {
   constructor(
+    private readonly ref: ChangeDetectorRef,
     private readonly zone: NgZone,
     @Inject(PLATFORM_ID) private readonly platformId: string,
     @Self() private readonly lottieEventsService: LottieEventsService,
@@ -19,6 +29,7 @@ export class LottieDirective extends BaseDirective implements OnInit {
 
   public ngOnInit(): void {
     super.loadAnimation(
+      this.ref,
       this.zone,
       this.platformId,
       this.lottieEventsService,

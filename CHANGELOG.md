@@ -1,3 +1,9 @@
+### 1.2.0 (2019-03-17)
+
+##### New Features
+
+*  add new `detach` binding ([#10](https://github.com/ngx-lottie/ngx-lottie/pull/10)) ([ca62295f](https://github.com/ngx-lottie/ngx-lottie/commit/ca62295ffeb27f17438e91adf388735c1bb4e1ea))
+
 ### 1.1.0 (2019-03-15)
 
 ##### New Features

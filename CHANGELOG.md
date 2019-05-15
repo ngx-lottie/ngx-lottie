@@ -1,3 +1,9 @@
+### 1.3.0 (2019-05-15)
+
+##### Bug Fixes
+
+*  change `renderSettings` to `rendererSettings` ([#12](https://github.com/ngx-lottie/ngx-lottie/pull/12)) ([bd1e850a](https://github.com/ngx-lottie/ngx-lottie/commit/bd1e850a131b1fe1afb38410a7831ddb12eb7cfc))
+
 ### 1.2.0 (2019-03-17)
 
 ##### New Features

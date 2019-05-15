@@ -7,7 +7,7 @@ export interface LottieOptions {
   autoplay?: boolean;
   name?: string;
   path?: string;
-  renderSettings?: {
+  rendererSettings?: {
     context?: CanvasRenderingContext2D;
     scaleMode?: string;
     viewBoxOnly?: boolean;

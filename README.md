@@ -3,15 +3,15 @@
 </h1>
 
 <div align="center">
-  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations.</strong>
+  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 8.</strong>
 </div>
 
 <br/>
 
 <div align="center">
-  <!-- AppVeyor -->
-  <a href="https://ci.appveyor.com/project/arturovt/ngx-lottie/branch/master">
-    <img src="https://ci.appveyor.com/api/projects/status/96b90w7hnxpo2lgr/branch/master?svg=true" alt="Build status">
+  <!-- Travis -->
+  <a href="https://travis-ci.com/ngx-lottie/ngx-lottie">
+    <img src="https://travis-ci.com/ngx-lottie/ngx-lottie.svg?branch=master" alt="Build status">
   </a>
 
   <!-- License -->
@@ -147,12 +147,11 @@ export class AppComponent {
 
 | @Input() | Type | Required | Default | Description
 | --- | --- | --- | --- | --- |
-| options | `LottieOptions` | required | `{ renderer: 'svg', loop: true, autoplay: true }` | Configuration that's used by `AnimationItem`
+| options | `LottieOptions` | required | `{}` | Configuration that's used by `AnimationItem`
 | width | `string` | optional | `null` | Custom container width
 | height | `string` | optional | `null` | Custom container height
 | styles | `LottieCSSStyleDeclaration` | optional | `null` | Custom container styles
 | containerClass | `LottieContainerClass` | optional | `null` | Custom class applied to the container
-| detach | `boolean` | optional | `false` | Determines whether to detach view from the change-detection tree or not
 
 ### Events
 
@@ -170,6 +169,12 @@ export class AppComponent {
 | loadedImages | `void` | optional | Dispatched after all assets are preloaded
 | destroy | `BMDestroyEvent` | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources
 
+### Attributes
+
+| @Attribute() | Type | Required | Default | Description
+| --- | --- | --- | --- | --- |
+| detach | string | optional | `null` | Determines whether to detach view from the change-detection tree or not
+
 ## Optimizations
 
 The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
@@ -179,7 +184,7 @@ Also, events, dispatched by `AnimationItem`, are listened outside Angular's zone
 Also you can provide a `detach` binding:
 
 ```html
-<ng-lottie [options]="options" [detach]="true"></ng-lottie>
+<ng-lottie [options]="options" detach="true"></ng-lottie>
 ```
 
 This will tell `ng-lottie` component or `lottie` directive to detach its view from the change-detection tree, so this component or directive will never be checked.
@@ -191,6 +196,8 @@ By default, `lottie` will load your `json` file with animation data every time y
 `ngx-lottie/server` package gives you the opportunity to preload animation data and cache it using `TransferState`.
 
 ### How2?
+
+TL;DR - see `integration/universal` folder.
 
 Import the `LottieServerModule` into your `AppServerModule`:
 

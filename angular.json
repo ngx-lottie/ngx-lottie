@@ -4,27 +4,29 @@
   "newProjectRoot": "projects",
   "projects": {
     "lottie": {
-      "root": "src/lottie",
-      "sourceRoot": "src/lottie/src",
+      "root": "",
+      "sourceRoot": "src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "src/lottie/tsconfig.lib.json"
+            "tsConfig": "src/tsconfig.lib.json"
           }
         },
         "test": {
           "builder": "@angular-builders/jest:run",
-          "options": {}
+          "options": {
+            "no-cache": false
+          }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/lottie/tsconfig.lib.json",
-              "src/lottie/tsconfig.spec.json"
+              "src/tsconfig.lib.json",
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**",

@@ -1,0 +1,22 @@
+sudo: required
+dist: trusty
+
+language: node_js
+node_js: '12'
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+install_dependencies: &install-dependencies
+  yarn --frozen-lockfile --non-interactive --no-progress
+
+install: *install-dependencies
+
+script:
+  - yarn ci:pipelines
+  - cd integration/universal
+  - echo $(pwd)
+  - *install-dependencies
+  - yarn test:ssr

@@ -17,7 +17,10 @@
     "svg",
     "after effects",
     "plugin",
-    "angular"
+    "angular",
+    "angular8",
+    "angular 8",
+    "universal"
   ],
   "sideEffects": true,
   "peerDependencies": {

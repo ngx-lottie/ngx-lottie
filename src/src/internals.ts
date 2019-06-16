@@ -25,14 +25,19 @@ function resolveOptions(options: LottieOptions | null, container: HTMLElement): 
   return Object.assign(defaulOptions, options);
 }
 
-export async function loadAnimation(
+export function loadAnimation(
   zone: NgZone,
   options: LottieOptions | null,
   container: HTMLElement
 ): Promise<AnimationItem> {
-  options = resolveOptions(options, container);
-  const player = await getLottiePlayer();
-  return zone.runOutsideAngular(() => player.loadAnimation(options!));
+  const resolvedOptions = resolveOptions(options, container);
+
+  const fn = () =>
+    getLottiePlayer().then((player) => {
+      return player.loadAnimation(resolvedOptions);
+    });
+
+  return zone.runOutsideAngular(fn);
 }
 
 /**

@@ -1,3 +1,11 @@
+## 2.0.0 (2019-06-16)
+
+##### New Features
+
+*  add travis badge ([#15](https://github.com/ngx-lottie/ngx-lottie/pull/15)) ([3b64d9d7](https://github.com/ngx-lottie/ngx-lottie/commit/3b64d9d7f75074bda9859fb75ec4267faef98f2e))
+*  add github templates for issues and PRs ([#14](https://github.com/ngx-lottie/ngx-lottie/pull/14)) ([4439d829](https://github.com/ngx-lottie/ngx-lottie/commit/4439d8297e588a3c4e3167e70526a8fc65ca4d3b))
+*  support Angular 8 ([#13](https://github.com/ngx-lottie/ngx-lottie/pull/13)) ([99c52fa4](https://github.com/ngx-lottie/ngx-lottie/commit/99c52fa4ed2b20be594a45aec787527c99d77b55))
+
 ### 1.3.0 (2019-05-15)
 
 ##### Bug Fixes

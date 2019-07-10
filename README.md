@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 8.</strong>
+  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 8 and Ivy renderer.</strong>
 </div>
 
 <br/>

@@ -1,3 +1,9 @@
+## 3.0.0 (2019-07-10)
+
+##### New Features
+
+*  support Ivy ([#16](https://github.com/ngx-lottie/ngx-lottie/pull/16)) ([874b9888](https://github.com/ngx-lottie/ngx-lottie/commit/874b9888f1ccbcfb96e5f37f0069450da292014d))
+
 ## 2.0.0 (2019-06-16)
 
 ##### New Features

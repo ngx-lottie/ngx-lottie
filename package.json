@@ -14,7 +14,8 @@
     "angular",
     "angular8",
     "angular 8",
-    "universal"
+    "universal",
+    "ivy"
   ],
   "author": "Artur Androsovych",
   "license": "MIT",

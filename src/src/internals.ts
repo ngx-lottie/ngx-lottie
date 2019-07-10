@@ -10,8 +10,10 @@ import {
 } from './symbols';
 import { BaseDirective } from './core/directives/base.directive';
 
-function getLottiePlayer(): Promise<Lottie> {
-  return import(/* webpackChunkName: 'lottie' */ 'lottie-web/build/player/lottie.js');
+function getLottiePlayer() {
+  return (import(
+    /* webpackChunkName: 'lottie' */ 'lottie-web/build/player/lottie.js'
+  ) as unknown) as Promise<Lottie>;
 }
 
 function resolveOptions(options: LottieOptions | null, container: HTMLElement): LottieOptions {

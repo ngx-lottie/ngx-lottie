@@ -22,8 +22,8 @@ export class LottieDirective extends BaseDirective implements OnInit {
     private readonly ref: ChangeDetectorRef,
     private readonly zone: NgZone,
     @Inject(PLATFORM_ID) private readonly platformId: string,
-    @Self() private readonly lottieEventsService: LottieEventsService,
     @Self() private readonly host: ElementRef<HTMLElement>,
+    @Self() private readonly lottieEventsService: LottieEventsService,
     @Attribute('detach') detach: string | null
   ) {
     super();

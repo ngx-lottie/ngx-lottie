@@ -10,13 +10,17 @@ cache:
     - node_modules
 
 install_dependencies: &install-dependencies
-  yarn --frozen-lockfile --non-interactive --no-progress
+  yarn --pure-lockfile --non-interactive --no-progress
 
 install: *install-dependencies
 
 script:
   - yarn ci:pipelines
-  - cd integration/universal
+  - cd integration/ivy
+  - echo $(pwd)
+  - *install-dependencies
+  - yarn build:prod
+  - cd ../universal
   - echo $(pwd)
   - *install-dependencies
   - yarn test:ssr

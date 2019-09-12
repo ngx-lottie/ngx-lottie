@@ -1,9 +1,9 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/ngx-lottie/ngx-lottie/master/docs/assets/icon_lottie.png">
+  <img src="https://raw.githubusercontent.com/ngx-lottie/ngx-lottie/master/docs/assets/lottie.gif">
 </h1>
 
 <div align="center">
-  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 8 and Ivy renderer.</strong>
+  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 8+ and Ivy renderer.</strong>
 </div>
 
 <br/>

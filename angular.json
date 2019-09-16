@@ -20,7 +20,7 @@
           "options": {
             "tsConfig": [
               "src/tsconfig.lib.json",
-              "tsconfig.spec.json"
+              "src/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**",

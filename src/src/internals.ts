@@ -10,10 +10,8 @@ import {
 } from './symbols';
 import { BaseDirective } from './core/directives/base.directive';
 
-function getLottiePlayer() {
-  return (import(
-    /* webpackChunkName: 'lottie' */ 'lottie-web/build/player/lottie.js'
-  ) as unknown) as Promise<Lottie>;
+function getLottiePlayer(): Lottie {
+  return require('lottie-web/build/player/lottie.js');
 }
 
 function resolveOptions(options: LottieOptions | null, container: HTMLElement): LottieOptions {
@@ -31,15 +29,10 @@ export function loadAnimation(
   zone: NgZone,
   options: LottieOptions | null,
   container: HTMLElement
-): Promise<AnimationItem> {
+): AnimationItem {
   const resolvedOptions = resolveOptions(options, container);
-
-  const fn = () =>
-    getLottiePlayer().then((player) => {
-      return player.loadAnimation(resolvedOptions);
-    });
-
-  return zone.runOutsideAngular(fn);
+  const player = getLottiePlayer();
+  return zone.runOutsideAngular(() => player.loadAnimation(resolvedOptions));
 }
 
 /**
@@ -78,7 +71,7 @@ export function getEventEmitterFromDirectiveInstance(
  * Events that can be dispatched by `Animationitem`
  * @see https://github.com/airbnb/lottie-web#events
  */
-export const lottieEvents: ReadonlyArray<LottieEventName> = [
+export const lottieEvents: readonly LottieEventName[] = [
   'complete',
   'loopComplete',
   'enterFrame',

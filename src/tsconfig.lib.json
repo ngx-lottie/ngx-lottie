@@ -2,9 +2,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "es2015",
-    "module": "esnext",
+    "module": "es2015",
     "inlineSources": true,
     "importHelpers": true,
+    "downlevelIteration": true,
     "lib": [
       "dom",
       "es2018"
@@ -14,6 +15,7 @@
     ]
   },
   "angularCompilerOptions": {
+    "enableIvy": false,
     "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,

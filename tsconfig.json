@@ -26,5 +26,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "suppressImplicitAnyIndexErrors": true
-  }
+  },
+  "exclude": [
+    "cypress"
+  ]
 }

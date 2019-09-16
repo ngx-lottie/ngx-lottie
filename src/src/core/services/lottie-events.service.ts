@@ -43,9 +43,9 @@ export class LottieEventsService implements OnDestroy {
   }
 
   private setupLottieEventListeners(instance: BaseDirective): void {
-    lottieEvents.forEach(name => {
-      this.setupLottieEventListener(name, instance);
-    });
+    for (const lottieEvent of lottieEvents) {
+      this.setupLottieEventListener(lottieEvent, instance);
+    }
   }
 
   private setupLottieEventListener(name: LottieEventName, instance: BaseDirective): void {

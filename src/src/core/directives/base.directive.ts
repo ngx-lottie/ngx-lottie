@@ -89,32 +89,19 @@ export class BaseDirective {
    */
   @Output() destroy = new EventEmitter<BMDestroyEvent>();
 
-  private detach = false;
-
-  protected async loadAnimation(
-    ref: ChangeDetectorRef,
+  protected loadAnimation(
     zone: NgZone,
     platformId: string,
     lottieEventsService: LottieEventsService,
     container: HTMLElement | HTMLCanvasElement,
     instance: BaseDirective
-  ): Promise<void> {
+  ): void {
     if (isPlatformServer(platformId)) {
       return;
     }
 
-    const animationItem = await loadAnimation(zone, this.options, container);
+    const animationItem = loadAnimation(zone, this.options, container);
     lottieEventsService.animationCreated(animationItem, this.animationCreated);
     lottieEventsService.setAnimationItemAndLottieEventListeners(animationItem, instance);
-    // Make this view static and never check it in the future
-    if (this.detach) {
-      ref.detach();
-    }
-  }
-
-  protected setDetach(detach: string | null): void {
-    if (detach !== null && detach.trim() === 'true') {
-      this.detach = true;
-    }
   }
 }

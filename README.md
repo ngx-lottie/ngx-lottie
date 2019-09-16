@@ -66,9 +66,9 @@
 
 To install `ngx-lottie` run the following command:
 
-```console
+```bash
 npm i lottie-web ngx-lottie
-# or if you're using yarn
+# Or if you use yarn
 yarn add lottie-web ngx-lottie
 ```
 
@@ -104,11 +104,11 @@ import { LottieOptions, AnimationItem } from 'ngx-lottie';
   `
 })
 export class AppComponent {
-  public options: LottieOptions = {
+  options: LottieOptions = {
     path: '/assets/animation.json'
   };
 
-  public animationCreated(animationItem: AnimationItem): void {
+  animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
   }
 }
@@ -131,11 +131,11 @@ import { LottieOptions, AnimationItem } from 'ngx-lottie';
   `
 })
 export class AppComponent {
-  public options: LottieOptions = {
+  options: LottieOptions = {
     path: '/assets/animation.json'
   };
 
-  public animationCreated(animationItem: AnimationItem): void {
+  animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
   }
 }
@@ -169,27 +169,15 @@ export class AppComponent {
 | loadedImages | `void` | optional | Dispatched after all assets are preloaded
 | destroy | `BMDestroyEvent` | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources
 
-### Attributes
-
-| @Attribute() | Type | Required | Default | Description
-| --- | --- | --- | --- | --- |
-| detach | string | optional | `null` | Determines whether to detach view from the change-detection tree or not
-
 ## Optimizations
 
 The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
 Also, events, dispatched by `AnimationItem`, are listened outside Angular's zone, thus you shouldn't worry that every dispatch will be intercepted by Angular's zone.
 
-Also you can provide a `detach` binding:
-
-```html
-<ng-lottie [options]="options" detach="true"></ng-lottie>
-```
-
-This will tell `ng-lottie` component or `lottie` directive to detach its view from the change-detection tree, so this component or directive will never be checked.
-
 ## Server side rendering
+
+> ⚠️ **Warning**: This works only if Ivy is NOT enabled! Ivy doesn't work with SSR right now and probably will be supported in Angular 10.
 
 By default, `lottie` will load your `json` file with animation data every time you create an animation. You may have some problems with the connection, so there may be some delay or even timeout. It's worth loading animation data only once and cache it on the client side, so every time you create an animation — the animation data will be retrieved from cache.
 
@@ -197,7 +185,7 @@ By default, `lottie` will load your `json` file with animation data every time y
 
 ### How2?
 
-TL;DR - see `integration/universal` folder.
+TL;DR - see `integration` folder.
 
 Import the `LottieServerModule` into your `AppServerModule`:
 
@@ -230,17 +218,17 @@ export class AppServerModule {}
 Also, don't forget to import `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of `json` files, that contain animation data, that should be read on the server side, cached and transfered on the client. `folder` is a path where your `json` files are located, but you should use it properly, this path is joined with the `process.cwd()`. Imagine such project structure:
 
 ```
--- dist (here you store your output artifacts)
-  -- project-name
-    -- assets
-    -- index.html
-    -- main.hash.js
--- dist-server
-  -- server.js
--- src (here is your app)
--- angular.json
--- package.json
--- webpack.config.js
+— dist (here you store your output artifacts)
+  — project-name
+    — assets
+    — index.html
+    — main.hash.js
+— dist-server
+  — server.js
+— src (here is your app)
+— angular.json
+— package.json
+— webpack.config.js
 ```
 
 If you start a server from the root folder like `node dist-server/server`, thus the `folder` property should equal `dist/project-name/assets`.
@@ -260,7 +248,7 @@ import { LottieOptions, LottieTransferState } from 'ngx-lottie';
   `
 })
 export class AppComponent {
-  public options: LottieOptions = {
+  options: LottieOptions = {
     animationData: this.lottieTransferState.get('data.json')
   };
 

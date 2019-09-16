@@ -3,12 +3,10 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   Inject,
-  ChangeDetectorRef,
   NgZone,
   ElementRef,
   ViewChild,
   Self,
-  Attribute,
   PLATFORM_ID,
   OnChanges,
   SimpleChanges,
@@ -36,15 +34,12 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 
   constructor(
-    private ref: ChangeDetectorRef,
     private zone: NgZone,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: string,
-    @Self() private lottieEventsService: LottieEventsService,
-    @Attribute('detach') detach: string | null
+    @Self() private lottieEventsService: LottieEventsService
   ) {
     super();
-    super.setDetach(detach);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,7 +50,6 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
 
   ngOnInit(): void {
     super.loadAnimation(
-      this.ref,
       this.zone,
       this.platformId,
       this.lottieEventsService,

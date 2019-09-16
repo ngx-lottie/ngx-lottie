@@ -10,6 +10,7 @@
       true,
       "element",
       "kebab-case"
-    ]
+    ],
+    "no-string-literal": false
   }
 }

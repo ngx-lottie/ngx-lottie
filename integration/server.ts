@@ -5,15 +5,13 @@ import { join } from 'path';
 import { readFileSync } from 'fs';
 import * as express from 'express';
 
-import { enableProdMode, ɵcmf as createNgModuleFactory } from '@angular/core';
-import { renderModuleFactory } from '@angular/platform-server';
-
-const { AppServerModule, AppComponent } = require('../dist-integration-server/main');
+const {
+  AppServerModuleNgFactory,
+  renderModuleFactory
+} = require('../dist-integration-server/main');
 
 const PORT = process.env.PORT || 4200;
 const DIST_FOLDER = join(__dirname, '../dist-integration');
-
-enableProdMode();
 
 const app = express();
 // Read `index.html` only once and cache it
@@ -26,13 +24,7 @@ app.get('*', async (req, res) => {
   // tslint:disable-next-line:no-console
   console.time(`GET: ${url}`);
 
-  const factory = createNgModuleFactory(
-    AppServerModule,
-    [AppComponent],
-    AppServerModule.ngInjectorDef.factory
-  );
-
-  const html = await renderModuleFactory(factory, {
+  const html = await renderModuleFactory(AppServerModuleNgFactory, {
     url,
     document
   });

@@ -10,11 +10,10 @@
     "main.server.ts"
   ],
   "angularCompilerOptions": {
-    "enableIvy": true,
+    "enableIvy": false,
     "entryModule": "app/app.server.module#AppServerModule"
   },
   "exclude": [
-    "server.ts",
-    "**/*.spec.ts"
+    "server.ts"
   ]
 }

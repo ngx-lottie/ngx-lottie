@@ -1,6 +1,8 @@
+/// <reference types="jest" />
+
 import { Component, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { TestBed, tick, fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 
 import {
   LottieModule,
@@ -44,31 +46,31 @@ describe('lottie', () => {
       `
     })
     class MockComponent {
-      public options: LottieOptions = {
+      options: LottieOptions = {
         animationData,
         loop: true,
         autoplay: true
       };
 
-      public styles: LottieCSSStyleDeclaration = {
+      styles: LottieCSSStyleDeclaration = {
         display: 'flex'
       };
 
-      public isDomLoaded = false;
+      isDomLoaded = false;
 
-      public animationItem: AnimationItem = null!;
+      animationItem: AnimationItem = null!;
 
-      public destroyEvent: BMDestroyEvent = null!;
+      destroyEvent: BMDestroyEvent = null!;
 
-      public animationCreated(animationItem: AnimationItem): void {
+      animationCreated(animationItem: AnimationItem): void {
         this.animationItem = animationItem;
       }
 
-      public domLoaded(): void {
+      domLoaded(): void {
         this.isDomLoaded = true;
       }
 
-      public destroy(destroyEvent: BMDestroyEvent): void {
+      destroy(destroyEvent: BMDestroyEvent): void {
         this.destroyEvent = destroyEvent;
       }
     }
@@ -80,64 +82,55 @@ describe('lottie', () => {
       });
     });
 
-    it('should render "svg" element successfully', fakeAsync(() => {
-      // Arrange
+    it('should render "svg" element successfully', () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
-
-      // Act
-      const svg = query(fixture.debugElement.nativeElement, 'svg')!;
+      const svg = fixture.debugElement.nativeElement.querySelector('svg');
 
       // Assert
       expect(svg).toBeTruthy();
       expect(svg instanceof SVGSVGElement).toBeTruthy();
-    }));
+    });
 
-    it('should set custom width and height', fakeAsync(() => {
-      // Arrange
+    it('should set custom width and height', () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
-
-      // Act
-      const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
-      const { height, width } = lottie.style;
+      const styles = fixture.debugElement.query(By.css('div:first-child')).styles;
 
       // Assert
-      expect(height).toBe('500px');
-      expect(width).toBe('500px');
-    }));
+      expect(styles.height).toBe('500px');
+      expect(styles.width).toBe('500px');
+    });
 
-    it('should set custom styles', fakeAsync(() => {
-      // Arrange
+    it('should set custom styles', () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
-
-      // Act
-      const lottie = query(fixture.debugElement.nativeElement, 'div:first-child')!;
-      const { display } = lottie.style;
+      const styles = fixture.debugElement.query(By.css('div:first-child')).styles;
 
       // Assert
-      expect(display).toBe('flex');
-    }));
+      expect(styles.display).toBe('flex');
+    });
 
-    it('should emit "animationCreated" event', fakeAsync(() => {
-      // Arrange
+    it('should emit "animationCreated" event', () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
-
-      // Act
-      const { animationItem } = fixture.componentInstance;
+      const animationItem = fixture.componentInstance.animationItem;
 
       // Assert
       expect(animationItem).toBeTruthy();
       expect(typeof animationItem.addEventListener).toBe('function');
-    }));
+    });
 
-    it('should emit "domLoaded" event when the svg is ready', fakeAsync(() => {
-      // Arrange
+    it('should emit "domLoaded" event when the svg is ready', async () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
+      await fixture.whenRenderingDone();
 
       // Assert
       expect(fixture.componentInstance.isDomLoaded).toBeTruthy();
-    }));
+    });
 
-    it('should emit "destroy" event', fakeAsync(() => {
+    it('should emit "destroy" event', () => {
       // Arrange
       const fixture = createFixture(MockComponent);
 
@@ -149,51 +142,7 @@ describe('lottie', () => {
       expect(destroyEvent).toBeTruthy();
       expect(destroyEvent.type).toBe('destroy');
       expect(destroyEvent.target.constructor.name).toBe('AnimationItem');
-    }));
-
-    it('shold detach change detector', fakeAsync(() => {
-      @Component({
-        template: `
-          <ng-lottie [width]="width" [options]="options" detach="true"></ng-lottie>
-
-          <button (click)="changeWidth()">Change width</button>
-        `
-      })
-      class DetachedComponent {
-        public options: LottieOptions = {
-          animationData,
-          loop: true,
-          autoplay: true
-        };
-
-        public width = 500;
-
-        public changeWidth(): void {
-          this.width = 1000;
-        }
-      }
-
-      TestBed.configureTestingModule({
-        imports: [LottieModule],
-        declarations: [DetachedComponent]
-      });
-
-      // Arrange
-      const fixture = createFixture(DetachedComponent);
-      const div = fixture.debugElement.query(By.css('ng-lottie div'));
-
-      // Assert
-      let width = div.nativeElement.style.width;
-      expect(width).toEqual('500px');
-
-      const button = fixture.debugElement.query(By.css('button'));
-      button.nativeElement.click();
-
-      fixture.detectChanges();
-      width = div.nativeElement.style.width;
-
-      expect(width).toEqual('500px');
-    }));
+    });
   });
 
   describe(LottieDirective.name, () => {
@@ -209,31 +158,31 @@ describe('lottie', () => {
       `
     })
     class MockComponent {
-      public options: LottieOptions = {
+      options: LottieOptions = {
         animationData,
         loop: true,
         autoplay: true
       };
 
-      public styles: LottieCSSStyleDeclaration = {
+      styles: LottieCSSStyleDeclaration = {
         display: 'flex'
       };
 
-      public isDomLoaded = false;
+      isDomLoaded = false;
 
-      public animationItem: AnimationItem = null!;
+      animationItem: AnimationItem = null!;
 
-      public destroyEvent: BMDestroyEvent = null!;
+      destroyEvent: BMDestroyEvent = null!;
 
-      public animationCreated(animationItem: AnimationItem): void {
+      animationCreated(animationItem: AnimationItem): void {
         this.animationItem = animationItem;
       }
 
-      public domLoaded(): void {
+      domLoaded(): void {
         this.isDomLoaded = true;
       }
 
-      public destroy(destroyEvent: BMDestroyEvent): void {
+      destroy(destroyEvent: BMDestroyEvent): void {
         this.destroyEvent = destroyEvent;
       }
     }
@@ -245,25 +194,23 @@ describe('lottie', () => {
       });
     });
 
-    it('should create directive on the provided container', fakeAsync(() => {
-      // Arrange
+    it('should create directive on the provided container', () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
-
-      // Act
-      const main = query(fixture.debugElement.nativeElement, 'main')!;
-      const svg = query(main, 'svg')!;
+      const main = fixture.debugElement.query(By.css('main'));
+      const svg = main.nativeElement.querySelector('svg');
 
       // Assert
-      expect(main.localName).toEqual('main');
-      expect(main instanceof HTMLElement).toBeTruthy();
+      expect(main.nativeElement.localName).toEqual('main');
+      expect(main.nativeElement instanceof HTMLElement).toBeTruthy();
       expect(svg instanceof SVGSVGElement).toBeTruthy();
-    }));
+    });
 
-    it('should emit necessary events', fakeAsync(() => {
-      // Arrange
+    it('should emit necessary events', async () => {
+      // Arrange & act
       const fixture = createFixture(MockComponent);
+      await fixture.whenRenderingDone();
 
-      // Act
       const { animationItem, isDomLoaded } = fixture.componentInstance;
 
       expect(animationItem).toBeTruthy();
@@ -271,8 +218,9 @@ describe('lottie', () => {
 
       fixture.destroy();
 
+      // Assert
       expect(fixture.componentInstance.destroyEvent).toBeTruthy();
-    }));
+    });
   });
 
   describe(LottieEventsService.name, () => {
@@ -282,44 +230,36 @@ describe('lottie', () => {
       });
     });
 
-    it('should listen to events exposed by lottie', fakeAsync(() => {
-      // Arrange
+    it('should listen to events exposed by lottie', () => {
+      // Arrange & act
       const fixture = createFixture(LottieComponent);
-
-      // Act
-      const { listeners, animationItem } = fixture.debugElement.injector.get(LottieEventsService);
+      const service = fixture.debugElement.injector.get(LottieEventsService);
+      const listeners = service['listeners'];
+      const animationItem = service['animationItem'];
 
       // Assert
       expect(animationItem).toBeTruthy();
       expect(listeners.size).toBeGreaterThan(0);
-    }));
+    });
 
-    it('should release memory when animation item gets destroyed', fakeAsync(() => {
-      // Arrange
+    it('should release memory when animation item gets destroyed', () => {
+      // Arrange & act
       const fixture = createFixture(LottieComponent);
-
-      // Act
       fixture.destroy();
 
-      const { listeners, animationItem } = fixture.debugElement.injector.get(LottieEventsService);
+      const service = fixture.debugElement.injector.get(LottieEventsService);
+      const listeners = service['listeners'];
+      const animationItem = service['animationItem'];
 
       // Assert
       expect(animationItem).toBeFalsy();
       expect(listeners.size).toEqual(0);
-    }));
+    });
   });
 });
 
-function query(element: HTMLElement, name: string): HTMLElement | null {
-  return element.querySelector(name);
-}
-
 function createFixture<T>(component: Type<T>): ComponentFixture<T> {
-  try {
-    const fixture = TestBed.createComponent(component);
-    fixture.detectChanges();
-    return fixture;
-  } finally {
-    tick(100);
-  }
+  const fixture = TestBed.createComponent(component);
+  fixture.detectChanges();
+  return fixture;
 }

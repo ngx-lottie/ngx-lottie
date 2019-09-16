@@ -1,3 +1,20 @@
+### 3.1.0 (2019-09-16)
+
+##### Build System / Dependencies
+
+*  add cypress for E2E testing ([#20](https://github.com/ngx-lottie/ngx-lottie/pull/20)) ([1d066195](https://github.com/ngx-lottie/ngx-lottie/commit/1d06619535183d346d507f1b4ec3e8416d1e7a46))
+
+##### Chores
+
+*  update script ([828acfea](https://github.com/ngx-lottie/ngx-lottie/commit/828acfeac056bfbe278aec3216e9f35bdb161beb))
+*  revert logo ([10552a4c](https://github.com/ngx-lottie/ngx-lottie/commit/10552a4cd3458ecff609f545f7afe5c1a5135f5b))
+*  remove typedoc generator ([653259cf](https://github.com/ngx-lottie/ngx-lottie/commit/653259cfa7e05ccc2663743377b20db7fca915c4))
+*  update deps ([#19](https://github.com/ngx-lottie/ngx-lottie/pull/19)) ([bd48dc18](https://github.com/ngx-lottie/ngx-lottie/commit/bd48dc18e19ff27383d6d420bff8165ffe3bd110))
+
+##### Bug Fixes
+
+*  load `lottie-web` synchronously and remove `detach` attribute ([#21](https://github.com/ngx-lottie/ngx-lottie/pull/21)) ([91e7c329](https://github.com/ngx-lottie/ngx-lottie/commit/91e7c329b91a6db44177fcda1d96a5c1c1be816b))
+
 ## 3.0.0 (2019-07-10)
 
 ##### New Features

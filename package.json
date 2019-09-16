@@ -57,7 +57,7 @@
     "release:major": "yarn bump --release major && changelog -M && yarn release:lottie && yarn version --major && yarn release",
     "release:minor": "yarn bump --release minor && changelog -m && yarn release:lottie && yarn version --minor && yarn release",
     "release:patch": "yarn bump --release patch && changelog -p && yarn release:lottie && yarn version --patch && yarn release",
-    "release:lottie": "git add . && git commit -m 'feat: update CHANGELOG.md'"
+    "release:lottie": "git add . && git commit -m 'chore: update CHANGELOG.md' --no-verify"
   },
   "private": true,
   "devDependencies": {

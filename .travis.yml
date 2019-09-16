@@ -12,6 +12,9 @@ addons:
     packages:
       - libgconf-2-4
 
+before_install:
+  - npm i -g yarn
+
 install:
   - yarn --frozen-lockfile --non-interactive
 

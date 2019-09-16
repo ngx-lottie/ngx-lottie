@@ -1,14 +1,12 @@
-import { TransferState, makeStateKey } from '@angular/platform-browser';
-
 import { join } from 'path';
-
+import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Observable, forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AnimationFilename, transformAnimationFilenameToKey } from 'ngx-lottie';
 
-import { LottieServerOptions, PathToAnimation, AnimationData } from './symbols';
 import { readFileWithAnimationData } from './utils';
+import { LottieServerOptions, PathToAnimation, AnimationData } from './symbols';
 
 function readAndTransferAnimationData(
   state: TransferState,
@@ -21,7 +19,7 @@ function readAndTransferAnimationData(
     const path = pathsToAnimations[i];
 
     const source = readFileWithAnimationData(path).pipe(
-      tap((animationData) => {
+      tap(animationData => {
         transferAnimationData(state, animations[i], animationData);
       })
     );
@@ -57,5 +55,5 @@ export function resolveLottiePaths({ preloadAnimations }: LottieServerOptions): 
   const { folder, animations } = preloadAnimations;
   const path = join(process.cwd(), folder);
 
-  return animations.map((animation) => join(path, animation));
+  return animations.map(animation => join(path, animation));
 }

@@ -1,8 +1,9 @@
-dist
-dist-server
+dist-integration
+dist-integration-server
 node_modules
 .idea
 .vscode
 .cache
 yarn-error.log
 coverage
+ngx-lottie

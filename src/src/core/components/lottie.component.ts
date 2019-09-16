@@ -33,28 +33,27 @@ import { LottieEventsService } from '../services/lottie-events.service';
   providers: [LottieEventsService]
 })
 export class LottieComponent extends BaseDirective implements OnChanges, OnInit {
-  @ViewChild('container', { static: true })
-  public container: ElementRef<HTMLElement> = null!;
+  @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 
   constructor(
-    private readonly ref: ChangeDetectorRef,
-    private readonly zone: NgZone,
-    private readonly renderer: Renderer2,
-    @Inject(PLATFORM_ID) private readonly platformId: string,
-    @Self() private readonly lottieEventsService: LottieEventsService,
+    private ref: ChangeDetectorRef,
+    private zone: NgZone,
+    private renderer: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: string,
+    @Self() private lottieEventsService: LottieEventsService,
     @Attribute('detach') detach: string | null
   ) {
     super();
     super.setDetach(detach);
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.containerClass) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.containerClass !== undefined) {
       this.renderer.addClass(this.container.nativeElement, changes.containerClass.currentValue);
     }
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     super.loadAnimation(
       this.ref,
       this.zone,

@@ -13,9 +13,9 @@ function copyReadmeAfterSuccessfulBuild(): void {
   }
 
   createReadStream(path)
-    .pipe(createWriteStream(join(__dirname, `../dist/${name}/README.md`)))
+    .pipe(createWriteStream(join(__dirname, `../${name}/README.md`)))
     .on('finish', () => {
-      console.log(colors.green(`Successfully copied README.md into dist/${name} folder!`));
+      console.log(colors.green(`Successfully copied README.md into "${name}" folder!`));
     });
 }
 

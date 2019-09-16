@@ -13,14 +13,11 @@ export class LottieEventsService implements OnDestroy {
    * Save listeners so we're able to remove them from `AnimationItem`
    * by references in the future when this service is destroyed
    */
-  private readonly listeners = new Map<LottieEventName, (event: LottieEvent) => void>();
+  private listeners = new Map<LottieEventName, (event: LottieEvent) => void>();
 
-  constructor(
-    private readonly zone: NgZone,
-    @Inject(PLATFORM_ID) private readonly platformId: string
-  ) {}
+  constructor(private zone: NgZone, @Inject(PLATFORM_ID) private platformId: string) {}
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.dispose();
   }
 
@@ -28,14 +25,14 @@ export class LottieEventsService implements OnDestroy {
    * This method is invoked after calling `loadAnimation` and dispatches the new one
    * created `AnimationItem` instance
    */
-  public animationCreated(
+  animationCreated(
     animationItem: AnimationItem,
     animationCreated: EventEmitter<AnimationItem>
   ): void {
     animationCreated.emit(animationItem);
   }
 
-  public setAnimationItemAndLottieEventListeners(
+  setAnimationItemAndLottieEventListeners(
     animationItem: AnimationItem,
     instance: BaseDirective
   ): void {
@@ -46,7 +43,7 @@ export class LottieEventsService implements OnDestroy {
   }
 
   private setupLottieEventListeners(instance: BaseDirective): void {
-    lottieEvents.forEach((name) => {
+    lottieEvents.forEach(name => {
       this.setupLottieEventListener(name, instance);
     });
   }

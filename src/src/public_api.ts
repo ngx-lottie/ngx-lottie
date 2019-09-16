@@ -1,4 +1,5 @@
 export { LottieModule } from './lottie.module';
+export { BaseDirective } from './core/directives/base.directive';
 export { LottieDirective } from './core/directives/lottie.directive';
 export { LottieComponent } from './core/components/lottie.component';
 export { LottieTransferState } from './core/services/lottie-transfer-state';

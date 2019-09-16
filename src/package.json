@@ -20,12 +20,13 @@
     "angular",
     "angular8",
     "angular 8",
+    "angular 9",
     "universal",
     "ivy"
   ],
   "sideEffects": true,
   "peerDependencies": {
-    "@angular/core": ">=7.0.0 <9.0.0",
+    "@angular/core": ">=7.0.0",
     "lottie-web": ">=5.0.0",
     "rxjs": ">=6.0.0"
   },
@@ -34,9 +35,9 @@
       "flatModuleFile": "ngx-lottie",
       "entryFile": "index.ts",
       "umdModuleIds": {
-        "@ngx-lottie/server": "ngx-lottie-server"
+        "ngx-lottie/server": "ngx-lottie-server"
       }
     },
-    "dest": "../dist/ngx-lottie"
+    "dest": "../ngx-lottie"
   }
 }

@@ -8,9 +8,9 @@ import { transformAnimationFilenameToKey } from '../../utils';
 export class LottieTransferState {
   constructor(private state: TransferState) {}
 
-  public get<T>(animation: AnimationFilename): T | null {
-    animation = transformAnimationFilenameToKey(animation);
-    const key = makeStateKey<T>(animation);
+  get<T>(animation: AnimationFilename): T | null {
+    const animationKey = transformAnimationFilenameToKey(animation);
+    const key = makeStateKey<T>(animationKey);
     return this.state.get(key, null);
   }
 }

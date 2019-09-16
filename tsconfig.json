@@ -3,13 +3,19 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "ngx-lottie": ["src/lottie/index"],
-      "ngx-lottie/*": ["src/lottie/src/*"]
+      "ngx-lottie": [
+        "ngx-lottie"
+      ]
     },
     "target": "es5",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "moduleResolution": "node",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "strict": true,
     "sourceMap": true,
     "declaration": false,

@@ -10,8 +10,8 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 
-import { LottieEventsService } from '../services/lottie-events.service';
 import { BaseDirective } from './base.directive';
+import { LottieEventsService } from '../services/lottie-events.service';
 
 @Directive({
   selector: '[lottie]',
@@ -19,18 +19,18 @@ import { BaseDirective } from './base.directive';
 })
 export class LottieDirective extends BaseDirective implements OnInit {
   constructor(
-    private readonly ref: ChangeDetectorRef,
-    private readonly zone: NgZone,
-    @Inject(PLATFORM_ID) private readonly platformId: string,
-    @Self() private readonly host: ElementRef<HTMLElement>,
-    @Self() private readonly lottieEventsService: LottieEventsService,
+    private ref: ChangeDetectorRef,
+    private zone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: string,
+    @Self() private host: ElementRef<HTMLElement>,
+    @Self() private lottieEventsService: LottieEventsService,
     @Attribute('detach') detach: string | null
   ) {
     super();
     super.setDetach(detach);
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     super.loadAnimation(
       this.ref,
       this.zone,

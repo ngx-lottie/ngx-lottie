@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "main.server.ts"
+  ],
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "entryModule": "app/app.server.module#AppServerModule"
+  },
+  "exclude": [
+    "server.ts",
+    "**/*.spec.ts"
+  ]
+}

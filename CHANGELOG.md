@@ -1,3 +1,9 @@
+## 4.0.0 (2019-09-23)
+
+##### New Features
+
+*  add possibility load library syncy/asyncy ([#22](https://github.com/ngx-lottie/ngx-lottie/pull/22)) ([662a4949](https://github.com/ngx-lottie/ngx-lottie/commit/662a494909a1760ae3b255f250edf2adeb5b1c8d))
+
 ### 3.1.0 (2019-09-16)
 
 ##### Build System / Dependencies

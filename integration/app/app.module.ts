@@ -5,12 +5,18 @@ import { LottieModule } from 'ngx-lottie';
 
 import { AppComponent } from './app.component';
 
+export function playerFactory() {
+  return import('lottie-web');
+}
+
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'ngx-lottie-universal' }),
     BrowserTransferStateModule,
     HttpClientModule,
-    LottieModule
+    LottieModule.forRoot({
+      player: playerFactory
+    })
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]

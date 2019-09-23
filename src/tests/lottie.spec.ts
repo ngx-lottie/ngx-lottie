@@ -1,37 +1,57 @@
-/// <reference types="jest" />
-
 import { Component, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 
-import {
-  LottieModule,
-  LottieComponent,
-  LottieDirective,
-  LottieOptions,
-  AnimationItem,
-  BMDestroyEvent,
-  LottieCSSStyleDeclaration
-} from '../';
-import { LottieEventsService } from '../src/core/services/lottie-events.service';
+// Do this before requiring `lottie-web`
+// @ts-ignore
+HTMLCanvasElement.prototype.getContext = () => ({
+  fillRect: jest.fn(),
+  clearRect: jest.fn(),
+  getImageData: (x: number, y: number, w: number, h: number) => {
+    return {
+      data: new Array(w * h * 4)
+    };
+  },
+  putImageData: jest.fn(),
+  createImageData: () => {
+    return [];
+  },
+  setTransform: jest.fn(),
+  drawImage: jest.fn(),
+  save: jest.fn(),
+  fillText: jest.fn(),
+  restore: jest.fn(),
+  beginPath: jest.fn(),
+  moveTo: jest.fn(),
+  lineTo: jest.fn(),
+  closePath: jest.fn(),
+  stroke: jest.fn(),
+  translate: jest.fn(),
+  scale: jest.fn(),
+  rotate: jest.fn(),
+  arc: jest.fn(),
+  fill: jest.fn(),
+  measureText: () => {
+    return {
+      width: 0
+    };
+  },
+  transform: jest.fn(),
+  rect: jest.fn(),
+  clip: jest.fn()
+});
+
+// Use `require` as `jest` uses CommonJS
+const player = require('lottie-web');
+
+import { LottieEventsService } from '../src/events.service';
+import { LottieOptions, AnimationItem } from '../src/symbols';
+import { LottieModule, LottieComponent, BMDestroyEvent } from '../';
 
 import animationData = require('./data.json');
 
-describe('lottie', () => {
-  beforeAll(() => {
-    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
-      value: jest.fn(() => {
-        return {
-          fillStyle: null,
-          fillRect: jest.fn(),
-          drawImage: jest.fn(),
-          getImageData: jest.fn()
-        };
-      })
-    });
-  });
-
-  describe(LottieComponent.name, () => {
+describe('ngx-lottie', () => {
+  describe('ng-lottie component', () => {
     @Component({
       template: `
         <ng-lottie
@@ -52,7 +72,7 @@ describe('lottie', () => {
         autoplay: true
       };
 
-      styles: LottieCSSStyleDeclaration = {
+      styles = {
         display: 'flex'
       };
 
@@ -77,7 +97,7 @@ describe('lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule],
+        imports: [LottieModule.forRoot({ player: () => player })],
         declarations: [MockComponent]
       });
     });
@@ -121,14 +141,17 @@ describe('lottie', () => {
       expect(typeof animationItem.addEventListener).toBe('function');
     });
 
-    it('should emit "domLoaded" event when the svg is ready', async () => {
+    it('should emit "domLoaded" event when the svg is ready', fakeAsync(() => {
       // Arrange & act
       const fixture = createFixture(MockComponent);
-      await fixture.whenRenderingDone();
+      // `tick` is needed because Lottie triggers `DOMLoaded` event
+      // after timeout, like
+      // `setTimeout(() => trigger('DOMLoaded'), 0)`
+      tick();
 
       // Assert
       expect(fixture.componentInstance.isDomLoaded).toBeTruthy();
-    });
+    }));
 
     it('should emit "destroy" event', () => {
       // Arrange
@@ -145,7 +168,7 @@ describe('lottie', () => {
     });
   });
 
-  describe(LottieDirective.name, () => {
+  describe('[lottie] directive', () => {
     @Component({
       template: `
         <main
@@ -164,7 +187,7 @@ describe('lottie', () => {
         autoplay: true
       };
 
-      styles: LottieCSSStyleDeclaration = {
+      styles = {
         display: 'flex'
       };
 
@@ -189,7 +212,7 @@ describe('lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule],
+        imports: [LottieModule.forRoot({ player: () => player })],
         declarations: [MockComponent]
       });
     });
@@ -206,10 +229,13 @@ describe('lottie', () => {
       expect(svg instanceof SVGSVGElement).toBeTruthy();
     });
 
-    it('should emit necessary events', async () => {
+    it('should emit necessary events', fakeAsync(() => {
       // Arrange & act
       const fixture = createFixture(MockComponent);
-      await fixture.whenRenderingDone();
+      // `tick` is needed because Lottie triggers `DOMLoaded` event
+      // after timeout, like
+      // `setTimeout(() => trigger('DOMLoaded'), 0)`
+      tick();
 
       const { animationItem, isDomLoaded } = fixture.componentInstance;
 
@@ -220,13 +246,13 @@ describe('lottie', () => {
 
       // Assert
       expect(fixture.componentInstance.destroyEvent).toBeTruthy();
-    });
+    }));
   });
 
-  describe(LottieEventsService.name, () => {
+  describe('Events service', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule]
+        imports: [LottieModule.forRoot({ player: () => player })]
       });
     });
 
@@ -255,6 +281,55 @@ describe('lottie', () => {
       expect(animationItem).toBeFalsy();
       expect(listeners.size).toEqual(0);
     });
+  });
+
+  describe('Lazy loading', () => {
+    @Component({
+      template: `
+        <ng-lottie
+          width="500"
+          height="500"
+          [options]="options"
+          [styles]="styles"
+          (animationCreated)="animationCreated($event)"
+        ></ng-lottie>
+      `
+    })
+    class MockComponent {
+      options: LottieOptions = {
+        animationData,
+        loop: true,
+        autoplay: true
+      };
+
+      styles = {
+        display: 'flex'
+      };
+
+      isDomLoaded = false;
+
+      animationItem: AnimationItem = null!;
+
+      animationCreated(animationItem: AnimationItem): void {
+        this.animationItem = animationItem;
+      }
+    }
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [LottieModule.forRoot({ player: () => import('lottie-web') })],
+        declarations: [MockComponent]
+      });
+    });
+
+    it('should lazy load "lottie-web" library', fakeAsync(() => {
+      // Arrange & act
+      const fixture = createFixture(MockComponent);
+      tick(100);
+
+      // Assert
+      expect(fixture.componentInstance.animationItem).toBeDefined();
+    }));
   });
 });
 

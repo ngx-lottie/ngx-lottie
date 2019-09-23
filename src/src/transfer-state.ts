@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 
-import { AnimationFilename } from '../../symbols';
-import { transformAnimationFilenameToKey } from '../../utils';
+import { AnimationFilename } from './symbols';
+import { transformAnimationFilenameToKey } from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class LottieTransferState {

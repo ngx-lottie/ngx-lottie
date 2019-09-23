@@ -3,18 +3,18 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   Inject,
-  NgZone,
   ElementRef,
   ViewChild,
   Self,
-  PLATFORM_ID,
   OnChanges,
   SimpleChanges,
-  Renderer2
+  Renderer2,
+  PLATFORM_ID
 } from '@angular/core';
 
-import { BaseDirective } from '../directives/base.directive';
-import { LottieEventsService } from '../services/lottie-events.service';
+import { BaseDirective } from './base.directive';
+import { AnimationLoader } from './animation-loader';
+import { LottieEventsService } from './events.service';
 
 @Component({
   selector: 'ng-lottie',
@@ -34,12 +34,12 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 
   constructor(
-    private zone: NgZone,
     private renderer: Renderer2,
-    @Inject(PLATFORM_ID) private platformId: string,
-    @Self() private lottieEventsService: LottieEventsService
+    @Inject(PLATFORM_ID) platformId: string,
+    @Self() private lottieEventsService: LottieEventsService,
+    animationLoader: AnimationLoader
   ) {
-    super();
+    super(platformId, animationLoader);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,12 +49,6 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
   }
 
   ngOnInit(): void {
-    super.loadAnimation(
-      this.zone,
-      this.platformId,
-      this.lottieEventsService,
-      this.container.nativeElement,
-      this
-    );
+    super.loadAnimation(this.container.nativeElement, this.lottieEventsService, this);
   }
 }

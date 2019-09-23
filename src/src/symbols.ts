@@ -28,7 +28,7 @@ export interface BMSegmentStartEvent {
 }
 
 export interface BMDestroyEvent {
-  target: import('lottie-web').AnimationItem;
+  target: AnimationItem;
   type: 'destroy';
 }
 

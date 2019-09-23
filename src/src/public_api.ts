@@ -1,20 +1,17 @@
 export { LottieModule } from './lottie.module';
-export { BaseDirective } from './core/directives/base.directive';
-export { LottieDirective } from './core/directives/lottie.directive';
-export { LottieComponent } from './core/components/lottie.component';
-export { LottieTransferState } from './core/services/lottie-transfer-state';
+export { BaseDirective } from './base.directive';
+export { LottieDirective } from './lottie.directive';
+export { LottieComponent } from './lottie.component';
+export { LottieTransferState } from './transfer-state';
 export {
-  LottieOptions,
-  Lottie,
-  AnimationItem,
   BMEnterFrameEvent,
   BMCompleteLoopEvent,
   BMCompleteEvent,
   BMSegmentStartEvent,
   BMDestroyEvent,
-  LottieEvent,
-  LottieCSSStyleDeclaration,
-  LottieContainerClass,
+  BMRenderFrameErrorEvent,
+  BMConfigErrorEvent,
+  LottieOptions,
   AnimationFilename
 } from './symbols';
 export { transformAnimationFilenameToKey } from './utils';

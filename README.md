@@ -40,7 +40,7 @@
 ## Features
 - __rich:__ `ngx-lottie` provides more opportunities to work with API exposed by Lottie
 - __strict:__ all types of objects and events are available to you
-- __performant:__ the `lottie` library is loaded on demand
+- __performant:__ the `lottie-web` library can be loaded synchronously or on demand
 
 ## Quick example
 
@@ -74,25 +74,51 @@ yarn add lottie-web ngx-lottie
 
 ## Usage
 
-First, import the `LottieModule` to any of your modules:
+First, import the `LottieModule` into `AppModule`:
 
 ```typescript
 import { NgModule } from '@angular/core';
 import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+
+// Note we need a separate function as it's required
+// by the AOT compiler
+export function playerFactory() {
+  return player;
+}
 
 @NgModule({
   imports: [
-    LottieModule
+    LottieModule.forRoot({ player: playerFactory })
   ]
 })
 export class AppModule {}
 ```
 
-Now you can simple use an `ng-lottie` component and provide your custom options via the `options` binding:
+The `lottie-web` library can be loaded on demand using dynamic import. Given the following code:
+
+```ts
+import { NgModule } from '@angular/core';
+import { LottieModule } from 'ngx-lottie';
+
+export function playerFactory() {
+  return import('lottie-web');
+}
+
+@NgModule({
+  imports: [
+    LottieModule.forRoot({ player: playerFactory })
+  ]
+})
+export class AppModule {}
+```
+
+Now you can simply use the `ng-lottie` component and provide your custom options via the `options` binding:
 
 ```typescript
 import { Component } from '@angular/core';
-import { LottieOptions, AnimationItem } from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
+import { LottieOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -114,11 +140,12 @@ export class AppComponent {
 }
 ```
 
-Also it's possible to use a `lottie` directive if you'd like to provide your own custom container and play with it:
+Also it's possible to use the `lottie` directive if you'd like to provide your own custom container and control it:
 
 ```typescript
 import { Component } from '@angular/core';
-import { LottieOptions, AnimationItem } from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
+import { LottieOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -141,6 +168,8 @@ export class AppComponent {
 }
 ```
 
+Notice that you will need to import the `LottieModule` into other modules as it exports `ng-lottie` component and `lottie` directive. But `forRoot` has to be called only once!
+
 ## API
 
 ### Bindings
@@ -160,20 +189,19 @@ export class AppComponent {
 | animationCreated | `AnimationItem` | optional | Dispatched after the `lottie` successfully creates animation
 | configReady | `void` | optional | Dispatched after the needed renderer is configured
 | dataReady | `void` | optional | Dispatched when all parts of the animation have been loaded
-| dataFailed | `void` | optional | Dispatched if the `XMLHttpRequest`, that tried to load animation data using provided `path`, has errored
 | domLoaded | `void` | optional | Dispatched when elements have been added to the DOM
 | enterFrame | `BMEnterFrameEvent` | optional | Dispatched after entering the new frame
 | segmentStart | `BMSegmentStartEvent` | optional | Dispatched when the new segment is adjusted
 | loopComplete | `BMCompleteLoopEvent` | optional | Dispatched after completing frame loop
 | complete | `BMCompleteEvent` | optional | Dispatched after completing the last frame
-| loadedImages | `void` | optional | Dispatched after all assets are preloaded
 | destroy | `BMDestroyEvent` | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources
+| error | `BMRenderFrameErrorEvent | BMConfigErrorEvent` | optional | Dispatched if the lottie player could not render some frame or parse the config
 
 ## Optimizations
 
 The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
-Also, events, dispatched by `AnimationItem`, are listened outside Angular's zone, thus you shouldn't worry that every dispatch will be intercepted by Angular's zone.
+Also `AnimationItem` events are listened outside of the Angular's zone. Thus you shouldn't worry that Lottie's events will cause the `ApplicationRef` to invoke tick every ms.
 
 ## Server side rendering
 
@@ -215,7 +243,7 @@ import { AppComponent } from './app.component';
 export class AppServerModule {}
 ```
 
-Also, don't forget to import `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of `json` files, that contain animation data, that should be read on the server side, cached and transfered on the client. `folder` is a path where your `json` files are located, but you should use it properly, this path is joined with the `process.cwd()`. Imagine such project structure:
+Don't forget to import `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of `json` files, that contain animation data, that should be read on the server side, cached and transfered on the client. `folder` is a path where your `json` files are located, but you should use it properly, this path is joined with the `process.cwd()`. Imagine such project structure:
 
 ```
 — dist (here you store your output artifacts)

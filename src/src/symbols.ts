@@ -1,130 +1,6 @@
-export interface LottieOptions {
-  animationData?: any;
-  container?: HTMLElement;
-  renderer?: 'svg' | 'canvas' | 'html';
-  autoloadSegments?: boolean;
-  loop?: boolean | number;
-  autoplay?: boolean;
-  name?: string;
-  path?: string;
-  rendererSettings?: {
-    context?: CanvasRenderingContext2D;
-    scaleMode?: string;
-    viewBoxOnly?: boolean;
-    viewBoxSize?: boolean;
-    clearCanvas?: boolean;
-    progressiveLoad?: boolean;
-    hideOnTransparent?: boolean;
-    preserveAspectRatio?: string;
-    imagePreserveAspectRatio?: string;
-    className?: string;
-  };
-}
+import { InjectionToken } from '@angular/core';
 
-export interface Lottie {
-  // with 1 optional parameter name to target a specific animation
-  play(name?: string): void;
-  // with 1 optional parameter name to target a specific animation
-  stop(name?: string): void;
-  // first argument speed (1 is normal speed) - with 1 optional parameter name
-  // to target a specific animation
-  setSpeed(speed: number, name?: string): void;
-  // first argument direction (1 is normal direction.) - with 1 optional parameter name
-  // to target a specific animation
-  setDirection(direction: number, name?: string): void;
-  // default 'high', set 'high','medium','low', or a number > 1 to improve player performance.
-  // In some animations as low as 2 won't show any difference
-  setQuality(quality: 'high' | 'medium' | 'low' | number): void;
-  // returns an animation instance to control individually
-  loadAnimation(params: LottieOptions): AnimationItem;
-  // you can register an element directly with registerAnimation.
-  // It must have the "data-animation-path" attribute pointing at the data.json url
-  registerAnimation(element: any, animationData?: any): AnimationItem;
-  // looks for elements with class "lottie" or "bodymovin"
-  searchAnimations(animationData?: any, standalone?: boolean, renderer?: string): void;
-  // to destroy and release resources. The DOM element will be emptied
-  destroy(name?: string): void;
-}
-
-export interface AnimationItem {
-  animType: string;
-  animationData: any;
-  animationID: string;
-  assets: any[];
-  assetsPath: string | undefined;
-  autoloadSegments: boolean;
-  autoplay: boolean;
-  currentFrame: number;
-  currentRawFrame: number;
-  fileName: string | undefined;
-  firstFrame: number;
-  frameModifier: number;
-  frameMult: number;
-  frameRate: number;
-  isLoaded: boolean;
-  isPaused: boolean;
-  loop: boolean;
-  name: string;
-  path: string;
-  playCount: number;
-  playDirection: number;
-  playSpeed: number;
-  renderer: any | null;
-  segmentPos: number;
-  segments: any[];
-  subframeEnabled: boolean;
-  timeCompleted: number;
-  totalFrames: number;
-  wrapper: HTMLElement | HTMLCanvasElement;
-  _cbs: ((event?: LottieEvent) => void)[];
-  _completedLoop: boolean;
-  _idle: boolean;
-  play(): void;
-  stop(): void;
-  pause(): void;
-  // one param speed (1 is normal speed)
-  setSpeed(speed: number): void;
-  // if false, it will respect the original AE fps. If true, it will update as much as possible
-  // (true by default)
-  setSubframe(flag: boolean): void;
-  // first param is a numeric value. second param is a boolean
-  // that defines time or frames for first param
-  goToAndPlay(value: number, isFrame: boolean): void;
-  // first param is a numeric value. second param is a boolean
-  // that defines time or frames for first param
-  goToAndStop(value: number, isFrame: boolean): void;
-  // first param is a single array or multiple arrays of two values each(fromFrame,toFrame)
-  // second param is a boolean for forcing the new segment right away
-  playSegments(segments: number[] | number[][], forceFlag: boolean): void;
-  // to destroy and release resources
-  destroy(): void;
-  // returns duration in seconds or in frames
-  getDuration(inFrames: boolean): number;
-  // listen to the specific event dispatched by `AnimationItem`
-  addEventListener(name: LottieEventName, callback: (event: LottieEvent) => void): void;
-  // remove specific event listener
-  removeEventListener(name: LottieEventName, callback: (event: LottieEvent) => void): void;
-  // sets `display = none` on the rendered element
-  hide(): void;
-  // can be used if the animation is rendered on the canvas element
-  resize(): void;
-  // sets `display = block` on the rendered element
-  show(): void;
-  // one param direction (1 is normal direction)
-  setDirection(direction: Direction): void;
-  // configures animation using provided options
-  configAnimation(animationData: any): void;
-  getAssetsPath(assetData: any): string;
-  getAssetData(id: number): any | undefined;
-  loadSegments(): void;
-  loadNextSegment(): void;
-  preloadImages(): void;
-  togglePause(): void;
-  renderFrame(): void;
-  setCurrentRawFrameValue(value: number): void;
-}
-
-export type Direction = 1 | -1;
+export type LottieOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
 
 export interface BMEnterFrameEvent {
   currentTime: number;
@@ -156,37 +32,37 @@ export interface BMDestroyEvent {
   type: 'destroy';
 }
 
+export interface BMRenderFrameErrorEvent {
+  type: 'renderFrameError';
+  nativeError: Error;
+  currentTime: number;
+}
+
+export interface BMConfigErrorEvent {
+  type: 'configError';
+  nativeError: Error;
+}
+
 export type LottieEvent =
   | BMEnterFrameEvent
   | BMCompleteLoopEvent
   | BMCompleteEvent
   | BMSegmentStartEvent
   | BMDestroyEvent
+  | BMRenderFrameErrorEvent
+  | BMConfigErrorEvent
   | void;
 
-export type LottieEventName =
-  | 'complete'
-  | 'loopComplete'
-  | 'enterFrame'
-  | 'segmentStart'
-  | 'config_ready'
-  | 'data_ready'
-  | 'data_failed'
-  | 'loaded_images'
-  | 'DOMLoaded'
-  | 'destroy';
-
-export type MappedLottieEventName =
+export type CamelizedAnimationEventName =
   | 'complete'
   | 'loopComplete'
   | 'enterFrame'
   | 'segmentStart'
   | 'configReady'
   | 'dataReady'
-  | 'dataFailed'
-  | 'loadedImages'
   | 'domLoaded'
-  | 'destroy';
+  | 'destroy'
+  | 'error';
 
 export type LottieCSSStyleDeclaration = Partial<CSSStyleDeclaration>;
 
@@ -198,3 +74,33 @@ export type LottieContainerClass =
   | null;
 
 export type AnimationFilename = string;
+
+export type AnimationEventName = import('lottie-web').AnimationEventName;
+
+export type AnimationItem = import('lottie-web').AnimationItem;
+export type AnimationConfig = import('lottie-web').AnimationConfig;
+export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithData;
+export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPath;
+
+export type LottiePlayer = typeof import('lottie-web').default;
+
+/**
+ * This looks as follows
+ * @example
+ * import player from 'lottie-web';
+ * const factory = () => player;
+ */
+export type LottiePlayerFactory = () => typeof import('lottie-web').default;
+
+/**
+ * This looks as follows
+ * @example
+ * const factory = () => import('lottie-web');
+ */
+export type LottieLoader = () => Promise<typeof import('lottie-web')>;
+
+export type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
+
+export const LOTTIE_PLAYER_FACTORY_OR_LOADER = new InjectionToken<LottiePlayerFactoryOrLoader>(
+  'LottiePlayerOrLoader'
+);

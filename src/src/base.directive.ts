@@ -1,19 +1,21 @@
-import { Directive, Input, Output, EventEmitter, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-import { loadAnimation } from '../../internals';
-import { LottieEventsService } from '../services/lottie-events.service';
 import {
   LottieOptions,
   LottieCSSStyleDeclaration,
-  AnimationItem,
   BMCompleteEvent,
   BMCompleteLoopEvent,
   BMEnterFrameEvent,
   BMSegmentStartEvent,
   BMDestroyEvent,
-  LottieContainerClass
-} from '../../symbols';
+  LottieContainerClass,
+  BMRenderFrameErrorEvent,
+  BMConfigErrorEvent,
+  AnimationItem
+} from './symbols';
+import { AnimationLoader } from './animation-loader';
+import { LottieEventsService } from './events.service';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective {
@@ -65,19 +67,6 @@ export class BaseDirective {
   @Output() dataReady = new EventEmitter<void>();
 
   /**
-   * Original event name is `data_failed`. `data_failed` can be dispatched
-   * if the `XMLHttpRequest`, that tried to load animation data using
-   * provided `path`, has errored
-   */
-  @Output() dataFailed = new EventEmitter<void>();
-
-  /**
-   * Original event name is `loaded_images`. `loaded_images` can be
-   * dispatched after all assets are preloaded
-   */
-  @Output() loadedImages = new EventEmitter<void>();
-
-  /**
    * Original event name is `DOMLoaded`. `DOMLoaded` is dispatched
    * when elements have been added to the DOM
    */
@@ -89,19 +78,32 @@ export class BaseDirective {
    */
   @Output() destroy = new EventEmitter<BMDestroyEvent>();
 
+  /**
+   * `error` will be dispatched if the lottie player could not render
+   * some frame or parse config
+   */
+  @Output() error = new EventEmitter<BMRenderFrameErrorEvent | BMConfigErrorEvent>();
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: string,
+    private animationLoader: AnimationLoader
+  ) {}
+
   protected loadAnimation(
-    zone: NgZone,
-    platformId: string,
-    lottieEventsService: LottieEventsService,
     container: HTMLElement | HTMLCanvasElement,
+    lottieEventsService: LottieEventsService,
     instance: BaseDirective
   ): void {
-    if (isPlatformServer(platformId)) {
+    if (isPlatformServer(this.platformId)) {
       return;
     }
 
-    const animationItem = loadAnimation(zone, this.options, container);
-    lottieEventsService.animationCreated(animationItem, this.animationCreated);
-    lottieEventsService.setAnimationItemAndLottieEventListeners(animationItem, instance);
+    this.animationLoader.resolveLoaderAndLoadAnimation(
+      this.options,
+      container,
+      lottieEventsService,
+      this.animationCreated,
+      instance
+    );
   }
 }

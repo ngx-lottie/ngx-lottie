@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "ngx-lottie": [
-        "ngx-lottie"
+        "src/index"
       ]
     },
     "target": "es5",

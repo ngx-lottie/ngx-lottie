@@ -1,3 +1,10 @@
+### 4.1.0 (2019-09-24)
+
+##### New Features
+
+*  update README.md ([915d356f](https://github.com/ngx-lottie/ngx-lottie/commit/915d356ffbe11167cd1dcb7abdcfb4bba721cd14))
+*  import "lottie-web" asynchronously only once ([#23](https://github.com/ngx-lottie/ngx-lottie/pull/23)) ([e3e25d14](https://github.com/ngx-lottie/ngx-lottie/commit/e3e25d14046332c101160a578a21865a95ccd82d))
+
 ## 4.0.0 (2019-09-23)
 
 ##### New Features

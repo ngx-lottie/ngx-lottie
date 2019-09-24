@@ -18,6 +18,9 @@ import { setPlayerLocationHref } from './utils';
 import { BaseDirective } from './base.directive';
 import { LottieEventsService } from './events.service';
 
+// This has to be dynamic as `Document` interface is not
+// accepted by the ngc compiler
+// @dynamic
 @Injectable()
 export class AnimationLoader {
   private cachedLottiePlayer$: Observable<LottiePlayer> | null = null;

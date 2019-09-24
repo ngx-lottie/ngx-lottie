@@ -1,3 +1,9 @@
+#### 4.1.1 (2019-09-24)
+
+##### Bug Fixes
+
+*  set location href for Safari/iOS ([#25](https://github.com/ngx-lottie/ngx-lottie/pull/25)) ([2e8e1db5](https://github.com/ngx-lottie/ngx-lottie/commit/2e8e1db5f4c13085c0543c09cec479a4de515074))
+
 ### 4.1.0 (2019-09-24)
 
 ##### New Features

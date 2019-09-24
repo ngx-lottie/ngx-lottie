@@ -1,3 +1,9 @@
+#### 4.1.2 (2019-09-24)
+
+##### Bug Fixes
+
+*  mark class as `@dynamic` to resolve ngc issue ([#26](https://github.com/ngx-lottie/ngx-lottie/pull/26)) ([58b3d175](https://github.com/ngx-lottie/ngx-lottie/commit/58b3d17554ed73ced0d66177d80891317bb6724d))
+
 #### 4.1.1 (2019-09-24)
 
 ##### Bug Fixes

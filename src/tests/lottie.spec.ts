@@ -322,7 +322,7 @@ describe('ngx-lottie', () => {
       });
     });
 
-    it('should lazy load "lottie-web" library', fakeAsync(() => {
+    it('should lazy load the "lottie-web" library', fakeAsync(() => {
       // Arrange & act
       const fixture = createFixture(MockComponent);
       tick(100);

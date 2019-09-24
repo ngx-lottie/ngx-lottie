@@ -30,17 +30,7 @@ export class LottieEventsFacade {
    * Events that can be dispatched by `Animationitem`
    * @see https://github.com/airbnb/lottie-web#events
    */
-  private eventNames: readonly AnimationEventName[] = [
-    'complete',
-    'loopComplete',
-    'enterFrame',
-    'segmentStart',
-    'config_ready',
-    'data_ready',
-    'DOMLoaded',
-    'destroy',
-    'error'
-  ];
+  private eventNames = Object.keys(this.eventsMap) as readonly AnimationEventName[];
 
   constructor(private ngZone: NgZone) {}
 

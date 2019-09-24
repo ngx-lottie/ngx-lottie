@@ -3,13 +3,11 @@ import { isPlatformServer } from '@angular/common';
 
 import {
   LottieOptions,
-  LottieCSSStyleDeclaration,
   BMCompleteEvent,
   BMCompleteLoopEvent,
   BMEnterFrameEvent,
   BMSegmentStartEvent,
   BMDestroyEvent,
-  LottieContainerClass,
   BMRenderFrameErrorEvent,
   BMConfigErrorEvent,
   AnimationItem
@@ -21,13 +19,13 @@ import { LottieEventsService } from './events.service';
 export class BaseDirective {
   @Input() options: LottieOptions | null = null;
 
-  @Input() containerClass: LottieContainerClass = null;
+  @Input() containerClass: string | null = null;
 
-  @Input() styles: LottieCSSStyleDeclaration | null = null;
+  @Input() styles: Partial<CSSStyleDeclaration> | null = null;
 
-  @Input() width: string = null!;
+  @Input() width: string | null = null;
 
-  @Input() height: string = null!;
+  @Input() height: string | null = null;
 
   /**
    * `animationCreated` is dispatched after calling `loadAnimation`

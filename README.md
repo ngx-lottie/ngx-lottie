@@ -223,7 +223,7 @@ The `lottie` directive supports only `options` binding.
 | loopComplete | `BMCompleteLoopEvent` | optional | Dispatched after completing frame loop
 | complete | `BMCompleteEvent` | optional | Dispatched after completing the last frame
 | destroy | `BMDestroyEvent` | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources
-| error | `BMRenderFrameErrorEvent | BMConfigErrorEvent` | optional | Dispatched if the lottie player could not render some frame or parse the config
+| error | `BMRenderFrameErrorEvent OR BMConfigErrorEvent` | optional | Dispatched if the lottie player could not render some frame or parse the config
 
 ## Optimizations
 

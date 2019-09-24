@@ -64,15 +64,6 @@ export type CamelizedAnimationEventName =
   | 'destroy'
   | 'error';
 
-export type LottieCSSStyleDeclaration = Partial<CSSStyleDeclaration>;
-
-export type LottieContainerClass =
-  | string
-  | string[]
-  | Set<string>
-  | { [klass: string]: any }
-  | null;
-
 export type AnimationFilename = string;
 
 export type AnimationEventName = import('lottie-web').AnimationEventName;
@@ -102,5 +93,5 @@ export type LottieLoader = () => Promise<typeof import('lottie-web')>;
 export type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
 
 export const LOTTIE_PLAYER_FACTORY_OR_LOADER = new InjectionToken<LottiePlayerFactoryOrLoader>(
-  'LottiePlayerOrLoader'
+  'LottiePlayerFactoryOrLoader'
 );

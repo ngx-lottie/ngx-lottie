@@ -43,9 +43,14 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.containerClass !== undefined) {
-      this.renderer.addClass(this.container.nativeElement, changes.containerClass.currentValue);
+    if (
+      changes.containerClass === undefined ||
+      typeof changes.containerClass.currentValue !== 'string'
+    ) {
+      return;
     }
+
+    this.renderer.addClass(this.container.nativeElement, changes.containerClass.currentValue);
   }
 
   ngOnInit(): void {

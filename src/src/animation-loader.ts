@@ -2,7 +2,7 @@ import { Injectable, NgZone, Inject, EventEmitter, PLATFORM_ID } from '@angular/
 import { isPlatformServer } from '@angular/common';
 
 import { from, of, Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, shareReplay } from 'rxjs/operators';
 
 import {
   LottiePlayer,
@@ -19,6 +19,8 @@ import { LottieEventsService } from './events.service';
 
 @Injectable()
 export class AnimationLoader {
+  private cachedLottiePlayer$: Observable<LottiePlayer> | null = null;
+
   constructor(
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
@@ -72,10 +74,14 @@ export class AnimationLoader {
   }
 
   private wrapPlayerOrLoaderIntoObservable(): Observable<LottiePlayer> {
+    if (this.cachedLottiePlayer$ !== null) {
+      return this.cachedLottiePlayer$;
+    }
+
     const playerOrLoader = this.playerFactoryOrLoader();
 
     if (playerOrLoader instanceof Promise) {
-      return from(playerOrLoader).pipe(
+      this.cachedLottiePlayer$ = from(playerOrLoader).pipe(
         map(module => module.default || module),
         catchError(error => {
           console.error(`
@@ -87,10 +93,13 @@ export class AnimationLoader {
             LottieModule.forRoot({ player: playerFactory })
           `);
           return throwError(error);
-        })
+        }),
+        shareReplay(1)
       );
+    } else {
+      this.cachedLottiePlayer$ = of(playerOrLoader);
     }
 
-    return of(playerOrLoader);
+    return this.cachedLottiePlayer$;
   }
 }

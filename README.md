@@ -49,6 +49,7 @@
   width="600"
   height="500"
   containerClass="moving-box"
+  [styles]="styles"
   [options]="options"
   (animationCreated)="animationCreated($event)"
   (configReady)="configReady()"
@@ -59,6 +60,7 @@
   (complete)="complete($event)"
   (loopComplete)="loopComplete($event)"
   (destroy)="destroy($event)"
+  (error)="error($event)"
 ></ng-lottie>
 ```
 
@@ -174,13 +176,39 @@ Notice that you will need to import the `LottieModule` into other modules as it 
 
 ### Bindings
 
-| @Input() | Type | Required | Default | Description
-| --- | --- | --- | --- | --- |
-| options | `LottieOptions` | required | `{}` | Configuration that's used by `AnimationItem`
-| width | `string` | optional | `null` | Custom container width
-| height | `string` | optional | `null` | Custom container height
-| styles | `LottieCSSStyleDeclaration` | optional | `null` | Custom container styles
-| containerClass | `LottieContainerClass` | optional | `null` | Custom class applied to the container
+The `ng-lottie` component supports the following bindings:
+
+```ts
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie
+      width="500"
+      height="600"
+      containerClass="moving-box"
+      [styles]="styles"
+      [options]="options"
+    ></ng-lottie>
+  `
+})
+export class AppComponent {
+  options: LottieOptions = {
+    path: '/assets/animation.json'
+  };
+
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '500px'
+  };
+}
+```
+
+* `options: LottieOptions` options used by `AnimationItem`
+* `width?: string` container element width in pixels. Bound to `[style.width.px]`
+* `height?: string` container element height in pixels. Bound to `[style.height.px]`
+* `styles?: Partial<CSSStyleDeclaration>` custom styles object. Bound to `[ngStyle]`
+* `containerClass?: string` custom container class. Bound to element
+
+The `lottie` directive supports only `options` binding.
 
 ### Events
 

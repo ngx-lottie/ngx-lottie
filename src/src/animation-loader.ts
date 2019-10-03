@@ -7,16 +7,15 @@ import { map, catchError, shareReplay } from 'rxjs/operators';
 import {
   LottiePlayer,
   LottieOptions,
-  AnimationConfig,
   AnimationItem,
   AnimationConfigWithData,
   AnimationConfigWithPath,
   LottiePlayerFactoryOrLoader,
   LOTTIE_PLAYER_FACTORY_OR_LOADER
 } from './symbols';
-import { setPlayerLocationHref } from './utils';
 import { BaseDirective } from './base.directive';
-import { LottieEventsService } from './events.service';
+import { LottieEventsFacade } from './events-facade';
+import { setPlayerLocationHref, resolveOptions } from './utils';
 
 // This has to be dynamic as `Document` interface is not
 // accepted by the ngc compiler
@@ -36,7 +35,7 @@ export class AnimationLoader {
   resolveLoaderAndLoadAnimation(
     options: LottieOptions | null,
     container: HTMLElement,
-    lottieEventsService: LottieEventsService,
+    eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective
   ) {
@@ -44,31 +43,17 @@ export class AnimationLoader {
       return;
     }
 
-    const resolvedOptions = this.resolveOptions(options, container);
+    const resolvedOptions = resolveOptions(options, container);
 
     this.wrapPlayerOrLoaderIntoObservable().subscribe(player => {
-      this.loadAnimation(player, resolvedOptions, lottieEventsService, animationCreated, instance);
+      this.loadAnimation(player, resolvedOptions, eventsFacade, animationCreated, instance);
     });
-  }
-
-  private resolveOptions(
-    options: LottieOptions | null,
-    container: HTMLElement
-  ): AnimationConfigWithData | AnimationConfigWithPath {
-    const defaultOptions: AnimationConfig = {
-      container,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true
-    };
-
-    return Object.assign(defaultOptions, options);
   }
 
   private loadAnimation(
     player: LottiePlayer,
     options: AnimationConfigWithData | AnimationConfigWithPath,
-    lottieEventsService: LottieEventsService,
+    eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective
   ): void {
@@ -76,7 +61,7 @@ export class AnimationLoader {
     const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
     // Dispatch `animationCreated` event after animation is loaded successfully
     animationCreated.emit(animationItem);
-    lottieEventsService.bootstrapEventsService(instance, animationItem);
+    eventsFacade.addEventListeners(instance, animationItem);
   }
 
   private wrapPlayerOrLoaderIntoObservable(): Observable<LottiePlayer> {

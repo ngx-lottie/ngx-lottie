@@ -2,7 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BaseDirective } from './base.directive';
-import { LottieEventsFacade } from './events-facade';
 import { AnimationLoader } from './animation-loader';
 import { LottieDirective } from './lottie.directive';
 import { LottieComponent } from './lottie.component';
@@ -21,7 +20,6 @@ export class LottieModule {
       ngModule: LottieModule,
       providers: [
         AnimationLoader,
-        LottieEventsFacade,
         {
           provide: LOTTIE_PLAYER_FACTORY_OR_LOADER,
           useValue: options.player

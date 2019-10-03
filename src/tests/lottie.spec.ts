@@ -41,16 +41,19 @@ HTMLCanvasElement.prototype.getContext = () => ({
   clip: jest.fn()
 });
 
-// Use `require` as `jest` uses CommonJS
-const player = require('lottie-web');
+import * as lottie from 'lottie-web';
 
-import { LottieEventsService } from '../src/events.service';
+import { LottieEventsFacade } from '../src/events-facade';
 import { LottieOptions, AnimationItem } from '../src/symbols';
 import { LottieModule, LottieComponent, BMDestroyEvent } from '../';
 
 import animationData = require('./data.json');
 
 describe('ngx-lottie', () => {
+  function playerFactory() {
+    return (lottie as unknown) as typeof import('lottie-web').default;
+  }
+
   describe('ng-lottie component', () => {
     @Component({
       template: `
@@ -97,7 +100,7 @@ describe('ngx-lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: () => player })],
+        imports: [LottieModule.forRoot({ player: playerFactory })],
         declarations: [MockComponent]
       });
     });
@@ -212,7 +215,7 @@ describe('ngx-lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: () => player })],
+        imports: [LottieModule.forRoot({ player: playerFactory })],
         declarations: [MockComponent]
       });
     });
@@ -249,19 +252,19 @@ describe('ngx-lottie', () => {
     }));
   });
 
-  describe('Events service', () => {
+  describe('Events facade', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: () => player })]
+        imports: [LottieModule.forRoot({ player: playerFactory })]
       });
     });
 
     it('should listen to events exposed by lottie', () => {
       // Arrange & act
       const fixture = createFixture(LottieComponent);
-      const service = fixture.debugElement.injector.get(LottieEventsService);
-      const listeners = service['listeners'];
-      const animationItem = service['animationItem'];
+      const facade = fixture.debugElement.injector.get(LottieEventsFacade);
+      const listeners = facade['listeners'];
+      const animationItem = facade['animationItem'];
 
       // Assert
       expect(animationItem).toBeTruthy();
@@ -273,9 +276,9 @@ describe('ngx-lottie', () => {
       const fixture = createFixture(LottieComponent);
       fixture.destroy();
 
-      const service = fixture.debugElement.injector.get(LottieEventsService);
-      const listeners = service['listeners'];
-      const animationItem = service['animationItem'];
+      const facade = fixture.debugElement.injector.get(LottieEventsFacade);
+      const listeners = facade['listeners'];
+      const animationItem = facade['animationItem'];
 
       // Assert
       expect(animationItem).toBeFalsy();

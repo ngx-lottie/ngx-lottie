@@ -13,7 +13,7 @@ import {
   AnimationItem
 } from './symbols';
 import { AnimationLoader } from './animation-loader';
-import { LottieEventsService } from './events.service';
+import { LottieEventsFacade } from './events-facade';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective {
@@ -89,7 +89,7 @@ export class BaseDirective {
 
   protected loadAnimation(
     container: HTMLElement | HTMLCanvasElement,
-    lottieEventsService: LottieEventsService,
+    eventsFacade: LottieEventsFacade,
     instance: BaseDirective
   ): void {
     if (isPlatformServer(this.platformId)) {
@@ -99,7 +99,7 @@ export class BaseDirective {
     this.animationLoader.resolveLoaderAndLoadAnimation(
       this.options,
       container,
-      lottieEventsService,
+      eventsFacade,
       this.animationCreated,
       instance
     );

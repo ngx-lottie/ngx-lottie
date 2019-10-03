@@ -14,7 +14,7 @@ import {
 
 import { BaseDirective } from './base.directive';
 import { AnimationLoader } from './animation-loader';
-import { LottieEventsService } from './events.service';
+import { LottieEventsFacade } from './events-facade';
 
 @Component({
   selector: 'ng-lottie',
@@ -28,7 +28,7 @@ import { LottieEventsService } from './events.service';
     ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [LottieEventsService]
+  providers: [LottieEventsFacade]
 })
 export class LottieComponent extends BaseDirective implements OnChanges, OnInit {
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
@@ -36,24 +36,23 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
   constructor(
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) platformId: string,
-    @Self() private lottieEventsService: LottieEventsService,
+    @Self() private eventsFacade: LottieEventsFacade,
     animationLoader: AnimationLoader
   ) {
     super(platformId, animationLoader);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes.containerClass === undefined ||
-      typeof changes.containerClass.currentValue !== 'string'
-    ) {
+    const containerClass = changes.containerClass;
+
+    if (containerClass === undefined || typeof containerClass.currentValue !== 'string') {
       return;
     }
 
-    this.renderer.addClass(this.container.nativeElement, changes.containerClass.currentValue);
+    this.renderer.addClass(this.container.nativeElement, containerClass.currentValue);
   }
 
   ngOnInit(): void {
-    super.loadAnimation(this.container.nativeElement, this.lottieEventsService, this);
+    super.loadAnimation(this.container.nativeElement, this.eventsFacade, this);
   }
 }

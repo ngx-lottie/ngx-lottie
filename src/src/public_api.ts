@@ -11,7 +11,7 @@ export {
   BMDestroyEvent,
   BMRenderFrameErrorEvent,
   BMConfigErrorEvent,
-  LottieOptions,
+  AnimationOptions,
   AnimationFilename
 } from './symbols';
 export { transformAnimationFilenameToKey } from './utils';

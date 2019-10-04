@@ -1,10 +1,9 @@
 import {
   AnimationFilename,
   LottiePlayer,
-  LottieOptions,
+  AnimationOptions,
   AnimationConfigWithData,
-  AnimationConfigWithPath,
-  AnimationConfig
+  AnimationConfigWithPath
 } from './symbols';
 
 export function transformAnimationFilenameToKey(animation: AnimationFilename): string {
@@ -20,10 +19,10 @@ export function setPlayerLocationHref(player: LottiePlayer, href: string, isSafa
 }
 
 export function resolveOptions(
-  options: LottieOptions | null,
+  options: AnimationOptions | null,
   container: HTMLElement
 ): AnimationConfigWithData | AnimationConfigWithPath {
-  const defaultOptions: AnimationConfig = {
+  const defaultOptions = {
     container,
     renderer: 'svg',
     loop: true,

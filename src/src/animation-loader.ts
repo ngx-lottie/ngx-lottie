@@ -6,8 +6,8 @@ import { map, catchError, shareReplay } from 'rxjs/operators';
 
 import {
   LottiePlayer,
-  LottieOptions,
   AnimationItem,
+  AnimationOptions,
   AnimationConfigWithData,
   AnimationConfigWithPath,
   LottiePlayerFactoryOrLoader,
@@ -35,7 +35,7 @@ export class AnimationLoader {
   ) {}
 
   resolveLoaderAndLoadAnimation(
-    options: LottieOptions | null,
+    options: AnimationOptions | null,
     container: HTMLElement,
     eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,

@@ -120,7 +120,7 @@ Now you can simply use the `ng-lottie` component and provide your custom options
 ```typescript
 import { Component } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { LottieOptions } from 'ngx-lottie';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -132,7 +132,7 @@ import { LottieOptions } from 'ngx-lottie';
   `
 })
 export class AppComponent {
-  options: LottieOptions = {
+  options: AnimationOptions = {
     path: '/assets/animation.json'
   };
 
@@ -147,7 +147,7 @@ Also it's possible to use the `lottie` directive if you'd like to provide your o
 ```typescript
 import { Component } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { LottieOptions } from 'ngx-lottie';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -160,7 +160,7 @@ import { LottieOptions } from 'ngx-lottie';
   `
 })
 export class AppComponent {
-  options: LottieOptions = {
+  options: AnimationOptions = {
     path: '/assets/animation.json'
   };
 
@@ -192,7 +192,7 @@ The `ng-lottie` component supports the following bindings:
   `
 })
 export class AppComponent {
-  options: LottieOptions = {
+  options: AnimationOptions = {
     path: '/assets/animation.json'
   };
 
@@ -202,7 +202,7 @@ export class AppComponent {
 }
 ```
 
-* `options: LottieOptions` options used by `AnimationItem`
+* `options: AnimationOptions` options used by `AnimationItem`
 * `width?: string` container element width in pixels. Bound to `[style.width.px]`
 * `height?: string` container element height in pixels. Bound to `[style.height.px]`
 * `styles?: Partial<CSSStyleDeclaration>` custom styles object. Bound to `[ngStyle]`
@@ -295,7 +295,7 @@ Inject this service into your component where you declare animation options:
 
 ```typescript
 import { Component } from '@angular/core';
-import { LottieOptions, LottieTransferState } from 'ngx-lottie';
+import { AnimationOptions, LottieTransferState } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -304,7 +304,7 @@ import { LottieOptions, LottieTransferState } from 'ngx-lottie';
   `
 })
 export class AppComponent {
-  options: LottieOptions = {
+  options: AnimationOptions = {
     animationData: this.lottieTransferState.get('data.json')
   };
 

@@ -1,7 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-export type LottieOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
-
 export interface BMEnterFrameEvent {
   currentTime: number;
   duration: number;
@@ -69,7 +67,6 @@ export type AnimationFilename = string;
 export type AnimationEventName = import('lottie-web').AnimationEventName;
 
 export type AnimationItem = import('lottie-web').AnimationItem;
-export type AnimationConfig = import('lottie-web').AnimationConfig;
 export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithData;
 export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPath;
 
@@ -97,3 +94,5 @@ export const LOTTIE_PLAYER_FACTORY_OR_LOADER = new InjectionToken<LottiePlayerFa
 );
 
 export const IS_SAFARI = new InjectionToken<boolean>('IsSafari');
+
+export type AnimationOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;

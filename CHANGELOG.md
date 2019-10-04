@@ -1,3 +1,9 @@
+## 5.0.0 (2019-10-04)
+
+##### Other Changes
+
+*  rename `LottieOptions` -> `AnimationOptions` ([#29](https://github.com/ngx-lottie/ngx-lottie/pull/29)) ([c6876fe2](https://github.com/ngx-lottie/ngx-lottie/commit/c6876fe28f736fa419dc5376fa095d3cc7d56a2f))
+
 #### 4.1.3 (2019-10-04)
 
 ##### Chores

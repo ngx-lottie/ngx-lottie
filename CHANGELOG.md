@@ -1,3 +1,13 @@
+#### 4.1.3 (2019-10-04)
+
+##### Chores
+
+*  replace service with facade ([#27](https://github.com/ngx-lottie/ngx-lottie/pull/27)) ([6714174c](https://github.com/ngx-lottie/ngx-lottie/commit/6714174cf8695428abcb52811a94e74bfeac5e50))
+
+##### Bug Fixes
+
+*  set location href only on the Safari ([#28](https://github.com/ngx-lottie/ngx-lottie/pull/28)) ([e4f9e466](https://github.com/ngx-lottie/ngx-lottie/commit/e4f9e466b1724b902f53828c0ef1b8f3f18a09df))
+
 #### 4.1.2 (2019-09-24)
 
 ##### Bug Fixes

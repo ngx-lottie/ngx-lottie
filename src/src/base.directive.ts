@@ -2,7 +2,7 @@ import { Directive, Input, Output, EventEmitter, Inject, PLATFORM_ID } from '@an
 import { isPlatformServer } from '@angular/common';
 
 import {
-  LottieOptions,
+  AnimationOptions,
   BMCompleteEvent,
   BMCompleteLoopEvent,
   BMEnterFrameEvent,
@@ -17,7 +17,7 @@ import { LottieEventsFacade } from './events-facade';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective {
-  @Input() options: LottieOptions | null = null;
+  @Input() options: AnimationOptions | null = null;
 
   @Input() containerClass: string | null = null;
 

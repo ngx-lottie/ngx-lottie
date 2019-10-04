@@ -44,7 +44,7 @@ HTMLCanvasElement.prototype.getContext = () => ({
 import * as lottie from 'lottie-web';
 
 import { LottieEventsFacade } from '../src/events-facade';
-import { LottieOptions, AnimationItem } from '../src/symbols';
+import { AnimationOptions, AnimationItem } from '../src/symbols';
 import { LottieModule, LottieComponent, BMDestroyEvent } from '../';
 
 import animationData = require('./data.json');
@@ -69,7 +69,7 @@ describe('ngx-lottie', () => {
       `
     })
     class MockComponent {
-      options: LottieOptions = {
+      options: AnimationOptions = {
         animationData,
         loop: true,
         autoplay: true
@@ -184,7 +184,7 @@ describe('ngx-lottie', () => {
       `
     })
     class MockComponent {
-      options: LottieOptions = {
+      options: AnimationOptions = {
         animationData,
         loop: true,
         autoplay: true
@@ -299,7 +299,7 @@ describe('ngx-lottie', () => {
       `
     })
     class MockComponent {
-      options: LottieOptions = {
+      options: AnimationOptions = {
         animationData,
         loop: true,
         autoplay: true

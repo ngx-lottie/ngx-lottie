@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { LottieOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
+import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { LottieOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  options!: LottieOptions;
+  options!: AnimationOptions;
 
   shown = true;
 

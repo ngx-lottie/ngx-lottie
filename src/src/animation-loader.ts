@@ -11,7 +11,8 @@ import {
   AnimationConfigWithData,
   AnimationConfigWithPath,
   LottiePlayerFactoryOrLoader,
-  LOTTIE_PLAYER_FACTORY_OR_LOADER
+  LOTTIE_PLAYER_FACTORY_OR_LOADER,
+  IS_SAFARI
 } from './symbols';
 import { BaseDirective } from './base.directive';
 import { LottieEventsFacade } from './events-facade';
@@ -28,6 +29,7 @@ export class AnimationLoader {
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
     @Inject(DOCUMENT) private document: Document,
+    @Inject(IS_SAFARI) private isSafari: boolean,
     @Inject(LOTTIE_PLAYER_FACTORY_OR_LOADER)
     private playerFactoryOrLoader: LottiePlayerFactoryOrLoader
   ) {}
@@ -57,7 +59,7 @@ export class AnimationLoader {
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective
   ): void {
-    setPlayerLocationHref(player, this.document.location.href);
+    setPlayerLocationHref(player, this.document.location.href, this.isSafari);
     const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
     // Dispatch `animationCreated` event after animation is loaded successfully
     animationCreated.emit(animationItem);

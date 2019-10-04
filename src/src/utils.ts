@@ -11,10 +11,12 @@ export function transformAnimationFilenameToKey(animation: AnimationFilename): s
   return `animation-${animation.split('.json')[0]}`;
 }
 
-export function setPlayerLocationHref(player: LottiePlayer, href: string): void {
+export function setPlayerLocationHref(player: LottiePlayer, href: string, isSafari: boolean): void {
   // This is a fix for the mask on Safari/iOS
   // https://github.com/airbnb/lottie-web/issues/1198
-  ((player as unknown) as { setLocationHref: (href: string) => void }).setLocationHref(href);
+  if (isSafari) {
+    ((player as unknown) as { setLocationHref: (href: string) => void }).setLocationHref(href);
+  }
 }
 
 export function resolveOptions(

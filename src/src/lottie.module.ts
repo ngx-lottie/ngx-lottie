@@ -5,7 +5,22 @@ import { BaseDirective } from './base.directive';
 import { AnimationLoader } from './animation-loader';
 import { LottieDirective } from './lottie.directive';
 import { LottieComponent } from './lottie.component';
-import { LottiePlayerFactoryOrLoader, LOTTIE_PLAYER_FACTORY_OR_LOADER } from './symbols';
+import { LottiePlayerFactoryOrLoader, LOTTIE_PLAYER_FACTORY_OR_LOADER, IS_SAFARI } from './symbols';
+
+export function isSafariFactory(): boolean {
+  // This `try-catch` block will also handle server-side rendering
+  // as `navigator` is not accessable there
+  try {
+    const { vendor, userAgent } = navigator;
+    return (
+      vendor.indexOf('Apple') > -1 &&
+      userAgent.indexOf('CriOS') === -1 &&
+      userAgent.indexOf('FxiOS') === -1
+    );
+  } catch {
+    return false;
+  }
+}
 
 @NgModule({
   imports: [CommonModule],
@@ -23,6 +38,10 @@ export class LottieModule {
         {
           provide: LOTTIE_PLAYER_FACTORY_OR_LOADER,
           useValue: options.player
+        },
+        {
+          provide: IS_SAFARI,
+          useFactory: isSafariFactory
         }
       ]
     };

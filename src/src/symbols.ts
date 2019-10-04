@@ -95,3 +95,5 @@ export type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
 export const LOTTIE_PLAYER_FACTORY_OR_LOADER = new InjectionToken<LottiePlayerFactoryOrLoader>(
   'LottiePlayerFactoryOrLoader'
 );
+
+export const IS_SAFARI = new InjectionToken<boolean>('IsSafari');

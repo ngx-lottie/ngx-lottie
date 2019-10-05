@@ -3,5 +3,8 @@
   "video": false,
   "responseTimeout": 60000,
   "pageLoadTimeout": 120000,
-  "ignoreTestFiles": ["**/plugins/**.js", "**/tsconfig.json"]
+  "ignoreTestFiles": [
+    "**/plugins/**.js",
+    "**/tsconfig.json"
+  ]
 }

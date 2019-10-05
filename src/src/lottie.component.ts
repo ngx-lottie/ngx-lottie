@@ -19,13 +19,7 @@ import { LottieEventsFacade } from './events-facade';
 @Component({
   selector: 'ng-lottie',
   template: `
-    <div
-      #container
-      [style.width.px]="width"
-      [style.height.px]="height"
-      style="margin: 0 auto"
-      [ngStyle]="styles"
-    ></div>
+    <div #container [style.width]="width" [style.height]="height" [ngStyle]="styles"></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LottieEventsFacade]
@@ -53,6 +47,7 @@ export class LottieComponent extends BaseDirective implements OnChanges, OnInit 
   }
 
   ngOnInit(): void {
+    super.setWidthAndHeight();
     super.loadAnimation(this.container.nativeElement, this.eventsFacade, this);
   }
 }

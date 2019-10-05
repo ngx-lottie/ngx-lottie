@@ -34,4 +34,21 @@ describe('Server side rendering', () => {
         expect(keys.length).to.equal(11);
       });
   });
+
+  it('should destroy animation', () => {
+    // Arrange & act & assert
+    cy.get('button.destroy')
+      .click()
+      .get('ng-lottie')
+      .should('not.exist');
+  });
+
+  it('should contain styles on the container div', () => {
+    // Arrange & act & assert
+    cy.get('.moving-box').should(
+      'have.attr',
+      'style',
+      'margin: 0px auto; width: 600px; height: 500px;'
+    );
+  });
 });

@@ -44,10 +44,11 @@ export class LottieEventsFacade implements OnDestroy {
 
   addEventListeners(instance: BaseDirective, animationItem: AnimationItem): void {
     this.animationItem = animationItem;
-
-    for (const name of this.eventNames) {
-      this.addEventListener(instance, name);
-    }
+    // `AnimationItem` triggers different events every ms, we have to listen
+    // them outside Angular's context, thus it won't affect performance
+    this.ngZone.runOutsideAngular(() => {
+      this.eventNames.forEach(name => this.addEventListener(instance, name));
+    });
   }
 
   private dispose(): void {
@@ -60,23 +61,12 @@ export class LottieEventsFacade implements OnDestroy {
     this.animationItem = null;
   }
 
-  private addEventListener(
-    instance: BaseDirective,
-    name: AnimationEventName
-  ): (event: LottieEvent) => void {
+  private addEventListener(instance: BaseDirective, name: AnimationEventName): void {
     const camelizedName = this.eventsMap[name];
 
-    function listenerFn(event: LottieEvent) {
+    this.animationItem!.addEventListener(name, (event: LottieEvent) => {
       const emitter = retrieveEventEmitter(instance, camelizedName);
       emitter.emit(event);
-    }
-
-    // `AnimationItem` triggers different events every ms, we have to listen
-    // them outside Angular's context, thus it won't affect performance
-    this.ngZone.runOutsideAngular(() => {
-      this.animationItem!.addEventListener(name, listenerFn);
     });
-
-    return listenerFn;
   }
 }

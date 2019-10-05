@@ -47,8 +47,8 @@
 
 ```html
 <ng-lottie
-  width="600"
-  height="500"
+  width="600px"
+  height="500px"
   containerClass="moving-box"
   [styles]="styles"
   [options]="options"
@@ -209,8 +209,8 @@ The `ng-lottie` component supports the following bindings:
   selector: 'app-root',
   template: `
     <ng-lottie
-      width="500"
-      height="600"
+      width="500px"
+      height="600px"
       containerClass="moving-box"
       [styles]="styles"
       [options]="options"
@@ -223,14 +223,15 @@ export class AppComponent {
   };
 
   styles: Partial<CSSStyleDeclaration> = {
-    maxWidth: '500px'
+    maxWidth: '500px',
+    margin: '0 auto'
   };
 }
 ```
 
 * `options: AnimationOptions` options used by `AnimationItem`
-* `width?: string` container element width in pixels. Bound to `[style.width.px]`
-* `height?: string` container element height in pixels. Bound to `[style.height.px]`
+* `width?: string` container element width in pixels. Bound to `[style.width]`. You can provide any CSS unit, e.g. `100em`
+* `height?: string` container element height in pixels. Bound to `[style.height]`. You can provide any CSS unit, e.g. `100em`
 * `styles?: Partial<CSSStyleDeclaration>` custom styles object. Bound to `[ngStyle]`
 * `containerClass?: string` custom container class. Bound to element
 

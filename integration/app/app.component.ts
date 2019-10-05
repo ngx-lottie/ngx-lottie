@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
 
@@ -8,15 +8,24 @@ import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lotti
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   options!: AnimationOptions;
 
   shown = true;
+
+  styles: Partial<CSSStyleDeclaration> = {
+    margin: '0 auto'
+  };
 
   private animationItem: AnimationItem | null = null;
 
   constructor(private lottieTransferState: LottieTransferState) {
     this.createOptions();
+  }
+
+  ngAfterViewChecked(): void {
+    // Notice that it's not logged every ms
+    console.log('ngAfterViewChecked');
   }
 
   animationCreated(animationItem: AnimationItem): void {

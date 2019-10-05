@@ -9,9 +9,9 @@
 <br/>
 
 <div align="center">
-  <!-- Travis -->
-  <a href="https://travis-ci.com/ngx-lottie/ngx-lottie">
-    <img src="https://travis-ci.com/ngx-lottie/ngx-lottie.svg?branch=master" alt="Build status">
+  <!-- CircleCI -->
+  <a href="https://circleci.com/gh/ngx-lottie/ngx-lottie/tree/master">
+    <img src="https://circleci.com/gh/ngx-lottie/ngx-lottie/tree/master.svg?style=svg" alt="CircleCI">
   </a>
 
   <!-- License -->

@@ -51,6 +51,31 @@ jobs:
           command: yarn build
       - *persist_workspace
 
+  lint:
+    <<: *job_defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run static linter
+          command: yarn lint
+
+  unit_tests:
+    <<: *job_defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run unit tests
+          command: yarn test:ci
+
+  integration_tests_ssr:
+    <<: *job_defaults
+    steps:
+      - *attach_workspace
+      - *restore_cache
+      - run:
+          name: Run SSR tests
+          command: yarn test:ci:integration:ssr
+
 workflows:
   version: 2
   build-workflow:
@@ -59,3 +84,15 @@ workflows:
           filters:
             tags:
               only: /.*/
+
+      - lint:
+          requires:
+            - build
+
+      - unit_tests:
+          requires:
+            - build
+
+      - integration_tests_ssr:
+          requires:
+            - build

@@ -6,11 +6,11 @@ import { transformAnimationFilenameToKey } from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class LottieTransferState {
-  constructor(private state: TransferState) {}
+  constructor(private transferState: TransferState) {}
 
   get<T>(animation: AnimationFilename): T | null {
     const animationKey = transformAnimationFilenameToKey(animation);
-    const key = makeStateKey<T>(animationKey);
-    return this.state.get(key, null);
+    const stateKey = makeStateKey<T>(animationKey);
+    return this.transferState.get(stateKey, null);
   }
 }

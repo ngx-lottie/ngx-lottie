@@ -33,6 +33,7 @@
 - [Quick example](#quick-example)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Caching](#caching)
 - [API](#api)
 - [Optimizations](#optimizations)
 - [Server side rendering](#server-side-rendering)
@@ -171,6 +172,31 @@ export class AppComponent {
 ```
 
 Notice that you will need to import the `LottieModule` into other modules as it exports `ng-lottie` component and `lottie` directive. But `forRoot` has to be called only once!
+
+## Caching
+
+`lottie-web` will load your JSON file every time when animation is being created. When importing `LottieModule` into the root module you can provide the `useCache` option:
+
+```ts
+import { NgModule } from '@angular/core';
+import { LottieModule } from 'ngx-lottie';
+
+export function playerFactory() {
+  return import('lottie-web');
+}
+
+@NgModule({
+  imports: [
+    LottieModule.forRoot({
+      player: playerFactory,
+      useCache: true
+    })
+  ]
+})
+export class AppModule {}
+```
+
+This will enable cache under the hood. Since the cache is enabled your JSON file will be loaded only once.
 
 ## API
 

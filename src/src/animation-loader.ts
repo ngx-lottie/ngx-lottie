@@ -6,17 +6,19 @@ import { map, catchError, shareReplay } from 'rxjs/operators';
 
 import {
   LottiePlayer,
+  LottieOptions,
   AnimationItem,
   AnimationOptions,
   AnimationConfigWithData,
   AnimationConfigWithPath,
-  LottiePlayerFactoryOrLoader,
-  LOTTIE_PLAYER_FACTORY_OR_LOADER,
-  IS_SAFARI
+  IS_SAFARI,
+  LOTTIE_OPTIONS,
+  ANIMATION_CACHE
 } from './symbols';
 import { BaseDirective } from './base.directive';
+import { AnimationCache } from './animation-cache';
 import { LottieEventsFacade } from './events-facade';
-import { setPlayerLocationHref, resolveOptions } from './utils';
+import { setPlayerLocationHref, mergeOptionsWithDefault, awaitConfigAndCache } from './utils';
 
 // This has to be dynamic as `Document` interface is not
 // accepted by the ngc compiler
@@ -30,8 +32,8 @@ export class AnimationLoader {
     @Inject(PLATFORM_ID) private platformId: string,
     @Inject(DOCUMENT) private document: Document,
     @Inject(IS_SAFARI) private isSafari: boolean,
-    @Inject(LOTTIE_PLAYER_FACTORY_OR_LOADER)
-    private playerFactoryOrLoader: LottiePlayerFactoryOrLoader
+    @Inject(LOTTIE_OPTIONS) private options: LottieOptions,
+    @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null
   ) {}
 
   resolveLoaderAndLoadAnimation(
@@ -45,10 +47,10 @@ export class AnimationLoader {
       return;
     }
 
-    const resolvedOptions = resolveOptions(options, container);
+    const mergedOptions = mergeOptionsWithDefault(options, container, this.animationCache);
 
     this.wrapPlayerOrLoaderIntoObservable().subscribe(player => {
-      this.loadAnimation(player, resolvedOptions, eventsFacade, animationCreated, instance);
+      this.loadAnimation(player, mergedOptions, eventsFacade, animationCreated, instance);
     });
   }
 
@@ -61,6 +63,7 @@ export class AnimationLoader {
   ): void {
     setPlayerLocationHref(player, this.document.location.href, this.isSafari);
     const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
+    awaitConfigAndCache(this.animationCache, options, animationItem);
     // Dispatch `animationCreated` event after animation is loaded successfully
     animationCreated.emit(animationItem);
     eventsFacade.addEventListeners(instance, animationItem);
@@ -71,7 +74,7 @@ export class AnimationLoader {
       return this.cachedLottiePlayer$;
     }
 
-    const playerOrLoader = this.playerFactoryOrLoader();
+    const playerOrLoader = this.options.player();
 
     if (playerOrLoader instanceof Promise) {
       this.cachedLottiePlayer$ = from(playerOrLoader).pipe(

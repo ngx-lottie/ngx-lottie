@@ -1,3 +1,9 @@
+### 5.2.0 (2019-10-05)
+
+##### New Features
+
+*  support any CSS unit on the width/height ([#33](https://github.com/ngx-lottie/ngx-lottie/pull/33)) ([56696ab2](https://github.com/ngx-lottie/ngx-lottie/commit/56696ab2c95caebe20fa8d7b5a5e721fad792201))
+
 #### 5.1.1 (2019-10-05)
 
 ##### Build System / Dependencies

@@ -1,3 +1,10 @@
+#### 5.1.1 (2019-10-05)
+
+##### Build System / Dependencies
+
+*  remove travis and enhance circle config ([#32](https://github.com/ngx-lottie/ngx-lottie/pull/32)) ([8065d379](https://github.com/ngx-lottie/ngx-lottie/commit/8065d3790ca3c3678e898e902fe1986984a2c73e))
+*  transfer pipelines to the CirleCI ([#31](https://github.com/ngx-lottie/ngx-lottie/pull/31)) ([d2903890](https://github.com/ngx-lottie/ngx-lottie/commit/d2903890250bcfff57f192e29cb87122164c9d17))
+
 ### 5.1.0 (2019-10-05)
 
 ##### New Features

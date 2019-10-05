@@ -9,11 +9,11 @@ import {
   LottieOptions,
   AnimationItem,
   AnimationOptions,
+  AnimationConfigWithData,
+  AnimationConfigWithPath,
   IS_SAFARI,
   LOTTIE_OPTIONS,
-  ANIMATION_CACHE,
-  AnimationConfigWithData,
-  AnimationConfigWithPath
+  ANIMATION_CACHE
 } from './symbols';
 import { BaseDirective } from './base.directive';
 import { AnimationCache } from './animation-cache';

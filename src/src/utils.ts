@@ -1,5 +1,8 @@
 import { EventEmitter } from '@angular/core';
 
+import { from, throwError, of, Observable } from 'rxjs';
+import { map, catchError, shareReplay } from 'rxjs/operators';
+
 import {
   LottiePlayer,
   AnimationOptions,
@@ -8,7 +11,8 @@ import {
   AnimationConfigWithPath,
   AnimationItem,
   LottieEvent,
-  CamelizedAnimationEventName
+  CamelizedAnimationEventName,
+  LottiePlayerFactoryOrLoader
 } from './symbols';
 import { BaseDirective } from './base.directive';
 import { AnimationCache } from './animation-cache';
@@ -88,4 +92,30 @@ export function retrieveEventEmitter(
   name: CamelizedAnimationEventName
 ): EventEmitter<LottieEvent> {
   return instance[name] as EventEmitter<LottieEvent>;
+}
+
+export function streamifyPlayerOrLoader(
+  player: LottiePlayerFactoryOrLoader
+): Observable<LottiePlayer> {
+  const playerOrLoader = player();
+
+  if (playerOrLoader instanceof Promise) {
+    return from(playerOrLoader).pipe(
+      map(module => module.default || module),
+      catchError(error => {
+        console.error(`
+          Could not retrieve the "lottie-web" player, did you provide
+          the "player" property correctly?
+          export function playerFactory() {
+            return import('lottie-web');
+          }
+          LottieModule.forRoot({ player: playerFactory })
+        `);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+  }
+
+  return of(playerOrLoader);
 }

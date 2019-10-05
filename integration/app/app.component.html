@@ -1,9 +1,10 @@
 <div class="demo">
   <ng-lottie
     *ngIf="shown"
-    width="600"
-    height="500"
+    width="600px"
+    height="500px"
     containerClass="moving-box"
+    [styles]="styles"
     [options]="options"
     (animationCreated)="animationCreated($event)"
     (destroy)="destroy($event)"

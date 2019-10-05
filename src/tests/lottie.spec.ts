@@ -43,9 +43,8 @@ HTMLCanvasElement.prototype.getContext = () => ({
 
 import * as lottie from 'lottie-web';
 
-import { LottieEventsFacade } from '../src/events-facade';
+import { LottieModule, BMDestroyEvent } from '../';
 import { AnimationOptions, AnimationItem } from '../src/symbols';
-import { LottieModule, LottieComponent, BMDestroyEvent } from '../';
 
 import animationData = require('./data.json');
 
@@ -58,8 +57,8 @@ describe('ngx-lottie', () => {
     @Component({
       template: `
         <ng-lottie
-          width="500"
-          height="500"
+          [width]="width"
+          [height]="height"
           [options]="options"
           [styles]="styles"
           (animationCreated)="animationCreated($event)"
@@ -84,6 +83,10 @@ describe('ngx-lottie', () => {
       animationItem: AnimationItem = null!;
 
       destroyEvent: BMDestroyEvent = null!;
+
+      width = '500px';
+
+      height = '500px';
 
       animationCreated(animationItem: AnimationItem): void {
         this.animationItem = animationItem;
@@ -123,6 +126,19 @@ describe('ngx-lottie', () => {
       // Assert
       expect(styles.height).toBe('500px');
       expect(styles.width).toBe('500px');
+    });
+
+    it('should set width and height in "em"', () => {
+      // Arrange & act
+      const fixture = createFixture(MockComponent);
+      fixture.componentInstance.width = '20em';
+      fixture.componentInstance.height = '20em';
+      fixture.detectChanges();
+      const styles = fixture.debugElement.query(By.css('div:first-child')).styles;
+
+      // Assert
+      expect(styles.height).toBe('20em');
+      expect(styles.width).toBe('20em');
     });
 
     it('should set custom styles', () => {
@@ -256,8 +272,8 @@ describe('ngx-lottie', () => {
     @Component({
       template: `
         <ng-lottie
-          width="500"
-          height="500"
+          width="500px"
+          height="500px"
           [options]="options"
           [styles]="styles"
           (animationCreated)="animationCreated($event)"

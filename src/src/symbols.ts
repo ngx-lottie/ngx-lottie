@@ -84,7 +84,7 @@ type LottiePlayerFactory = () => typeof import('lottie-web').default;
  */
 type LottieLoader = () => Promise<typeof import('lottie-web')>;
 
-type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
+export type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
 
 export interface LottieOptions {
   player: LottiePlayerFactoryOrLoader;

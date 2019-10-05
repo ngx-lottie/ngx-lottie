@@ -87,6 +87,11 @@ export class BaseDirective {
     private animationLoader: AnimationLoader
   ) {}
 
+  protected setWidthAndHeight(): void {
+    this.width = this.width || '100%';
+    this.height = this.height || '100%';
+  }
+
   protected loadAnimation(
     container: HTMLElement | HTMLCanvasElement,
     eventsFacade: LottieEventsFacade,

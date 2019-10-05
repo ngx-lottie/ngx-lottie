@@ -1,3 +1,9 @@
+### 5.1.0 (2019-10-05)
+
+##### New Features
+
+*  implement animation cache ([#30](https://github.com/ngx-lottie/ngx-lottie/pull/30)) ([1cf5b37a](https://github.com/ngx-lottie/ngx-lottie/commit/1cf5b37a98dcc5889e603e08977136b50e0a5dd4))
+
 ## 5.0.0 (2019-10-04)
 
 ##### Other Changes

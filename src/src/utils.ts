@@ -1,10 +1,17 @@
+import { EventEmitter } from '@angular/core';
+
 import {
-  AnimationFilename,
   LottiePlayer,
   AnimationOptions,
+  AnimationFilename,
   AnimationConfigWithData,
-  AnimationConfigWithPath
+  AnimationConfigWithPath,
+  AnimationItem,
+  LottieEvent,
+  CamelizedAnimationEventName
 } from './symbols';
+import { BaseDirective } from './base.directive';
+import { AnimationCache } from './animation-cache';
 
 export function transformAnimationFilenameToKey(animation: AnimationFilename): string {
   return `animation-${animation.split('.json')[0]}`;
@@ -18,16 +25,67 @@ export function setPlayerLocationHref(player: LottiePlayer, href: string, isSafa
   }
 }
 
-export function resolveOptions(
+export function mergeOptionsWithDefault(
   options: AnimationOptions | null,
-  container: HTMLElement
+  container: HTMLElement,
+  animationCache: AnimationCache | null
 ): AnimationConfigWithData | AnimationConfigWithPath {
-  const defaultOptions = {
-    container,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true
-  };
+  const merged: AnimationConfigWithData | AnimationConfigWithPath = Object.assign(
+    {
+      container,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true
+    },
+    options
+  );
 
-  return Object.assign(defaultOptions, options);
+  if (animationCache !== null) {
+    return animationCache.transformOptions(merged);
+  }
+
+  return merged;
+}
+
+export function isSafariFactory(): boolean {
+  // This `try-catch` block will also handle server-side rendering
+  // as `navigator` is not accessable there
+  try {
+    const { vendor, userAgent } = navigator;
+    return (
+      vendor.indexOf('Apple') > -1 &&
+      userAgent.indexOf('CriOS') === -1 &&
+      userAgent.indexOf('FxiOS') === -1
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function isAnimationConfigWithData(
+  options: AnimationConfigWithPath | AnimationConfigWithData
+): options is AnimationConfigWithData {
+  const animationData = (options as AnimationConfigWithData).animationData;
+  return animationData !== null && typeof animationData === 'object';
+}
+
+export function awaitConfigAndCache(
+  animationCache: AnimationCache | null,
+  options: AnimationConfigWithPath | AnimationConfigWithData,
+  animationItem: AnimationItem
+): void {
+  if (animationCache === null) {
+    return;
+  }
+
+  animationItem.addEventListener('config_ready', () => {
+    animationCache.set(options, animationItem);
+  });
+}
+
+export function retrieveEventEmitter(
+  instance: BaseDirective,
+  name: CamelizedAnimationEventName
+): EventEmitter<LottieEvent> {
+  return instance[name] as EventEmitter<LottieEvent>;
 }

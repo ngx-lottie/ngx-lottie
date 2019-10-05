@@ -1,12 +1,13 @@
-import { OnDestroy, EventEmitter, Injectable, NgZone, Inject, PLATFORM_ID } from '@angular/core';
+import { OnDestroy, Injectable, NgZone, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
 import {
-  CamelizedAnimationEventName,
   LottieEvent,
+  AnimationItem,
   AnimationEventName,
-  AnimationItem
+  CamelizedAnimationEventName
 } from './symbols';
+import { retrieveEventEmitter } from './utils';
 import { BaseDirective } from './base.directive';
 
 @Injectable()
@@ -33,12 +34,6 @@ export class LottieEventsFacade implements OnDestroy {
    */
   private eventNames = Object.keys(this.eventsMap) as readonly AnimationEventName[];
 
-  /**
-   * Save listeners so we're able to remove them from `AnimationItem`
-   * by references in the future when this service is destroyed
-   */
-  private listeners = new Map<AnimationEventName, (event: LottieEvent) => void>();
-
   private animationItem: AnimationItem | null = null;
 
   constructor(private ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: string) {}
@@ -51,12 +46,7 @@ export class LottieEventsFacade implements OnDestroy {
     this.animationItem = animationItem;
 
     for (const name of this.eventNames) {
-      const listenerFn = this.addEventListener(instance, name);
-      // We don't have to save `destroy` listener, because `AnimationItem`
-      // is able to remove `destroy` event listener itself
-      if (name !== 'destroy') {
-        this.listeners.set(name, listenerFn);
-      }
+      this.addEventListener(instance, name);
     }
   }
 
@@ -65,23 +55,22 @@ export class LottieEventsFacade implements OnDestroy {
       return;
     }
 
-    for (const [name, listenerFn] of this.listeners.entries()) {
-      this.animationItem!.removeEventListener(name, listenerFn);
-    }
-
-    // We cannot call `destroy` before removing event listeners
-    // as after calling `destroy` - `removeEventListener` becomes unavailable
+    // `destroy()` will remove all events listeners
     this.animationItem!.destroy();
     this.animationItem = null;
-    // Release listeners as we don't need them
-    this.listeners.clear();
   }
 
   private addEventListener(
     instance: BaseDirective,
     name: AnimationEventName
   ): (event: LottieEvent) => void {
-    const listenerFn = this.handleEventClosure(instance, name);
+    const camelizedName = this.eventsMap[name];
+
+    function listenerFn(event: LottieEvent) {
+      const emitter = retrieveEventEmitter(instance, camelizedName);
+      emitter.emit(event);
+    }
+
     // `AnimationItem` triggers different events every ms, we have to listen
     // them outside Angular's context, thus it won't affect performance
     this.ngZone.runOutsideAngular(() => {
@@ -89,27 +78,5 @@ export class LottieEventsFacade implements OnDestroy {
     });
 
     return listenerFn;
-  }
-
-  private handleEventClosure(instance: BaseDirective, name: AnimationEventName) {
-    return (event: LottieEvent) => {
-      const emitter = this.retrieveEventEmitter(instance, name);
-      emitter.emit(event);
-    };
-  }
-
-  /**
-   * @param name - Name of the event in the `snake_case` dispatched by Lottie
-   * @returns - Resolved event name in the `camelCase`
-   */
-  private camelizeNativeEventName(name: AnimationEventName): CamelizedAnimationEventName {
-    return this.eventsMap[name];
-  }
-
-  private retrieveEventEmitter(
-    instance: BaseDirective,
-    name: AnimationEventName
-  ): EventEmitter<LottieEvent> {
-    return instance[this.camelizeNativeEventName(name)] as EventEmitter<LottieEvent>;
   }
 }

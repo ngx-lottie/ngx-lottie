@@ -252,40 +252,6 @@ describe('ngx-lottie', () => {
     }));
   });
 
-  describe('Events facade', () => {
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: playerFactory })]
-      });
-    });
-
-    it('should listen to events exposed by lottie', () => {
-      // Arrange & act
-      const fixture = createFixture(LottieComponent);
-      const facade = fixture.debugElement.injector.get(LottieEventsFacade);
-      const listeners = facade['listeners'];
-      const animationItem = facade['animationItem'];
-
-      // Assert
-      expect(animationItem).toBeTruthy();
-      expect(listeners.size).toBeGreaterThan(0);
-    });
-
-    it('should release memory when animation item gets destroyed', () => {
-      // Arrange & act
-      const fixture = createFixture(LottieComponent);
-      fixture.destroy();
-
-      const facade = fixture.debugElement.injector.get(LottieEventsFacade);
-      const listeners = facade['listeners'];
-      const animationItem = facade['animationItem'];
-
-      // Assert
-      expect(animationItem).toBeFalsy();
-      expect(listeners.size).toEqual(0);
-    });
-  });
-
   describe('Lazy loading', () => {
     @Component({
       template: `

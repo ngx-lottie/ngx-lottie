@@ -15,7 +15,8 @@ export function playerFactory() {
     BrowserTransferStateModule,
     HttpClientModule,
     LottieModule.forRoot({
-      player: playerFactory
+      player: playerFactory,
+      useCache: true
     })
   ],
   declarations: [AppComponent],

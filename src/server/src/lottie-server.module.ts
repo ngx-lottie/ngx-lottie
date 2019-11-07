@@ -4,9 +4,7 @@ import { TransferState } from '@angular/platform-browser';
 import { LottieServerOptions } from './symbols';
 import { appInitializerFactory } from './internals';
 
-export const LOTTIE_SERVER_OPTIONS = new InjectionToken<LottieServerOptions>(
-  'LOTTIE_SERVER_OPTIONS'
-);
+export const LOTTIE_SERVER_OPTIONS = new InjectionToken<LottieServerOptions>('LottieServerOptions');
 
 @NgModule()
 export class LottieServerModule {

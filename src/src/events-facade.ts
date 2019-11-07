@@ -1,38 +1,43 @@
-import { OnDestroy, Injectable, NgZone, Inject, PLATFORM_ID } from '@angular/core';
+import { OnDestroy, Injectable, NgZone, Inject, EventEmitter, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-import {
-  LottieEvent,
-  AnimationItem,
-  AnimationEventName,
-  CamelizedAnimationEventName
-} from './symbols';
-import { retrieveEventEmitter } from './utils';
 import { BaseDirective } from './base.directive';
+import { EventsMap, LottieEvent, AnimationItem } from './symbols';
+
+/**
+ * Returns only those `EventEmitter` instances that has attached observers
+ */
+function getObservedEventEmitters(instance: BaseDirective, eventsMap: EventsMap) {
+  return Object.keys(instance)
+    .map(key => [key, instance[key]])
+    .filter(
+      ([key, property]) =>
+        property instanceof EventEmitter &&
+        property.observers.length > 0 &&
+        eventsMap.hasOwnProperty(key)
+    )
+    .map(([key, eventEmitter]) => ({
+      eventEmitter,
+      name: eventsMap[key]
+    }));
+}
 
 @Injectable()
 export class LottieEventsFacade implements OnDestroy {
   /**
-   * Some dispatched events are in the `snake_case` registry, for convenience,
-   * we create this object that will map event name to the `camelCase` registry
+   * @see https://github.com/airbnb/lottie-web#events
    */
-  private eventsMap: { [key in AnimationEventName]: CamelizedAnimationEventName } = {
+  private eventsMap: EventsMap = {
     complete: 'complete',
     loopComplete: 'loopComplete',
     enterFrame: 'enterFrame',
     segmentStart: 'segmentStart',
-    config_ready: 'configReady',
-    data_ready: 'dataReady',
-    DOMLoaded: 'domLoaded',
+    configReady: 'config_ready',
+    dataReady: 'data_ready',
+    domLoaded: 'DOMLoaded',
     destroy: 'destroy',
     error: 'error'
   };
-
-  /**
-   * Events that can be dispatched by `Animationitem`
-   * @see https://github.com/airbnb/lottie-web#events
-   */
-  private eventNames = Object.keys(this.eventsMap) as readonly AnimationEventName[];
 
   private animationItem: AnimationItem | null = null;
 
@@ -46,9 +51,7 @@ export class LottieEventsFacade implements OnDestroy {
     this.animationItem = animationItem;
     // `AnimationItem` triggers different events every ms, we have to listen
     // them outside Angular's context, thus it won't affect performance
-    this.ngZone.runOutsideAngular(() => {
-      this.eventNames.forEach(name => this.addEventListener(instance, name));
-    });
+    this.ngZone.runOutsideAngular(() => this.addEventListenersToObservedEventEmitters(instance));
   }
 
   private dispose(): void {
@@ -61,12 +64,13 @@ export class LottieEventsFacade implements OnDestroy {
     this.animationItem = null;
   }
 
-  private addEventListener(instance: BaseDirective, name: AnimationEventName): void {
-    const camelizedName = this.eventsMap[name];
+  private addEventListenersToObservedEventEmitters(instance: BaseDirective): void {
+    const observedEmitters = getObservedEventEmitters(instance, this.eventsMap);
 
-    this.animationItem!.addEventListener(name, (event: LottieEvent) => {
-      const emitter = retrieveEventEmitter(instance, camelizedName);
-      emitter.emit(event);
-    });
+    for (const { name, eventEmitter } of observedEmitters) {
+      this.animationItem!.addEventListener(name, (event: LottieEvent) => {
+        eventEmitter.emit(event);
+      });
+    }
   }
 }

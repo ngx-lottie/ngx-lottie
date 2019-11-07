@@ -29,6 +29,7 @@
 </div>
 
 ## Table of contents
+
 - [Features](#features)
 - [Quick example](#quick-example)
 - [Installation](#installation)
@@ -39,9 +40,10 @@
 - [Server side rendering](#server-side-rendering)
 
 ## Features
-- __rich:__ `ngx-lottie` provides more opportunities to work with API exposed by Lottie
-- __strict:__ all types of objects and events are available to you
-- __performant:__ the `lottie-web` library can be loaded synchronously or on demand
+
+- **rich:** `ngx-lottie` provides more opportunities to work with API exposed by Lottie
+- **strict:** all types of objects and events are available to you
+- **performant:** the `lottie-web` library can be loaded synchronously or on demand
 
 ## Quick example
 
@@ -91,9 +93,7 @@ export function playerFactory() {
 }
 
 @NgModule({
-  imports: [
-    LottieModule.forRoot({ player: playerFactory })
-  ]
+  imports: [LottieModule.forRoot({ player: playerFactory })]
 })
 export class AppModule {}
 ```
@@ -109,9 +109,7 @@ export function playerFactory() {
 }
 
 @NgModule({
-  imports: [
-    LottieModule.forRoot({ player: playerFactory })
-  ]
+  imports: [LottieModule.forRoot({ player: playerFactory })]
 })
 export class AppModule {}
 ```
@@ -126,10 +124,7 @@ import { AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie
-      [options]="options"
-      (animationCreated)="animationCreated($event)"
-    ></ng-lottie>
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
   `
 })
 export class AppComponent {
@@ -153,11 +148,7 @@ import { AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-root',
   template: `
-    <main
-      lottie
-      [options]="options"
-      (animationCreated)="animationCreated($event)"
-    ></main>
+    <main lottie [options]="options" (animationCreated)="animationCreated($event)"></main>
   `
 })
 export class AppComponent {
@@ -229,34 +220,73 @@ export class AppComponent {
 }
 ```
 
-* `options: AnimationOptions` options used by `AnimationItem`
-* `width?: string` container element width in pixels. Bound to `[style.width]`. You can provide any CSS unit, e.g. `100em`
-* `height?: string` container element height in pixels. Bound to `[style.height]`. You can provide any CSS unit, e.g. `100em`
-* `styles?: Partial<CSSStyleDeclaration>` custom styles object. Bound to `[ngStyle]`
-* `containerClass?: string` custom container class. Bound to element
+- `options: AnimationOptions` options used by `AnimationItem`
+- `width?: string` container element width in pixels. Bound to `[style.width]`. You can provide any CSS unit, e.g. `100em`
+- `height?: string` container element height in pixels. Bound to `[style.height]`. You can provide any CSS unit, e.g. `100em`
+- `styles?: Partial<CSSStyleDeclaration>` custom styles object. Bound to `[ngStyle]`
+- `containerClass?: string` custom container class. Bound to element
 
 The `lottie` directive supports only `options` binding.
 
 ### Events
 
-| @Output() | Type | Required | Description
-| --- | --- | --- | --- |
-| animationCreated | `AnimationItem` | optional | Dispatched after the `lottie` successfully creates animation
-| configReady | `void` | optional | Dispatched after the needed renderer is configured
-| dataReady | `void` | optional | Dispatched when all parts of the animation have been loaded
-| domLoaded | `void` | optional | Dispatched when elements have been added to the DOM
-| enterFrame | `BMEnterFrameEvent` | optional | Dispatched after entering the new frame
-| segmentStart | `BMSegmentStartEvent` | optional | Dispatched when the new segment is adjusted
-| loopComplete | `BMCompleteLoopEvent` | optional | Dispatched after completing frame loop
-| complete | `BMCompleteEvent` | optional | Dispatched after completing the last frame
-| destroy | `BMDestroyEvent` | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources
-| error | `BMRenderFrameErrorEvent OR BMConfigErrorEvent` | optional | Dispatched if the lottie player could not render some frame or parse the config
+| @Output()        | Type                                            | Required | Description                                                                                                             |
+| ---------------- | ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| animationCreated | `AnimationItem`                                 | optional | Dispatched after the `lottie` successfully creates animation                                                            |
+| configReady      | `void`                                          | optional | Dispatched after the needed renderer is configured                                                                      |
+| dataReady        | `void`                                          | optional | Dispatched when all parts of the animation have been loaded                                                             |
+| domLoaded        | `void`                                          | optional | Dispatched when elements have been added to the DOM                                                                     |
+| enterFrame       | `BMEnterFrameEvent`                             | optional | Dispatched after entering the new frame                                                                                 |
+| segmentStart     | `BMSegmentStartEvent`                           | optional | Dispatched when the new segment is adjusted                                                                             |
+| loopComplete     | `BMCompleteLoopEvent`                           | optional | Dispatched after completing frame loop                                                                                  |
+| complete         | `BMCompleteEvent`                               | optional | Dispatched after completing the last frame                                                                              |
+| destroy          | `BMDestroyEvent`                                | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources |
+| error            | `BMRenderFrameErrorEvent OR BMConfigErrorEvent` | optional | Dispatched if the lottie player could not render some frame or parse the config                                         |
 
 ## Optimizations
 
 The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
-Also `AnimationItem` events are listened outside of the Angular's zone. Thus you shouldn't worry that Lottie's events will cause the `ApplicationRef` to invoke tick every ms.
+Also `AnimationItem` events are listened outside of the Angular zone. Thus you shouldn't worry that Lottie's events will cause the `ApplicationRef` to invoke tick every ms.
+
+**Note!** All `AnimationItem` methods must be invoked outside of the Angular zone. Given the following code:
+
+```ts
+import { Component, NgZone } from '@angular/core';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+
+    <button (click)="stop()">Stop</button>
+    <button (click)="play()">Play</button>
+  `
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json'
+  };
+
+  private animationItem: AnimationItem;
+
+  constructor(private ngZone: NgZone) {}
+
+  animationCreated(animationItem: AnimationItem): void {
+    this.animationItem = animationItem;
+  }
+
+  stop(): void {
+    this.ngZone.runOutsideAngular(() => this.animatiomItem.stop());
+  }
+
+  play(): void {
+    this.ngZone.runOutsideAngular(() => this.animatiomItem.play());
+  }
+}
+```
 
 ## Server side rendering
 

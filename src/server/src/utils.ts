@@ -1,19 +1,15 @@
 import { readFile } from 'fs';
-import { Observable } from 'rxjs';
 
 import { AnimationData } from './symbols';
 
 export function readFileWithAnimationData(path: string) {
-  // `Promise` is not used here to avoid creation of micro tasks
-  return new Observable<AnimationData>(observer => {
-    readFile(path, { encoding: 'utf-8' }, (error, data) => {
+  return new Promise<AnimationData>((resolve, reject) => {
+    readFile(path, (error, data) => {
       if (error) {
-        observer.error(error);
-      } else {
-        observer.next(data);
+        return reject(error);
       }
 
-      observer.complete();
+      resolve(data.toString());
     });
   });
 }

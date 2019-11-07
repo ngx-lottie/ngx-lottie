@@ -64,6 +64,8 @@ export type CamelizedAnimationEventName =
   | 'destroy'
   | 'error';
 
+export type EventsMap = { [key in CamelizedAnimationEventName]: AnimationEventName };
+
 export type AnimationFilename = string;
 export type AnimationEventName = import('lottie-web').AnimationEventName;
 export type AnimationItem = import('lottie-web').AnimationItem;

@@ -1,5 +1,3 @@
-import { EventEmitter } from '@angular/core';
-
 import { from, throwError, of, Observable } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
 
@@ -10,11 +8,8 @@ import {
   AnimationConfigWithData,
   AnimationConfigWithPath,
   AnimationItem,
-  LottieEvent,
-  CamelizedAnimationEventName,
   LottiePlayerFactoryOrLoader
 } from './symbols';
-import { BaseDirective } from './base.directive';
 import { AnimationCache } from './animation-cache';
 
 export function transformAnimationFilenameToKey(animation: AnimationFilename): string {
@@ -85,13 +80,6 @@ export function awaitConfigAndCache(
   animationItem.addEventListener('config_ready', () => {
     animationCache.set(options, animationItem);
   });
-}
-
-export function retrieveEventEmitter(
-  instance: BaseDirective,
-  name: CamelizedAnimationEventName
-): EventEmitter<LottieEvent> {
-  return instance[name] as EventEmitter<LottieEvent>;
 }
 
 export function streamifyPlayerOrLoader(

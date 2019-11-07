@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
+import { Component, ChangeDetectionStrategy, AfterViewChecked, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
 
@@ -19,7 +19,7 @@ export class AppComponent implements AfterViewChecked {
 
   private animationItem: AnimationItem | null = null;
 
-  constructor(private lottieTransferState: LottieTransferState) {
+  constructor(private ngZone: NgZone, private lottieTransferState: LottieTransferState) {
     this.createOptions();
   }
 
@@ -47,32 +47,26 @@ export class AppComponent implements AfterViewChecked {
   }
 
   setSpeed(speed: number): void {
-    this.invokeIfAnimationItemIsTruthy(animationItem => {
-      animationItem.setSpeed(speed);
-    });
+    if (this.animationItem) {
+      this.ngZone.runOutsideAngular(() => this.animationItem!.setSpeed(speed));
+    }
   }
 
   play(): void {
-    this.invokeIfAnimationItemIsTruthy(animationItem => {
-      animationItem.play();
-    });
+    if (this.animationItem) {
+      this.ngZone.runOutsideAngular(() => this.animationItem!.play());
+    }
   }
 
   pause(): void {
-    this.invokeIfAnimationItemIsTruthy(animationItem => {
-      animationItem.pause();
-    });
+    if (this.animationItem) {
+      this.ngZone.runOutsideAngular(() => this.animationItem!.pause());
+    }
   }
 
   stop(): void {
-    this.invokeIfAnimationItemIsTruthy(animationItem => {
-      animationItem.stop();
-    });
-  }
-
-  private invokeIfAnimationItemIsTruthy(fn: (animationItem: AnimationItem) => void) {
     if (this.animationItem) {
-      fn(this.animationItem);
+      this.ngZone.runOutsideAngular(() => this.animationItem!.stop());
     }
   }
 

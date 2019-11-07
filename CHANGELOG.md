@@ -1,3 +1,9 @@
+### 5.3.0 (2019-11-07)
+
+##### New Features
+
+*  listen only to those events whose emitters are observed ([#35](https://github.com/ngx-lottie/ngx-lottie/pull/35)) ([9c0640f7](https://github.com/ngx-lottie/ngx-lottie/commit/9c0640f704cd3af240e9ac1b642220ba077237cc))
+
 ### 5.2.0 (2019-10-05)
 
 ##### New Features

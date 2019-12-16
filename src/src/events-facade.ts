@@ -55,12 +55,17 @@ export class LottieEventsFacade implements OnDestroy {
   }
 
   private dispose(): void {
-    if (isPlatformServer(this.platformId)) {
+    // The `ng-lottie` component or the `lottie` directive can be destroyed
+    // before the `animationItem` is set, thus it will fail with
+    // `Cannot read property 'destroy' of null`.
+    // Potentially it can happen if the directive gets destroyed before change
+    // detection is run.
+    if (isPlatformServer(this.platformId) || this.animationItem === null) {
       return;
     }
 
     // `destroy()` will remove all events listeners
-    this.animationItem!.destroy();
+    this.animationItem.destroy();
     this.animationItem = null;
   }
 

@@ -1,3 +1,9 @@
+#### 5.3.1 (2019-12-16)
+
+##### Bug Fixes
+
+*  check that `animationItem` is not null before destroying ([#39](https://github.com/ngx-lottie/ngx-lottie/pull/39)) ([4a2796a6](https://github.com/ngx-lottie/ngx-lottie/commit/4a2796a61227d794892c518aebf793fa38d919d0))
+
 ### 5.3.0 (2019-11-07)
 
 ##### New Features

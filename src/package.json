@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
   "name": "ngx-lottie",
-  "version": "5.3.0",
+  "version": "5.3.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ngx-lottie/ngx-lottie.git"

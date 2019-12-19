@@ -32,11 +32,9 @@
   },
   "ngPackage": {
     "lib": {
+      "umdId": "ngx-lottie",
       "flatModuleFile": "ngx-lottie",
-      "entryFile": "index.ts",
-      "umdModuleIds": {
-        "ngx-lottie/server": "ngx-lottie-server"
-      }
+      "entryFile": "index.ts"
     },
     "dest": "../ngx-lottie"
   }

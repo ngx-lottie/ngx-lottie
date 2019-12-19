@@ -1,6 +1,9 @@
 import { Injectable, NgZone, Inject, EventEmitter, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer, DOCUMENT } from '@angular/common';
 
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import {
   LottiePlayer,
   LottieOptions,
@@ -43,15 +46,15 @@ export class AnimationLoader {
     container: HTMLElement,
     eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,
-    instance: BaseDirective
+    instance: BaseDirective,
+    destroy$: Subject<void>
   ) {
     if (isPlatformServer(this.platformId)) {
       return;
     }
 
-    const mergedOptions = mergeOptionsWithDefault(options, container, this.animationCache);
-
-    this.player$.subscribe(player => {
+    this.player$.pipe(takeUntil(destroy$)).subscribe(player => {
+      const mergedOptions = mergeOptionsWithDefault(options, container, this.animationCache);
       this.loadAnimation(player, mergedOptions, eventsFacade, animationCreated, instance);
     });
   }

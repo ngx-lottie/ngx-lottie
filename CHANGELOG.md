@@ -1,3 +1,9 @@
+#### 5.3.2 (2019-12-19)
+
+##### Bug Fixes
+
+*  unsubscribe and release resources from async loader ([#41](https://github.com/ngx-lottie/ngx-lottie/pull/41)) ([a2e642de](https://github.com/ngx-lottie/ngx-lottie/commit/a2e642de0a8ac078721de5062a9ac59b3314812d))
+
 #### 5.3.1 (2019-12-16)
 
 ##### Bug Fixes

@@ -1,5 +1,15 @@
-import { Directive, Input, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Directive,
+  Input,
+  Output,
+  EventEmitter,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy
+} from '@angular/core';
 import { isPlatformServer } from '@angular/common';
+
+import { Subject } from 'rxjs';
 
 import {
   AnimationOptions,
@@ -16,7 +26,7 @@ import { AnimationLoader } from './animation-loader';
 import { LottieEventsFacade } from './events-facade';
 
 @Directive({ selector: '[lottie]' })
-export class BaseDirective {
+export class BaseDirective implements OnDestroy {
   @Input() options: AnimationOptions | null = null;
 
   @Input() containerClass: string | null = null;
@@ -82,10 +92,17 @@ export class BaseDirective {
    */
   @Output() error = new EventEmitter<BMRenderFrameErrorEvent | BMConfigErrorEvent>();
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: string,
     private animationLoader: AnimationLoader
   ) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   protected setWidthAndHeight(): void {
     this.width = this.width || '100%';
@@ -106,7 +123,8 @@ export class BaseDirective {
       container,
       eventsFacade,
       this.animationCreated,
-      instance
+      instance,
+      this.destroy$
     );
   }
 }

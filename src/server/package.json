@@ -2,6 +2,7 @@
   "ngPackage": {
     "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
     "lib": {
+      "umdId": "ngx-lottie-server",
       "entryFile": "src/index.ts",
       "flatModuleFile": "ngx-lottie-server"
     }

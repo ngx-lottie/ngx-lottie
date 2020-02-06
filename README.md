@@ -279,11 +279,11 @@ export class AppComponent {
   }
 
   stop(): void {
-    this.ngZone.runOutsideAngular(() => this.animatiomItem.stop());
+    this.ngZone.runOutsideAngular(() => this.animationItem.stop());
   }
 
   play(): void {
-    this.ngZone.runOutsideAngular(() => this.animatiomItem.play());
+    this.ngZone.runOutsideAngular(() => this.animationItem.play());
   }
 }
 ```

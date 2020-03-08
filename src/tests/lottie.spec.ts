@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, Type, ɵivyEnabled as ivyEnabled } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 
@@ -106,6 +106,11 @@ describe('ngx-lottie', () => {
         imports: [LottieModule.forRoot({ player: playerFactory })],
         declarations: [MockComponent]
       });
+    });
+
+    it('Ivy should be enabled', () => {
+      // Assert
+      expect(ivyEnabled).toBeTruthy();
     });
 
     it('should render "svg" element successfully', () => {

@@ -8,18 +8,21 @@ import { EventsMap, LottieEvent, AnimationItem } from './symbols';
  * Returns only those `EventEmitter` instances that has attached observers
  */
 function getObservedEventEmitters(instance: BaseDirective, eventsMap: EventsMap) {
-  return Object.keys(instance)
-    .map(key => [key, instance[key]])
-    .filter(
-      ([key, property]) =>
-        property instanceof EventEmitter &&
-        property.observers.length > 0 &&
-        eventsMap.hasOwnProperty(key)
-    )
-    .map(([key, eventEmitter]) => ({
-      eventEmitter,
-      name: eventsMap[key]
-    }));
+  return (
+    Object.keys(instance)
+      // `Object.entries` is not supported in IE11.
+      .map(key => [key, instance[key]])
+      .filter(
+        ([key, property]) =>
+          property instanceof EventEmitter &&
+          property.observers.length > 0 &&
+          eventsMap.hasOwnProperty(key)
+      )
+      .map(([key, eventEmitter]) => ({
+        eventEmitter,
+        name: eventsMap[key]
+      }))
+  );
 }
 
 @Injectable()

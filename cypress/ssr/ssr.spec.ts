@@ -44,11 +44,13 @@ describe('Server side rendering', () => {
   });
 
   it('should contain styles on the container div', () => {
-    // Arrange & act & assert
-    cy.get('.moving-box').should(
-      'have.attr',
-      'style',
-      'margin: 0px auto; width: 600px; height: 500px;'
-    );
+    // Arrange & act
+    const style = cy.get('.moving-box').invoke('attr', 'style');
+
+    // Assert
+    style
+      .should('contain', 'margin: 0px auto')
+      .should('contain', 'width: 600px')
+      .should('contain', 'height: 500px');
   });
 });

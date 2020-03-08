@@ -19,7 +19,7 @@
     "server.ts"
   ],
   "angularCompilerOptions": {
-    "enableIvy": false,
+    "enableIvy": true,
     "fullTemplateTypeCheck": true
   }
 }

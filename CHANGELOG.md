@@ -1,3 +1,17 @@
+### 5.4.0 (2020-03-08)
+
+##### Build System / Dependencies
+
+*  upgrade to Angular 9 ([#45](https://github.com/ngx-lottie/ngx-lottie/pull/45)) ([33f840f7](https://github.com/ngx-lottie/ngx-lottie/commit/33f840f73ac200b7652a10ba05720c0c30203f21))
+
+##### Chores
+
+*  update README.md ([#42](https://github.com/ngx-lottie/ngx-lottie/pull/42)) ([bfcb85d8](https://github.com/ngx-lottie/ngx-lottie/commit/bfcb85d8387dc26a79176173e0660425bbd8da01))
+
+##### New Features
+
+*  add possibility to provide multiple classes ([#46](https://github.com/ngx-lottie/ngx-lottie/pull/46)) ([cec160d8](https://github.com/ngx-lottie/ngx-lottie/commit/cec160d8dd45bb5ce7d78718952cd71730bf2add))
+
 #### 5.3.2 (2019-12-19)
 
 ##### Bug Fixes

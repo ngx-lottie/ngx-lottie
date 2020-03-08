@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 8+ and Ivy renderer.</strong>
+  <strong>A minimal customizable performance-stable Angular component for rendering After Effects animations. Compatible with Angular 9+.</strong>
 </div>
 
 <br/>
@@ -51,7 +51,7 @@
 <ng-lottie
   width="600px"
   height="500px"
-  containerClass="moving-box"
+  containerClass="moving-box another-class"
   [styles]="styles"
   [options]="options"
   (animationCreated)="animationCreated($event)"
@@ -79,7 +79,7 @@ yarn add lottie-web ngx-lottie
 
 ## Usage
 
-First, import the `LottieModule` into `AppModule`:
+First, import the `LottieModule` into the `AppModule`:
 
 ```typescript
 import { NgModule } from '@angular/core';
@@ -87,18 +87,18 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 
 // Note we need a separate function as it's required
-// by the AOT compiler
+// by the AOT compiler.
 export function playerFactory() {
   return player;
 }
 
 @NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory })]
+  imports: [LottieModule.forRoot({ player: playerFactory })],
 })
 export class AppModule {}
 ```
 
-The `lottie-web` library can be loaded on demand using dynamic import. Given the following code:
+The `lottie-web` library can be loaded on demand using dynamic import. Webpack will load this library only when your animation gets rendered for the first time. Given the following code:
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -109,7 +109,7 @@ export function playerFactory() {
 }
 
 @NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory })]
+  imports: [LottieModule.forRoot({ player: playerFactory })],
 })
 export class AppModule {}
 ```
@@ -125,11 +125,11 @@ import { AnimationOptions } from 'ngx-lottie';
   selector: 'app-root',
   template: `
     <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
-  `
+  `,
 })
 export class AppComponent {
   options: AnimationOptions = {
-    path: '/assets/animation.json'
+    path: '/assets/animation.json',
   };
 
   animationCreated(animationItem: AnimationItem): void {
@@ -149,11 +149,11 @@ import { AnimationOptions } from 'ngx-lottie';
   selector: 'app-root',
   template: `
     <main lottie [options]="options" (animationCreated)="animationCreated($event)"></main>
-  `
+  `,
 })
 export class AppComponent {
   options: AnimationOptions = {
-    path: '/assets/animation.json'
+    path: '/assets/animation.json',
   };
 
   animationCreated(animationItem: AnimationItem): void {
@@ -166,7 +166,7 @@ Notice that you will need to import the `LottieModule` into other modules as it 
 
 ## Caching
 
-`lottie-web` will load your JSON file every time when animation is being created. When importing `LottieModule` into the root module you can provide the `useCache` option:
+`lottie-web` will load your JSON file every time when animation is created. When importing the `LottieModule` into the root module you can provide the `useCache` option:
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -180,9 +180,9 @@ export function playerFactory() {
   imports: [
     LottieModule.forRoot({
       player: playerFactory,
-      useCache: true
-    })
-  ]
+      useCache: true,
+    }),
+  ],
 })
 export class AppModule {}
 ```
@@ -206,16 +206,16 @@ The `ng-lottie` component supports the following bindings:
       [styles]="styles"
       [options]="options"
     ></ng-lottie>
-  `
+  `,
 })
 export class AppComponent {
   options: AnimationOptions = {
-    path: '/assets/animation.json'
+    path: '/assets/animation.json',
   };
 
   styles: Partial<CSSStyleDeclaration> = {
     maxWidth: '500px',
-    margin: '0 auto'
+    margin: '0 auto',
   };
 }
 ```
@@ -224,7 +224,7 @@ export class AppComponent {
 - `width?: string` container element width in pixels. Bound to `[style.width]`. You can provide any CSS unit, e.g. `100em`
 - `height?: string` container element height in pixels. Bound to `[style.height]`. You can provide any CSS unit, e.g. `100em`
 - `styles?: Partial<CSSStyleDeclaration>` custom styles object. Bound to `[ngStyle]`
-- `containerClass?: string` custom container class. Bound to element
+- `containerClass?: string` custom container class(es). Bound to `[ngClass]`.
 
 The `lottie` directive supports only `options` binding.
 
@@ -247,9 +247,9 @@ The `lottie` directive supports only `options` binding.
 
 The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
-Also `AnimationItem` events are listened outside of the Angular zone. Thus you shouldn't worry that Lottie's events will cause the `ApplicationRef` to invoke tick every ms.
+`AnimationItem` events are listened outside of the Angular zone. You shouldn't worry that animation events will cause change detection every ms.
 
-**Note!** All `AnimationItem` methods must be invoked outside of the Angular zone. Given the following code:
+**But be careful!** Always wrap any calls to `AnimationItem` methods in `runOutsideAngular`. See the below code:
 
 ```ts
 import { Component, NgZone } from '@angular/core';
@@ -263,11 +263,11 @@ import { AnimationOptions } from 'ngx-lottie';
 
     <button (click)="stop()">Stop</button>
     <button (click)="play()">Play</button>
-  `
+  `,
 })
 export class AppComponent {
   options: AnimationOptions = {
-    path: '/assets/animation.json'
+    path: '/assets/animation.json',
   };
 
   private animationItem: AnimationItem;
@@ -289,8 +289,6 @@ export class AppComponent {
 ```
 
 ## Server side rendering
-
-> ⚠️ **Warning**: This works only if Ivy is NOT enabled! Ivy doesn't work with SSR right now and probably will be supported in Angular 10.
 
 By default, `lottie` will load your `json` file with animation data every time you create an animation. You may have some problems with the connection, so there may be some delay or even timeout. It's worth loading animation data only once and cache it on the client side, so every time you create an animation — the animation data will be retrieved from cache.
 
@@ -319,11 +317,11 @@ import { AppComponent } from './app.component';
     LottieServerModule.forRoot({
       preloadAnimations: {
         folder: 'dist/assets',
-        animations: ['data.json']
-      }
-    })
+        animations: ['data.json'],
+      },
+    }),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppServerModule {}
 ```
@@ -358,11 +356,11 @@ import { AnimationOptions, LottieTransferState } from 'ngx-lottie';
   selector: 'app-root',
   template: `
     <ng-lottie [options]="options"></ng-lottie>
-  `
+  `,
 })
 export class AppComponent {
   options: AnimationOptions = {
-    animationData: this.lottieTransferState.get('data.json')
+    animationData: this.lottieTransferState.get('data.json'),
   };
 
   constructor(private lottieTransferState: LottieTransferState) {}

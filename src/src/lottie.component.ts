@@ -6,9 +6,6 @@ import {
   ElementRef,
   ViewChild,
   Self,
-  OnChanges,
-  SimpleChanges,
-  Renderer2,
   PLATFORM_ID
 } from '@angular/core';
 
@@ -19,31 +16,26 @@ import { LottieEventsFacade } from './events-facade';
 @Component({
   selector: 'ng-lottie',
   template: `
-    <div #container [style.width]="width" [style.height]="height" [ngStyle]="styles"></div>
+    <div
+      #container
+      [style.width]="width"
+      [style.height]="height"
+      [ngStyle]="styles"
+      [ngClass]="containerClass"
+    ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LottieEventsFacade]
 })
-export class LottieComponent extends BaseDirective implements OnChanges, OnInit {
+export class LottieComponent extends BaseDirective implements OnInit {
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 
   constructor(
-    private renderer: Renderer2,
     @Inject(PLATFORM_ID) platformId: string,
     @Self() private eventsFacade: LottieEventsFacade,
     animationLoader: AnimationLoader
   ) {
     super(platformId, animationLoader);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const containerClass = changes.containerClass;
-
-    if (containerClass === undefined || typeof containerClass.currentValue !== 'string') {
-      return;
-    }
-
-    this.renderer.addClass(this.container.nativeElement, containerClass.currentValue);
   }
 
   ngOnInit(): void {

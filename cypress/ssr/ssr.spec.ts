@@ -53,4 +53,11 @@ describe('Server side rendering', () => {
       .should('contain', 'width: 600px')
       .should('contain', 'height: 500px');
   });
+
+  it('should contain multiple classes on the container div', () => {
+    // Arrange & act & assert
+    cy.get('.moving-box')
+      .invoke('attr', 'class')
+      .should('contain', 'moving-box moving-box-second-class');
+  });
 });

@@ -1,4 +1,8 @@
-## 7.0.0.0 (2020-05-01)
+## 6.0.0 (2020-05-01)
+
+#### Bug Fixes
+
+* fix: do not set location href on Safari ([#51](https://github.com/ngx-lottie/ngx-lottie/pull/51)) ([a2e642de](https://github.com/ngx-lottie/ngx-lottie/commit/3c4c56b25ca8bcd703fe9dd6eaf88f5b8cc07f0a))
 
 ### 5.4.0 (2020-03-08)
 

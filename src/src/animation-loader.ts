@@ -1,5 +1,5 @@
 import { Injectable, NgZone, Inject, EventEmitter, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer, DOCUMENT } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,9 +19,6 @@ import { BaseDirective } from './base.directive';
 import { AnimationCache } from './animation-cache';
 import { LottieEventsFacade } from './events-facade';
 
-// This has to be dynamic as `Document` interface is not
-// accepted by the ngc compiler
-// @dynamic
 @Injectable()
 export class AnimationLoader {
   private player$ = streamifyPlayerOrLoader(this.options.player);
@@ -29,7 +26,6 @@ export class AnimationLoader {
   constructor(
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
-    @Inject(DOCUMENT) private document: Document,
     @Inject(LOTTIE_OPTIONS) private options: LottieOptions,
     @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null,
   ) {}

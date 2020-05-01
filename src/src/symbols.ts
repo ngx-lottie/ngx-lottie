@@ -97,6 +97,5 @@ export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithDa
 export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPath;
 export type AnimationOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
 
-export const IS_SAFARI = new InjectionToken<boolean>('IsSafari');
 export const LOTTIE_OPTIONS = new InjectionToken<LottieOptions>('LottieOptions');
 export const ANIMATION_CACHE = new InjectionToken<AnimationCache | null>('AnimationCache');

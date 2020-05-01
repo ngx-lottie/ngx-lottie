@@ -1,5 +1,5 @@
 import { Injectable, NgZone, Inject, EventEmitter, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer, DOCUMENT } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,23 +11,14 @@ import {
   AnimationOptions,
   AnimationConfigWithData,
   AnimationConfigWithPath,
-  IS_SAFARI,
   LOTTIE_OPTIONS,
-  ANIMATION_CACHE
+  ANIMATION_CACHE,
 } from './symbols';
-import {
-  awaitConfigAndCache,
-  setPlayerLocationHref,
-  mergeOptionsWithDefault,
-  streamifyPlayerOrLoader
-} from './utils';
+import { awaitConfigAndCache, mergeOptionsWithDefault, streamifyPlayerOrLoader } from './utils';
 import { BaseDirective } from './base.directive';
 import { AnimationCache } from './animation-cache';
 import { LottieEventsFacade } from './events-facade';
 
-// This has to be dynamic as `Document` interface is not
-// accepted by the ngc compiler
-// @dynamic
 @Injectable()
 export class AnimationLoader {
   private player$ = streamifyPlayerOrLoader(this.options.player);
@@ -35,10 +26,8 @@ export class AnimationLoader {
   constructor(
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(IS_SAFARI) private isSafari: boolean,
     @Inject(LOTTIE_OPTIONS) private options: LottieOptions,
-    @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null
+    @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null,
   ) {}
 
   resolveLoaderAndLoadAnimation(
@@ -47,7 +36,7 @@ export class AnimationLoader {
     eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective,
-    destroy$: Subject<void>
+    destroy$: Subject<void>,
   ) {
     if (isPlatformServer(this.platformId)) {
       return;
@@ -64,9 +53,8 @@ export class AnimationLoader {
     options: AnimationConfigWithData | AnimationConfigWithPath,
     eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,
-    instance: BaseDirective
+    instance: BaseDirective,
   ): void {
-    setPlayerLocationHref(player, this.document.location.href, this.isSafari);
     const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
     awaitConfigAndCache(this.animationCache, options, animationItem);
     // Dispatch `animationCreated` event after animation is loaded successfully

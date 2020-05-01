@@ -8,7 +8,7 @@ import {
   AnimationConfigWithData,
   AnimationConfigWithPath,
   AnimationItem,
-  LottiePlayerFactoryOrLoader
+  LottiePlayerFactoryOrLoader,
 } from './symbols';
 import { AnimationCache } from './animation-cache';
 
@@ -16,27 +16,19 @@ export function transformAnimationFilenameToKey(animation: AnimationFilename): s
   return `animation-${animation.split('.json')[0]}`;
 }
 
-export function setPlayerLocationHref(player: LottiePlayer, href: string, isSafari: boolean): void {
-  // This is a fix for the mask on Safari/iOS
-  // https://github.com/airbnb/lottie-web/issues/1198
-  if (isSafari) {
-    ((player as unknown) as { setLocationHref: (href: string) => void }).setLocationHref(href);
-  }
-}
-
 export function mergeOptionsWithDefault(
   options: AnimationOptions | null,
   container: HTMLElement,
-  animationCache: AnimationCache | null
+  animationCache: AnimationCache | null,
 ): AnimationConfigWithData | AnimationConfigWithPath {
   const merged: AnimationConfigWithData | AnimationConfigWithPath = Object.assign(
     {
       container,
       renderer: 'svg',
       loop: true,
-      autoplay: true
+      autoplay: true,
     },
-    options
+    options,
   );
 
   if (animationCache !== null) {
@@ -46,23 +38,8 @@ export function mergeOptionsWithDefault(
   return merged;
 }
 
-export function isSafariFactory(): boolean {
-  // This `try-catch` block will also handle server-side rendering
-  // as `navigator` is not accessable there
-  try {
-    const { vendor, userAgent } = navigator;
-    return (
-      vendor.indexOf('Apple') > -1 &&
-      userAgent.indexOf('CriOS') === -1 &&
-      userAgent.indexOf('FxiOS') === -1
-    );
-  } catch {
-    return false;
-  }
-}
-
 export function isAnimationConfigWithData(
-  options: AnimationConfigWithPath | AnimationConfigWithData
+  options: AnimationConfigWithPath | AnimationConfigWithData,
 ): options is AnimationConfigWithData {
   const animationData = (options as AnimationConfigWithData).animationData;
   return animationData !== null && typeof animationData === 'object';
@@ -71,7 +48,7 @@ export function isAnimationConfigWithData(
 export function awaitConfigAndCache(
   animationCache: AnimationCache | null,
   options: AnimationConfigWithPath | AnimationConfigWithData,
-  animationItem: AnimationItem
+  animationItem: AnimationItem,
 ): void {
   if (animationCache === null) {
     return;
@@ -83,7 +60,7 @@ export function awaitConfigAndCache(
 }
 
 export function streamifyPlayerOrLoader(
-  player: LottiePlayerFactoryOrLoader
+  player: LottiePlayerFactoryOrLoader,
 ): Observable<LottiePlayer> {
   const playerOrLoader = player();
 
@@ -101,7 +78,7 @@ export function streamifyPlayerOrLoader(
         `);
         return throwError(error);
       }),
-      shareReplay(1)
+      shareReplay(1),
     );
   }
 

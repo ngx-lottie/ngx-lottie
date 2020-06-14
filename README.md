@@ -34,6 +34,7 @@
 - [Quick example](#quick-example)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Updating animation](#updating-animation)
 - [Caching](#caching)
 - [API](#api)
 - [Optimizations](#optimizations)
@@ -163,6 +164,44 @@ export class AppComponent {
 ```
 
 Notice that you will need to import the `LottieModule` into other modules as it exports `ng-lottie` component and `lottie` directive. But `forRoot` has to be called only once!
+
+## Updating animation
+
+If you want to update animation dynamically then you have to update animation options immutably. Let's look at the following example:
+
+```ts
+import { Component } from '@angular/core';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <button (click)="updateAnimation()">Update animation</button>
+  `,
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json',
+  };
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
+
+  updateAnimation(): void {
+    // ⚠️⚠️ Don't do this!
+    this.options.path = '/assets/new-animation.json';
+
+    // ✔️✔️ Update `options` in this way
+    this.options = {
+      ...this.options, // In case you have other properties that you want to copy
+      path: '/assets/new-animation.json',
+    };
+  }
+}
+```
 
 ## Caching
 

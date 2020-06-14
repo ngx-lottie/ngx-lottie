@@ -8,7 +8,7 @@ function unescapeHtml(text: string): string {
     '&q;': '"',
     '&s;': "'",
     '&l;': '<',
-    '&g;': '>'
+    '&g;': '>',
   };
 
   return text.replace(/&[^;]+;/g, (s: string) => unescapedText[s]);
@@ -59,5 +59,19 @@ describe('Server side rendering', () => {
     cy.get('.moving-box')
       .invoke('attr', 'class')
       .should('contain', 'moving-box moving-box-second-class');
+  });
+
+  it('should update animation dynamically when options change', () => {
+    // Arrange & act & assert
+    cy.get('ng-lottie svg g')
+      .invoke('prop', 'childElementCount')
+      .should('equal', 2);
+
+    cy.get('.update-animation')
+      .click()
+      .get('ng-lottie svg g')
+      .invoke('prop', 'childElementCount')
+      // The new animation is more complex and has much more elements.
+      .should('equal', 8);
   });
 });

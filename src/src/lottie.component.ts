@@ -1,12 +1,14 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnInit,
+  Input,
   Inject,
   ElementRef,
   ViewChild,
   Self,
-  PLATFORM_ID
+  PLATFORM_ID,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 
 import { BaseDirective } from './base.directive';
@@ -18,28 +20,30 @@ import { LottieEventsFacade } from './events-facade';
   template: `
     <div
       #container
-      [style.width]="width"
-      [style.height]="height"
+      [style.width]="width || '100%'"
+      [style.height]="height || '100%'"
       [ngStyle]="styles"
       [ngClass]="containerClass"
     ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [LottieEventsFacade]
+  providers: [LottieEventsFacade],
 })
-export class LottieComponent extends BaseDirective implements OnInit {
+export class LottieComponent extends BaseDirective implements OnChanges {
+  @Input() width: string | null = null;
+  @Input() height: string | null = null;
+
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: string,
     @Self() private eventsFacade: LottieEventsFacade,
-    animationLoader: AnimationLoader
+    animationLoader: AnimationLoader,
   ) {
     super(platformId, animationLoader);
   }
 
-  ngOnInit(): void {
-    super.setWidthAndHeight();
-    super.loadAnimation(this.container.nativeElement, this.eventsFacade, this);
+  ngOnChanges(changes: SimpleChanges): void {
+    super.loadAnimation(changes, this.container.nativeElement, this.eventsFacade, this);
   }
 }

@@ -16,11 +16,11 @@ function getObservedEventEmitters(instance: BaseDirective, eventsMap: EventsMap)
         ([key, property]) =>
           property instanceof EventEmitter &&
           property.observers.length > 0 &&
-          eventsMap.hasOwnProperty(key)
+          eventsMap.hasOwnProperty(key),
       )
       .map(([key, eventEmitter]) => ({
         eventEmitter,
-        name: eventsMap[key]
+        name: eventsMap[key],
       }))
   );
 }
@@ -39,7 +39,7 @@ export class LottieEventsFacade implements OnDestroy {
     dataReady: 'data_ready',
     domLoaded: 'DOMLoaded',
     destroy: 'destroy',
-    error: 'error'
+    error: 'error',
   };
 
   private animationItem: AnimationItem | null = null;
@@ -47,7 +47,7 @@ export class LottieEventsFacade implements OnDestroy {
   constructor(private ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: string) {}
 
   ngOnDestroy(): void {
-    this.dispose();
+    this.destroyAnimation();
   }
 
   addEventListeners(instance: BaseDirective, animationItem: AnimationItem): void {
@@ -57,7 +57,7 @@ export class LottieEventsFacade implements OnDestroy {
     this.ngZone.runOutsideAngular(() => this.addEventListenersToObservedEventEmitters(instance));
   }
 
-  private dispose(): void {
+  destroyAnimation(): void {
     // The `ng-lottie` component or the `lottie` directive can be destroyed
     // before the `animationItem` is set, thus it will fail with
     // `Cannot read property 'destroy' of null`.

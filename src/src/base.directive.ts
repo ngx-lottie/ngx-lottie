@@ -5,7 +5,8 @@ import {
   EventEmitter,
   Inject,
   PLATFORM_ID,
-  OnDestroy
+  OnDestroy,
+  SimpleChanges,
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
@@ -20,7 +21,7 @@ import {
   BMDestroyEvent,
   BMRenderFrameErrorEvent,
   BMConfigErrorEvent,
-  AnimationItem
+  AnimationItem,
 } from './symbols';
 import { AnimationLoader } from './animation-loader';
 import { LottieEventsFacade } from './events-facade';
@@ -32,10 +33,6 @@ export class BaseDirective implements OnDestroy {
   @Input() containerClass: string | null = null;
 
   @Input() styles: Partial<CSSStyleDeclaration> | null = null;
-
-  @Input() width: string | null = null;
-
-  @Input() height: string | null = null;
 
   /**
    * `animationCreated` is dispatched after calling `loadAnimation`
@@ -96,7 +93,7 @@ export class BaseDirective implements OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: string,
-    private animationLoader: AnimationLoader
+    private animationLoader: AnimationLoader,
   ) {}
 
   ngOnDestroy(): void {
@@ -104,27 +101,25 @@ export class BaseDirective implements OnDestroy {
     this.destroy$.complete();
   }
 
-  protected setWidthAndHeight(): void {
-    this.width = this.width || '100%';
-    this.height = this.height || '100%';
-  }
-
   protected loadAnimation(
-    container: HTMLElement | HTMLCanvasElement,
+    changes: SimpleChanges,
+    container: HTMLElement,
     eventsFacade: LottieEventsFacade,
-    instance: BaseDirective
+    instance: BaseDirective,
   ): void {
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformServer(this.platformId) || !changes.options) {
       return;
     }
 
+    eventsFacade.destroyAnimation();
+
     this.animationLoader.resolveLoaderAndLoadAnimation(
-      this.options,
+      changes.options.currentValue,
       container,
       eventsFacade,
       this.animationCreated,
       instance,
-      this.destroy$
+      this.destroy$,
     );
   }
 }

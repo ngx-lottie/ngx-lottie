@@ -1,5 +1,5 @@
-import { from, throwError, of, Observable } from 'rxjs';
-import { map, catchError, shareReplay } from 'rxjs/operators';
+import { from, of, Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 import {
   LottiePlayer,
@@ -31,11 +31,7 @@ export function mergeOptionsWithDefault(
     options,
   );
 
-  if (animationCache !== null) {
-    return animationCache.transformOptions(merged);
-  }
-
-  return merged;
+  return animationCache !== null ? animationCache.transformOptions(merged) : merged;
 }
 
 export function isAnimationConfigWithData(
@@ -67,20 +63,9 @@ export function streamifyPlayerOrLoader(
   if (playerOrLoader instanceof Promise) {
     return from(playerOrLoader).pipe(
       map(module => module.default || module),
-      catchError(error => {
-        console.error(`
-          Could not retrieve the "lottie-web" player, did you provide
-          the "player" property correctly?
-          export function playerFactory() {
-            return import('lottie-web');
-          }
-          LottieModule.forRoot({ player: playerFactory })
-        `);
-        return throwError(error);
-      }),
       shareReplay(1),
     );
+  } else {
+    return of(playerOrLoader);
   }
-
-  return of(playerOrLoader);
 }

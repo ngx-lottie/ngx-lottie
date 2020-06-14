@@ -2,7 +2,7 @@ import {
   LottieOptions,
   AnimationItem,
   AnimationConfigWithData,
-  AnimationConfigWithPath
+  AnimationConfigWithPath,
 } from './symbols';
 import { isAnimationConfigWithData } from './utils';
 
@@ -10,15 +10,11 @@ export class AnimationCache {
   private cache = new Map<string, unknown>();
 
   static create(options: LottieOptions): AnimationCache | null {
-    if (options.useCache) {
-      return new AnimationCache();
-    }
-
-    return null;
+    return options.useCache ? new AnimationCache() : null;
   }
 
   transformOptions(
-    options: AnimationConfigWithData | AnimationConfigWithPath
+    options: AnimationConfigWithData | AnimationConfigWithPath,
   ): AnimationConfigWithData | AnimationConfigWithPath {
     const path = (options as AnimationConfigWithPath).path;
     if (path && this.cache.has(path)) {
@@ -30,7 +26,7 @@ export class AnimationCache {
 
   set(
     options: AnimationConfigWithData | AnimationConfigWithPath,
-    animationItem: AnimationItem
+    animationItem: AnimationItem,
   ): void {
     if (isAnimationConfigWithData(options)) {
       return;

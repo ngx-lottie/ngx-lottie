@@ -48,7 +48,7 @@
             "aot": true,
             "assets": [
               {
-                "glob": "data.json",
+                "glob": "*.json",
                 "input": "integration/assets/animations",
                 "output": "/assets/animations"
               }

@@ -6,7 +6,7 @@ import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lotti
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements AfterViewChecked {
   options!: AnimationOptions;
@@ -14,7 +14,7 @@ export class AppComponent implements AfterViewChecked {
   shown = true;
 
   styles: Partial<CSSStyleDeclaration> = {
-    margin: '0 auto'
+    margin: '0 auto',
   };
 
   private animationItem: AnimationItem | null = null;
@@ -70,14 +70,20 @@ export class AppComponent implements AfterViewChecked {
     }
   }
 
+  updateAnimation(): void {
+    this.options = {
+      path: '/assets/animations/17893-work-from-home.json',
+    };
+  }
+
   private createOptions(): void {
     if (this.lottieTransferState.get('data.json')) {
       this.options = {
-        animationData: this.lottieTransferState.get('data.json')
+        animationData: this.lottieTransferState.get('data.json'),
       };
     } else {
       this.options = {
-        path: '/assets/animations/data.json'
+        path: '/assets/animations/data.json',
       };
     }
   }

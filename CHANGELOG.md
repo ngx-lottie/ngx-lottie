@@ -1,3 +1,17 @@
+### 6.1.0 (2020-06-14)
+
+##### Build System / Dependencies
+
+* **deps:**  bump websocket-extensions from 0.1.3 to 0.1.4 ([#55](https://github.com/ngx-lottie/ngx-lottie/pull/55)) ([4d053c01](https://github.com/ngx-lottie/ngx-lottie/commit/4d053c01cafce78d09cae5cedddb43683462af80))
+
+##### Chores
+
+*  update CHANGELOG.md ([a55d9adb](https://github.com/ngx-lottie/ngx-lottie/commit/a55d9adbfc5dff8783288e34289ed17b487ce6e7))
+
+##### New Features
+
+*  update animation when options change ([#57](https://github.com/ngx-lottie/ngx-lottie/pull/57)) ([185fc470](https://github.com/ngx-lottie/ngx-lottie/commit/185fc470315fdd8d521574ac14bfec6a098824b2))
+
 ## 6.0.0 (2020-05-01)
 
 #### Bug Fixes

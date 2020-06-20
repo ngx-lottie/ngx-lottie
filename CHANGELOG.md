@@ -1,3 +1,9 @@
+#### 6.1.1 (2020-06-20)
+
+##### Bug Fixes
+
+*  replace `shareReplay(1)` with `publishReplay(1), refCount()` to exclude memory leak ([#59](https://github.com/ngx-lottie/ngx-lottie/pull/59)) ([406b1e5b](https://github.com/ngx-lottie/ngx-lottie/commit/406b1e5bfc6275f67200789fd408cc5c09862f8f))
+
 ### 6.1.0 (2020-06-14)
 
 ##### Build System / Dependencies

@@ -1,5 +1,5 @@
 import { from, of, Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, publishReplay, refCount } from 'rxjs/operators';
 
 import {
   LottiePlayer,
@@ -63,7 +63,8 @@ export function streamifyPlayerOrLoader(
   if (playerOrLoader instanceof Promise) {
     return from(playerOrLoader).pipe(
       map(module => module.default || module),
-      shareReplay(1),
+      publishReplay(1),
+      refCount(),
     );
   } else {
     return of(playerOrLoader);

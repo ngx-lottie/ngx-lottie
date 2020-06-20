@@ -32,7 +32,7 @@
     "build": "ts-node ./tools/build && ts-node ./tools/copy-readme",
     "format": "prettier --write \"*.{ts,js,md}\"",
     "bump": "ts-node ./tools/bump",
-    "serve:integration": "ng s --project integration",
+    "serve:integration": "ng s --project integration --live-reload false",
     "serve:integration:static": "angular-http-server --path dist-integration -p 4200 --silent",
     "serve:integration:ssr": "yarn ts-node integration/server",
     "build:integration": "ng run integration:build:production",

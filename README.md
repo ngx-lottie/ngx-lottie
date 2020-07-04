@@ -35,6 +35,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Updating animation](#updating-animation)
+- [Listening to lottie-web events](#listening-to-lottie-web-events)
 - [Caching](#caching)
 - [API](#api)
 - [Optimizations](#optimizations)
@@ -199,6 +200,168 @@ export class AppComponent {
       ...this.options, // In case you have other properties that you want to copy
       path: '/assets/new-animation.json',
     };
+  }
+}
+```
+
+If you want to update options relying on a response from the server then you'll have to call `markForCheck` to make sure that the change detection will be run if `ng-lottie` is inside a `ChangeDetectionStrategy.OnPush` component:
+
+```ts
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <button (click)="updateAnimation()">Update animation</button>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json',
+  };
+
+  constructor(private ref: ChangeDetectorRef, private animationService: AnimationService) {}
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
+
+  updateAnimation(): void {
+    this.animationService.loadAnimationOptions().subscribe(options => {
+      this.options = options;
+      this.ref.markForCheck();
+    });
+  }
+}
+```
+
+You can also store options in `BehaviorSubject` and bind them via `async` pipe in a template:
+
+```ts
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie
+      [options]="options$ | async"
+      (animationCreated)="animationCreated($event)"
+    ></ng-lottie>
+
+    <button (click)="updateAnimation()">Update animation</button>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppComponent {
+  options$ = new BehaviorSubject<AnimationOptions>({
+    path: '/assets/animation.json',
+  });
+
+  constructor(private ref: ChangeDetectorRef, private animationService: AnimationService) {}
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
+
+  updateAnimation(): void {
+    this.animationService.loadAnimationOptions().subscribe(options => {
+      this.options$.next(options);
+    });
+  }
+}
+```
+
+## Listening to `lottie-web` events
+
+The `ng-lottie` listens only to events that the user listens from outside. This means that if you've got the following code:
+
+```html
+<ng-lottie (loopComplete)="onLoopComplete()"></ng-lottie>
+```
+
+So only `loopComplete` event will be listened on the `AnimatiomItem` under the hood. One important note that all events are listened outside of the Angular zone:
+
+```ts
+ngZone.runOutsideAngular(() => {
+  animationItem.addEventListener('loopComplete', () => {});
+});
+```
+
+Such a design decision was made because animation items can emit hundreds and thousands of events every second. Some events are not emitted synchronously because they're wrapped into `setTimeout` inside of the `lottie-web` library. This means that if thousand of event occurs during the single second then Angular will run change detection thousand times, which will drastically decrease performance.
+
+Therefore, all methods that are event listeners in the template are also called outside the Angular zone:
+
+```ts
+import { Component, ChangeDetectionStrategy, NgZone } from '@angular/core';
+import { AnimationOptions } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json',
+  };
+
+  onLoopComplete(): void {
+    NgZone.assertNotInAngularZone();
+    console.log(NgZone.isInAngularZone()); // false
+  }
+}
+```
+
+Therefore you need:
+* either call `NgZone.run()`
+* either call change detection manually via `ChangeDetectorRef.detectChanges()`
+* either mark component to be checked via `ChangeDetectorRef.markForCheck()`
+
+```ts
+import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
+import { AnimationOptions } from 'ngx-lottie';
+
+// Angular 9+
+import { ɵdetectChanges as detectChanges, ɵmarkDirty as markDirty } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie>
+    <p>On loop complete called times = {{ onLoopCompleteCalledTimes }}</p>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json',
+  };
+
+  onLoopCompleteCalledTimes = 0;
+
+  constructor(private ngZone: NgZone, private ref: ChangeDetectorRef) {}
+
+  onLoopComplete(): void {
+    // * first option via `NgZone.run()`
+    this.ngZone.run(() => {
+      this.onLoopCompleteCalledTimes++;
+    });
+
+    // * second option via `ChangeDetectorRef.detectChanges()`
+    this.onLoopCompleteCalledTimes++;
+    this.ref.detectChanges();
+    // Angular 9+
+    detectChanges(this);
+
+    // * third option via `ChangeDetectorRef.markForCheck()`
+    this.onLoopCompleteCalledTimes++;
+    this.ref.markForCheck();
+    // Angular 9+
+    markDirty(this);
   }
 }
 ```

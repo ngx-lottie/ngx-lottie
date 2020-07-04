@@ -8,7 +8,6 @@ HTMLCanvasElement.prototype.getContext = () => ({
   fillRect: jest.fn(),
   clearRect: jest.fn(),
   putImageData: jest.fn(),
-  createImageData: () => <any>{},
   setTransform: jest.fn(),
   drawImage: jest.fn(),
   save: jest.fn(),

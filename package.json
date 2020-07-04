@@ -104,6 +104,7 @@
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
     "tsickle": "^0.39.0",
+    "tslib": "^2.0.0",
     "tslint": "^6.1.2",
     "typescript": "~3.9.6",
     "zone.js": "^0.10.3"
@@ -129,8 +130,5 @@
     "bracketSpacing": true,
     "arrowParens": "avoid",
     "singleQuote": true
-  },
-  "dependencies": {
-    "tslib": "^2.0.0"
   }
 }

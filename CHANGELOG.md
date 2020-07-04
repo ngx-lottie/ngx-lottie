@@ -1,3 +1,9 @@
+#### 6.1.2 (2020-07-04)
+
+##### Documentation Changes
+
+*  document how to properly listen to native events ([#60](https://github.com/ngx-lottie/ngx-lottie/pull/60)) ([6004d77d](https://github.com/ngx-lottie/ngx-lottie/commit/6004d77d1d7a708e53f8fe6dd08e18affec02bce))
+
 #### 6.1.1 (2020-06-20)
 
 ##### Bug Fixes

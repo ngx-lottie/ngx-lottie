@@ -1,7 +1,7 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext",
+    "module": "es2020",
     "target": "es2015",
     "types": [
       "node"

@@ -1,3 +1,9 @@
+### 6.2.0 (2020-07-04)
+
+##### New Features
+
+*  upgrade to Angular 10 ([#61](https://github.com/ngx-lottie/ngx-lottie/pull/61)) ([f69ba256](https://github.com/ngx-lottie/ngx-lottie/commit/f69ba256379ccbfab4f4bc98be35a099472a8531))
+
 #### 6.1.2 (2020-07-04)
 
 ##### Documentation Changes

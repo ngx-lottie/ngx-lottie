@@ -7,15 +7,8 @@ import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testin
 HTMLCanvasElement.prototype.getContext = () => ({
   fillRect: jest.fn(),
   clearRect: jest.fn(),
-  getImageData: (x: number, y: number, w: number, h: number) => {
-    return {
-      data: new Array(w * h * 4)
-    };
-  },
   putImageData: jest.fn(),
-  createImageData: () => {
-    return [];
-  },
+  createImageData: () => <any>{},
   setTransform: jest.fn(),
   drawImage: jest.fn(),
   save: jest.fn(),
@@ -31,14 +24,9 @@ HTMLCanvasElement.prototype.getContext = () => ({
   rotate: jest.fn(),
   arc: jest.fn(),
   fill: jest.fn(),
-  measureText: () => {
-    return {
-      width: 0
-    };
-  },
   transform: jest.fn(),
   rect: jest.fn(),
-  clip: jest.fn()
+  clip: jest.fn(),
 });
 
 import * as lottie from 'lottie-web';
@@ -65,17 +53,17 @@ describe('ngx-lottie', () => {
           (domLoaded)="domLoaded()"
           (destroy)="destroy($event)"
         ></ng-lottie>
-      `
+      `,
     })
     class MockComponent {
       options: AnimationOptions = {
         animationData,
         loop: true,
-        autoplay: true
+        autoplay: true,
       };
 
       styles = {
-        display: 'flex'
+        display: 'flex',
       };
 
       isDomLoaded = false;
@@ -104,7 +92,7 @@ describe('ngx-lottie', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [LottieModule.forRoot({ player: playerFactory })],
-        declarations: [MockComponent]
+        declarations: [MockComponent],
       });
     });
 
@@ -202,17 +190,17 @@ describe('ngx-lottie', () => {
           (domLoaded)="domLoaded()"
           (destroy)="destroy($event)"
         ></main>
-      `
+      `,
     })
     class MockComponent {
       options: AnimationOptions = {
         animationData,
         loop: true,
-        autoplay: true
+        autoplay: true,
       };
 
       styles = {
-        display: 'flex'
+        display: 'flex',
       };
 
       isDomLoaded = false;
@@ -237,7 +225,7 @@ describe('ngx-lottie', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [LottieModule.forRoot({ player: playerFactory })],
-        declarations: [MockComponent]
+        declarations: [MockComponent],
       });
     });
 
@@ -283,17 +271,17 @@ describe('ngx-lottie', () => {
           [styles]="styles"
           (animationCreated)="animationCreated($event)"
         ></ng-lottie>
-      `
+      `,
     })
     class MockComponent {
       options: AnimationOptions = {
         animationData,
         loop: true,
-        autoplay: true
+        autoplay: true,
       };
 
       styles = {
-        display: 'flex'
+        display: 'flex',
       };
 
       isDomLoaded = false;
@@ -308,7 +296,7 @@ describe('ngx-lottie', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [LottieModule.forRoot({ player: () => import('lottie-web') })],
-        declarations: [MockComponent]
+        declarations: [MockComponent],
       });
     });
 

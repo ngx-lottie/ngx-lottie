@@ -1,3 +1,9 @@
+#### 6.2.1 (2020-07-04)
+
+##### Documentation Changes
+
+*  document how to reduce `lottie-web` bundle size ([#62](https://github.com/ngx-lottie/ngx-lottie/pull/62)) ([f18d8cc6](https://github.com/ngx-lottie/ngx-lottie/commit/f18d8cc6dc6382d474801927570d7bfbc25f937c))
+
 ### 6.2.0 (2020-07-04)
 
 ##### New Features

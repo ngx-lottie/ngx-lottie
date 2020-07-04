@@ -6,7 +6,7 @@ import { LottieModule } from 'ngx-lottie';
 import { AppComponent } from './app.component';
 
 export function playerFactory() {
-  return import('lottie-web');
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
 }
 
 @NgModule({
@@ -16,10 +16,10 @@ export function playerFactory() {
     HttpClientModule,
     LottieModule.forRoot({
       player: playerFactory,
-      useCache: true
-    })
+      useCache: true,
+    }),
   ],
   declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

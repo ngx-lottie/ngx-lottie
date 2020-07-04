@@ -52,6 +52,9 @@
                 "input": "integration/assets/animations",
                 "output": "/assets/animations"
               }
+            ],
+            "allowedCommonJsDependencies": [
+              "lottie-web"
             ]
           },
           "configurations": {

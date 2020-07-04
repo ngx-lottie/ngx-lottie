@@ -107,7 +107,7 @@ import { NgModule } from '@angular/core';
 import { LottieModule } from 'ngx-lottie';
 
 export function playerFactory() {
-  return import('lottie-web');
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
 }
 
 @NgModule({
@@ -375,7 +375,7 @@ import { NgModule } from '@angular/core';
 import { LottieModule } from 'ngx-lottie';
 
 export function playerFactory() {
-  return import('lottie-web');
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
 }
 
 @NgModule({

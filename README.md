@@ -38,6 +38,7 @@
 - [Listening to lottie-web events](#listening-to-lottie-web-events)
 - [Caching](#caching)
 - [API](#api)
+- [Reducing lottie-web bundle size](#reducing-lottie-web-bundle-size)
 - [Optimizations](#optimizations)
 - [Server side rendering](#server-side-rendering)
 
@@ -444,6 +445,61 @@ The `lottie` directive supports only `options` binding.
 | complete         | `BMCompleteEvent`                               | optional | Dispatched after completing the last frame                                                                              |
 | destroy          | `BMDestroyEvent`                                | optional | Dispatched in the `ngOnDestroy` hook of the service that manages `lottie`'s events, it's useful for releasing resources |
 | error            | `BMRenderFrameErrorEvent OR BMConfigErrorEvent` | optional | Dispatched if the lottie player could not render some frame or parse the config                                         |
+
+## Reducing `lottie-web` bundle size
+
+The size of the `lottie-web` library is quite large. Because when we write this:
+
+```ts
+import player from 'lottie-web';
+
+export function playerFactory() {
+  return player;
+}
+
+// Or if you load `lottie-web` on demand
+export function playerFactory() {
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
+}
+```
+
+It bundles all 3 renderers: `CanvasRenderer`, `SVGRenderer` and `HybridRenderer`. The `SVGRenderer` is used by default. If you don't care which renderer is used and you never provide the `renderer` option then you might want to exclude `CanvasRenderer` and `HybridRenderer`. To do this just import `lottie_svg` file that is inside the `lottie-web/build/player` folder:
+
+```ts
+import player from 'lottie-web/build/player/lottie_svg';
+
+export function playerFactory() {
+  return player;
+}
+
+// Or if you load `lottie-web` on demand
+export function playerFactory() {
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_svg');
+}
+```
+
+Its minified size is `198 KiB`.
+
+You can also use the `lottie-web` light version. As Hernan Torrisi (author of `lottie-web`) explains:
+
+> It should work fine but animations won't render correctly if they have expressions or effects.
+
+The light version can be imported using the following code:
+
+```ts
+import player from 'lottie-web/build/player/lottie_light';
+
+export function playerFactory() {
+  return player;
+}
+
+// Or if you load `lottie-web` on demand
+export function playerFactory() {
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_light');
+}
+```
+
+Its minified size is `148 KiB`. Use this at your own risk because I can't know if your animations contain expressions or effects.
 
 ## Optimizations
 

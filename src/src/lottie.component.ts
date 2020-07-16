@@ -15,6 +15,8 @@ import { BaseDirective } from './base.directive';
 import { AnimationLoader } from './animation-loader';
 import { LottieEventsFacade } from './events-facade';
 
+const lottie: any = require('lottie-web/build/player/lottie.js');
+
 @Component({
   selector: 'ng-lottie',
   template: `
@@ -41,6 +43,7 @@ export class LottieComponent extends BaseDirective implements OnChanges {
     animationLoader: AnimationLoader,
   ) {
     super(platformId, animationLoader);
+    lottie.setLocationHref(document.location.href);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

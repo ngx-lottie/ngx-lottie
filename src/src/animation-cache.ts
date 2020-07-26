@@ -16,20 +16,20 @@ export class AnimationCache {
   transformOptions(
     options: AnimationConfigWithData | AnimationConfigWithPath,
   ): AnimationConfigWithData | AnimationConfigWithPath {
-    const path = (<AnimationConfigWithPath>options).path;
+    const path = (options as AnimationConfigWithPath).path;
     if (path && this.cache.has(path)) {
-      delete (<AnimationConfigWithPath>options).path;
-      (<AnimationConfigWithData>options).animationData = this.cache.get(path);
+      delete (options as AnimationConfigWithPath).path;
+      (options as AnimationConfigWithData).animationData = this.cache.get(path);
     }
     return options;
   }
 
   set(options: AnimationOptions, animationItem: AnimationItem): void {
-    const animationData = (<AnimationConfigWithData>options).animationData;
+    const animationData = (options as AnimationConfigWithData).animationData;
     if (animationData) {
       return;
     }
 
-    this.cache.set((<AnimationConfigWithPath>options).path!, animationItem['animationData']);
+    this.cache.set((options as AnimationConfigWithPath).path!, animationItem['animationData']);
   }
 }

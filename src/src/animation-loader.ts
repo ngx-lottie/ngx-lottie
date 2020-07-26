@@ -59,7 +59,7 @@ export class AnimationLoader {
       options.beforeAnimationIsCreated(player);
     }
     const animationItem = this.ngZone.runOutsideAngular(() =>
-      player.loadAnimation(<AnimationConfigWithData | AnimationConfigWithPath>options),
+      player.loadAnimation(options as AnimationConfigWithData | AnimationConfigWithPath),
     );
     awaitConfigAndCache(this.animationCache, options, animationItem);
     // Dispatch `animationCreated` event after animation is loaded successfully

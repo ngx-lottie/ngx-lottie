@@ -41,6 +41,8 @@ attach_workspace: &attach_workspace
 jobs:
   build:
     <<: *job_defaults
+    environment:
+      HUSKY_SKIP_INSTALL: 'true'
     steps:
       - checkout
       - *restore_cache

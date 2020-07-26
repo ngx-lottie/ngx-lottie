@@ -34,16 +34,9 @@ export function mergeOptionsWithDefault(
   return animationCache !== null ? animationCache.transformOptions(merged) : merged;
 }
 
-export function isAnimationConfigWithData(
-  options: AnimationConfigWithPath | AnimationConfigWithData,
-): options is AnimationConfigWithData {
-  const animationData = (options as AnimationConfigWithData).animationData;
-  return animationData !== null && typeof animationData === 'object';
-}
-
 export function awaitConfigAndCache(
   animationCache: AnimationCache | null,
-  options: AnimationConfigWithPath | AnimationConfigWithData,
+  options: AnimationOptions,
   animationItem: AnimationItem,
 ): void {
   if (animationCache === null) {

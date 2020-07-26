@@ -10,10 +10,10 @@ module.exports = {
   cacheDirectory: '<rootDir>/.cache',
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/src/tsconfig.spec.json'
-    }
+      tsConfig: '<rootDir>/src/tsconfig.spec.json',
+    },
   },
   bail: true,
   clearMocks: true,
-  resetModules: true
+  resetModules: true,
 };

@@ -3,8 +3,8 @@ import {
   AnimationItem,
   AnimationConfigWithData,
   AnimationConfigWithPath,
+  AnimationOptions,
 } from './symbols';
-import { isAnimationConfigWithData } from './utils';
 
 export class AnimationCache {
   private cache = new Map<string, unknown>();
@@ -24,15 +24,12 @@ export class AnimationCache {
     return options;
   }
 
-  set(
-    options: AnimationConfigWithData | AnimationConfigWithPath,
-    animationItem: AnimationItem,
-  ): void {
-    if (isAnimationConfigWithData(options)) {
+  set(options: AnimationOptions, animationItem: AnimationItem): void {
+    const animationData = (options as AnimationConfigWithData).animationData;
+    if (animationData) {
       return;
     }
 
-    const animationData = animationItem['animationData'];
-    this.cache.set(options.path!, animationData);
+    this.cache.set((options as AnimationConfigWithPath).path!, animationItem['animationData']);
   }
 }

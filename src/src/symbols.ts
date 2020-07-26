@@ -72,15 +72,13 @@ export type AnimationItem = import('lottie-web').AnimationItem;
 export type LottiePlayer = typeof import('lottie-web').default;
 
 /**
- * This looks as follows
  * @example
  * import player from 'lottie-web';
  * const factory = () => player;
  */
-type LottiePlayerFactory = () => typeof import('lottie-web').default;
+type LottiePlayerFactory = () => LottiePlayer;
 
 /**
- * This looks as follows
  * @example
  * const factory = () => import('lottie-web');
  */
@@ -95,7 +93,16 @@ export interface LottieOptions {
 
 export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithData;
 export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPath;
-export type AnimationOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
+
+export interface BeforeAnimationIsCreated {
+  beforeAnimationIsCreated?(player: LottiePlayer): void;
+}
+
+export type AnimationOptions = (
+  | Partial<AnimationConfigWithData>
+  | Partial<AnimationConfigWithPath>
+) &
+  BeforeAnimationIsCreated;
 
 export const LOTTIE_OPTIONS = new InjectionToken<LottieOptions>('LottieOptions');
 export const ANIMATION_CACHE = new InjectionToken<AnimationCache | null>('AnimationCache');

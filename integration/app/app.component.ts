@@ -77,12 +77,19 @@ export class AppComponent implements AfterViewChecked {
   }
 
   private createOptions(): void {
-    if (this.lottieTransferState.get('data.json')) {
+    const tranferredAnimationData = this.lottieTransferState.get('data.json');
+    const options: AnimationOptions = {
+      beforeAnimationIsCreated: () => console.log('beforeAnimationCreated is called'),
+    };
+
+    if (tranferredAnimationData) {
       this.options = {
-        animationData: this.lottieTransferState.get('data.json'),
+        ...options,
+        animationData: tranferredAnimationData,
       };
     } else {
       this.options = {
+        ...options,
         path: '/assets/animations/data.json',
       };
     }

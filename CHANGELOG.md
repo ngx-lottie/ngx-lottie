@@ -1,3 +1,17 @@
+### 6.3.0 (2020-07-26)
+
+##### Build System / Dependencies
+
+* **deps:**  bump npm-registry-fetch from 4.0.2 to 4.0.5 ([#63](https://github.com/ngx-lottie/ngx-lottie/pull/63)) ([f5798fba](https://github.com/ngx-lottie/ngx-lottie/commit/f5798fbad575f8c1d68167285613f011b9a75384))
+
+##### Documentation Changes
+
+*  update README.md ([eefdf8be](https://github.com/ngx-lottie/ngx-lottie/commit/eefdf8bed33bd0e5ff94e37c0b7890acbe4f0e9e))
+
+##### New Features
+
+*  add `beforeAnimationCreated` options method for doing anything before animation is created ([#66](https://github.com/ngx-lottie/ngx-lottie/pull/66)) ([82e18262](https://github.com/ngx-lottie/ngx-lottie/commit/82e182625195cfa34ea503853e302d38213e4cc4))
+
 #### 6.2.1 (2020-07-04)
 
 ##### Documentation Changes

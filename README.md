@@ -41,6 +41,7 @@
 - [Reducing lottie-web bundle size](#reducing-lottie-web-bundle-size)
 - [Optimizations](#optimizations)
 - [Server side rendering](#server-side-rendering)
+- [Potential Pitfalls](#potential-pitfalls)
 
 ## Features
 
@@ -300,9 +301,7 @@ import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie>
-  `,
+  template: ` <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
@@ -318,9 +317,10 @@ export class AppComponent {
 ```
 
 Therefore you need:
-* either call `NgZone.run()`
-* either call change detection manually via `ChangeDetectorRef.detectChanges()`
-* either mark component to be checked via `ChangeDetectorRef.markForCheck()`
+
+- either call `NgZone.run()`
+- either call change detection manually via `ChangeDetectorRef.detectChanges()`
+- either mark component to be checked via `ChangeDetectorRef.markForCheck()`
 
 ```ts
 import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
@@ -612,9 +612,7 @@ import { AnimationOptions, LottieTransferState } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <ng-lottie [options]="options"></ng-lottie>
-  `,
+  template: ` <ng-lottie [options]="options"></ng-lottie> `,
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -637,4 +635,31 @@ To this:
 document.addEventListener('DOMContentLoaded', () => {
   platformBrowserDynamic().bootstrapModule(AppModule);
 });
+```
+
+## Potential Pitfalls
+
+There is only one potential pitfall associated with animations in the Safari browser. Also this known issue is in the `lottie-web` library itself. As the `lottie-web` library says, this problem can be solved by setting href. You're able to provide the `beforeAnimationCreated` function in `AnimationOptions`, this function will be called every time before your particular animation is created, it also accepts the `LottiePlayer` as an argument:
+
+```ts
+import { Component } from '@angular/core';
+import { AnimationItem, LottiePlayer } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: ` <ng-lottie [options]="options"></ng-lottie> `,
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json',
+    beforeAnimationIsCreated: (player: LottiePlayer) => {
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+      if (isSafari) {
+        player.setLocationHref(location.href);
+      }
+    },
+  };
+}
 ```

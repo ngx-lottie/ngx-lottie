@@ -3,8 +3,8 @@ import {
   AnimationItem,
   AnimationConfigWithData,
   AnimationConfigWithPath,
+  AnimationOptions,
 } from './symbols';
-import { isAnimationConfigWithData } from './utils';
 
 export class AnimationCache {
   private cache = new Map<string, unknown>();
@@ -16,23 +16,20 @@ export class AnimationCache {
   transformOptions(
     options: AnimationConfigWithData | AnimationConfigWithPath,
   ): AnimationConfigWithData | AnimationConfigWithPath {
-    const path = (options as AnimationConfigWithPath).path;
+    const path = (<AnimationConfigWithPath>options).path;
     if (path && this.cache.has(path)) {
-      delete (options as AnimationConfigWithPath).path;
-      (options as AnimationConfigWithData).animationData = this.cache.get(path);
+      delete (<AnimationConfigWithPath>options).path;
+      (<AnimationConfigWithData>options).animationData = this.cache.get(path);
     }
     return options;
   }
 
-  set(
-    options: AnimationConfigWithData | AnimationConfigWithPath,
-    animationItem: AnimationItem,
-  ): void {
-    if (isAnimationConfigWithData(options)) {
+  set(options: AnimationOptions, animationItem: AnimationItem): void {
+    const animationData = (<AnimationConfigWithData>options).animationData;
+    if (animationData) {
       return;
     }
 
-    const animationData = animationItem['animationData'];
-    this.cache.set(options.path!, animationData);
+    this.cache.set((<AnimationConfigWithPath>options).path!, animationItem['animationData']);
   }
 }

@@ -37,7 +37,7 @@ export class AnimationLoader {
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective,
     destroy$: Subject<void>,
-  ) {
+  ): void {
     if (isPlatformServer(this.platformId)) {
       return;
     }
@@ -50,12 +50,17 @@ export class AnimationLoader {
 
   private loadAnimation(
     player: LottiePlayer,
-    options: AnimationConfigWithData | AnimationConfigWithPath,
+    options: AnimationOptions,
     eventsFacade: LottieEventsFacade,
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective,
   ): void {
-    const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
+    if (typeof options.beforeAnimationIsCreated === 'function') {
+      options.beforeAnimationIsCreated(player);
+    }
+    const animationItem = this.ngZone.runOutsideAngular(() =>
+      player.loadAnimation(<AnimationConfigWithData | AnimationConfigWithPath>options),
+    );
     awaitConfigAndCache(this.animationCache, options, animationItem);
     // Dispatch `animationCreated` event after animation is loaded successfully
     animationCreated.emit(animationItem);

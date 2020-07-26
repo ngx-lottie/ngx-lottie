@@ -59,6 +59,7 @@ describe('ngx-lottie', () => {
         animationData,
         loop: true,
         autoplay: true,
+        beforeAnimationIsCreated: jest.fn(),
       };
 
       styles = {
@@ -176,6 +177,14 @@ describe('ngx-lottie', () => {
       expect(destroyEvent).toBeTruthy();
       expect(destroyEvent.type).toBe('destroy');
       expect(destroyEvent.target.constructor.name).toBe('AnimationItem');
+    });
+
+    it('should call "beforeAnimationIsCreated"', () => {
+      // Arrange & act
+      const fixture = createFixture(MockComponent);
+
+      // Assert
+      expect(fixture.componentInstance.options.beforeAnimationIsCreated).toBeCalled();
     });
   });
 

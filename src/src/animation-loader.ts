@@ -55,9 +55,6 @@ export class AnimationLoader {
     animationCreated: EventEmitter<AnimationItem>,
     instance: BaseDirective,
   ): void {
-    if (typeof options.beforeAnimationIsCreated === 'function') {
-      options.beforeAnimationIsCreated(player);
-    }
     const animationItem = this.ngZone.runOutsideAngular(() =>
       player.loadAnimation(options as AnimationConfigWithData | AnimationConfigWithPath),
     );

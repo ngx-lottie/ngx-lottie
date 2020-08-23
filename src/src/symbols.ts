@@ -94,15 +94,7 @@ export interface LottieOptions {
 export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithData;
 export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPath;
 
-export interface BeforeAnimationIsCreated {
-  beforeAnimationIsCreated?(player: LottiePlayer): void;
-}
-
-export type AnimationOptions = (
-  | Partial<AnimationConfigWithData>
-  | Partial<AnimationConfigWithPath>
-) &
-  BeforeAnimationIsCreated;
+export type AnimationOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
 
 export const LOTTIE_OPTIONS = new InjectionToken<LottieOptions>('LottieOptions');
 export const ANIMATION_CACHE = new InjectionToken<AnimationCache | null>('AnimationCache');

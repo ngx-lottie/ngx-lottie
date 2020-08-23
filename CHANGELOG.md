@@ -1,3 +1,13 @@
+### 6.4.0 (2020-08-23)
+
+##### Build System / Dependencies
+
+* **deps:**  bump elliptic from 6.5.2 to 6.5.3 ([#68](https://github.com/ngx-lottie/ngx-lottie/pull/68)) ([f1c8c87a](https://github.com/ngx-lottie/ngx-lottie/commit/f1c8c87a8b47f5eae3e32b77d493876289724b53))
+
+##### Bug Fixes
+
+*  remove `beforeAnimationIsCreated` ([#69](https://github.com/ngx-lottie/ngx-lottie/pull/69)) ([eb3e0937](https://github.com/ngx-lottie/ngx-lottie/commit/eb3e0937a0f644abeb2b8c53d7e7314c32a79378))
+
 ### 6.3.0 (2020-07-26)
 
 ##### Build System / Dependencies

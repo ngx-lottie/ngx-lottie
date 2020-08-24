@@ -6,6 +6,7 @@ import {
   PLATFORM_ID,
   OnDestroy,
   SimpleChanges,
+  NgZone,
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
@@ -100,6 +101,7 @@ export class BaseDirective implements OnDestroy {
   private animationItem$ = new BehaviorSubject<AnimationItem | null>(null);
 
   constructor(
+    private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
     private animationLoader: AnimationLoader,
   ) {}
@@ -153,8 +155,14 @@ export class BaseDirective implements OnDestroy {
     return this.getAnimationItem().pipe(
       switchMap(
         animationItem =>
+          // `fromEvent` will try to call `removeEventListener` when `unsubscribe()` is invoked.
+          // The problem is that `ngOnDestroy()` is called before Angular unsubscribes from
+          // `@Output()` properties, thus `animationItem` will be `null` already, also `lottie-web`
+          // removes event listeners when calling `destroy()`.
           new Observable<T>(observer => {
-            animationItem.addEventListener<T>(name, event => observer.next(event));
+            this.ngZone.runOutsideAngular(() => {
+              animationItem.addEventListener<T>(name, event => observer.next(event));
+            });
           }),
       ),
     );

@@ -8,6 +8,7 @@ import {
   PLATFORM_ID,
   OnChanges,
   SimpleChanges,
+  NgZone,
 } from '@angular/core';
 
 import { BaseDirective } from './base.directive';
@@ -32,8 +33,12 @@ export class LottieComponent extends BaseDirective implements OnChanges {
 
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 
-  constructor(@Inject(PLATFORM_ID) platformId: string, animationLoader: AnimationLoader) {
-    super(platformId, animationLoader);
+  constructor(
+    ngZone: NgZone,
+    @Inject(PLATFORM_ID) platformId: string,
+    animationLoader: AnimationLoader,
+  ) {
+    super(ngZone, platformId, animationLoader);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,7 +1,7 @@
-import { Injectable, NgZone, Inject, EventEmitter, PLATFORM_ID } from '@angular/core';
+import { Injectable, NgZone, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import {
@@ -14,10 +14,8 @@ import {
   LOTTIE_OPTIONS,
   ANIMATION_CACHE,
 } from './symbols';
-import { awaitConfigAndCache, mergeOptionsWithDefault, streamifyPlayerOrLoader } from './utils';
-import { BaseDirective } from './base.directive';
 import { AnimationCache } from './animation-cache';
-import { LottieEventsFacade } from './events-facade';
+import { awaitConfigAndCache, mergeOptionsWithDefault, streamifyPlayerOrLoader } from './utils';
 
 @Injectable()
 export class AnimationLoader {
@@ -33,9 +31,7 @@ export class AnimationLoader {
   resolveLoaderAndLoadAnimation(
     options: AnimationOptions | null,
     container: HTMLElement,
-    eventsFacade: LottieEventsFacade,
-    animationCreated: EventEmitter<AnimationItem>,
-    instance: BaseDirective,
+    animationItem$: BehaviorSubject<AnimationItem | null>,
     destroy$: Subject<void>,
   ): void {
     if (isPlatformServer(this.platformId)) {
@@ -44,23 +40,19 @@ export class AnimationLoader {
 
     this.player$.pipe(takeUntil(destroy$)).subscribe(player => {
       const mergedOptions = mergeOptionsWithDefault(options, container, this.animationCache);
-      this.loadAnimation(player, mergedOptions, eventsFacade, animationCreated, instance);
+      this.loadAnimation(player, mergedOptions, animationItem$);
     });
   }
 
   private loadAnimation(
     player: LottiePlayer,
     options: AnimationOptions,
-    eventsFacade: LottieEventsFacade,
-    animationCreated: EventEmitter<AnimationItem>,
-    instance: BaseDirective,
+    animationItem$: BehaviorSubject<AnimationItem | null>,
   ): void {
     const animationItem = this.ngZone.runOutsideAngular(() =>
       player.loadAnimation(options as AnimationConfigWithData | AnimationConfigWithPath),
     );
     awaitConfigAndCache(this.animationCache, options, animationItem);
-    // Dispatch `animationCreated` event after animation is loaded successfully
-    animationCreated.emit(animationItem);
-    eventsFacade.addEventListeners(instance, animationItem);
+    animationItem$.next(animationItem);
   }
 }

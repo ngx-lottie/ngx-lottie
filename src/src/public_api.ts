@@ -12,6 +12,6 @@ export {
   BMRenderFrameErrorEvent,
   BMConfigErrorEvent,
   AnimationOptions,
-  AnimationFilename
+  AnimationFilename,
 } from './symbols';
-export { transformAnimationFilenameToKey } from './utils';
+export { transformAnimationFilenameToKey } from './server';

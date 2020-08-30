@@ -113,7 +113,7 @@ export class BaseDirective implements OnDestroy {
   }
 
   protected loadAnimation(changes: SimpleChanges, container: HTMLElement): void {
-    if (changes.options === undefined) {
+    if (isPlatformServer(this.platformId) || changes.options === undefined) {
       return;
     }
 
@@ -133,7 +133,7 @@ export class BaseDirective implements OnDestroy {
     // `Cannot read property 'destroy' of null`.
     // Potentially it can happen if the directive gets destroyed before change
     // detection is run.
-    if (isPlatformServer(this.platformId) || this.animationItem$.value === null) {
+    if (this.animationItem$.value === null) {
       return;
     }
 

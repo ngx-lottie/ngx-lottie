@@ -1,8 +1,7 @@
-import { Injectable, NgZone, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { Injectable, NgZone, Inject } from '@angular/core';
 
-import { Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, BehaviorSubject, Observable, from, of } from 'rxjs';
+import { takeUntil, map, publishReplay, refCount } from 'rxjs/operators';
 
 import {
   LottiePlayer,
@@ -13,9 +12,35 @@ import {
   AnimationConfigWithPath,
   LOTTIE_OPTIONS,
   ANIMATION_CACHE,
+  LottiePlayerFactoryOrLoader,
 } from './symbols';
 import { AnimationCache } from './animation-cache';
-import { awaitConfigAndCache, mergeOptionsWithDefault, streamifyPlayerOrLoader } from './utils';
+
+function awaitConfigAndCache(
+  animationCache: AnimationCache | null,
+  options: AnimationOptions,
+  animationItem: AnimationItem,
+): void {
+  if (animationCache !== null) {
+    animationItem.addEventListener('config_ready', () => {
+      animationCache.set(options, animationItem);
+    });
+  }
+}
+
+function streamifyPlayerOrLoader(player: LottiePlayerFactoryOrLoader): Observable<LottiePlayer> {
+  const playerOrLoader = player();
+
+  if (playerOrLoader instanceof Promise) {
+    return from(playerOrLoader).pipe(
+      map(module => module.default || module),
+      publishReplay(1),
+      refCount(),
+    );
+  } else {
+    return of(playerOrLoader);
+  }
+}
 
 @Injectable()
 export class AnimationLoader {
@@ -23,7 +48,6 @@ export class AnimationLoader {
 
   constructor(
     private ngZone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: string,
     @Inject(LOTTIE_OPTIONS) private options: LottieOptions,
     @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null,
   ) {}
@@ -34,13 +58,24 @@ export class AnimationLoader {
     animationItem$: BehaviorSubject<AnimationItem | null>,
     destroy$: Subject<void>,
   ): void {
-    if (isPlatformServer(this.platformId)) {
-      return;
-    }
-
     this.player$.pipe(takeUntil(destroy$)).subscribe(player => {
-      const mergedOptions = mergeOptionsWithDefault(options, container, this.animationCache);
-      this.loadAnimation(player, mergedOptions, animationItem$);
+      options = Object.assign(
+        {
+          container,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+        },
+        options,
+      );
+
+      if (this.animationCache !== null) {
+        options = this.animationCache.transformOptions(
+          <AnimationConfigWithData | AnimationConfigWithPath>options,
+        );
+      }
+
+      this.loadAnimation(player, options, animationItem$);
     });
   }
 

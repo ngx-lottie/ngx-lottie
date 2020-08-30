@@ -71,7 +71,7 @@ export class AnimationLoader {
 
       if (this.animationCache !== null) {
         options = this.animationCache.transformOptions(
-          <AnimationConfigWithData | AnimationConfigWithPath>options,
+          options as AnimationConfigWithData | AnimationConfigWithPath,
         );
       }
 

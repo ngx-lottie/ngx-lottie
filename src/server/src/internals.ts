@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 
-import { AnimationFilename, transformAnimationFilenameToKey } from 'ngx-lottie';
+import { AnimationFilename, transformAnimationFilenameToKey } from 'ngx-lottie-es5';
 
 import { readFileWithAnimationData } from './utils';
 import { LottieServerOptions, PathToAnimation, AnimationData } from './symbols';

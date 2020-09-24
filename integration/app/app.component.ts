@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, AfterViewChecked, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
+import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie-es5';
 
 @Component({
   selector: 'app-root',

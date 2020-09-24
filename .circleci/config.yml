@@ -32,7 +32,7 @@ persist_to_workspace: &persist_to_workspace
   persist_to_workspace:
     root: ~/workspace
     paths:
-      - ngx-lottie
+      - ngx-lottie-es5
 
 attach_workspace: &attach_workspace
   attach_workspace:

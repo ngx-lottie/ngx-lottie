@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
   "name": "ngx-lottie-es5",
-  "version": "6.4.1",
+  "version": "6.4.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/renearias/ngx-lottie.git"
@@ -35,10 +35,10 @@
   },
   "ngPackage": {
     "lib": {
-      "umdId": "ngx-lottie",
-      "flatModuleFile": "ngx-lottie",
+      "umdId": "ngx-lottie-es5",
+      "flatModuleFile": "ngx-lottie-es5",
       "entryFile": "index.ts"
     },
-    "dest": "../ngx-lottie"
+    "dest": "../ngx-lottie-es5"
   }
 }

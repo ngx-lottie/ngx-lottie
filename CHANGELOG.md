@@ -1,3 +1,18 @@
+#### 6.4.1 (2020-09-24)
+
+##### Build System / Dependencies
+
+* **deps:**  bump http-proxy from 1.18.0 to 1.18.1 ([#73](https://github.com/ngx-lottie/ngx-lottie/pull/73)) ([147b0896](https://github.com/ngx-lottie/ngx-lottie/commit/147b08969d325a8423297e5292eac5847f61b9bc))
+
+##### Bug Fixes
+
+*  call `isPlatformServer` only once ([#72](https://github.com/ngx-lottie/ngx-lottie/pull/72)) ([4cae4f53](https://github.com/ngx-lottie/ngx-lottie/commit/4cae4f53c10e35c6c44074d92229d595085a077d))
+
+##### Performance Improvements
+
+*  add compatibility with es5 ([1735cf1d](https://github.com/ngx-lottie/ngx-lottie/commit/1735cf1d1fc77bdf42998b381fb1ca8c74bf8e5d))
+*  remove `LottieEventsFacade` and reduce bundle size ([#70](https://github.com/ngx-lottie/ngx-lottie/pull/70)) ([53b71757](https://github.com/ngx-lottie/ngx-lottie/commit/53b7175747f189db8e051208a197b5bafe618378))
+
 ### 6.4.0 (2020-08-23)
 
 ##### Build System / Dependencies

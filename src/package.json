@@ -1,15 +1,15 @@
 {
   "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
-  "name": "ngx-lottie",
-  "version": "6.4.0",
+  "name": "ngx-lottie-es5",
+  "version": "6.4.1",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ngx-lottie/ngx-lottie.git"
+    "url": "git+https://github.com/renearias/ngx-lottie.git"
   },
   "license": "MIT",
-  "homepage": "https://github.com/ngx-lottie/ngx-lottie#readme",
+  "homepage": "https://github.com/renearias/ngx-lottie#readme",
   "bugs": {
-    "url": "git+https://github.com/ngx-lottie/ngx-lottie/issues"
+    "url": "git+https://github.com/renearias/ngx-lottie/issues"
   },
   "keywords": [
     "animation",

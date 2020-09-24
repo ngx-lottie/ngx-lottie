@@ -7,3 +7,4 @@ node_modules
 yarn-error.log
 coverage
 ngx-lottie
+ngx-lottie-es5

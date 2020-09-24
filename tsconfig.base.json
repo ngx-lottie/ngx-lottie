@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "ngx-lottie": [
+      "ngx-lottie-es5": [
         "src/index"
       ]
     },

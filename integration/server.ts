@@ -6,8 +6,9 @@ import { readFileSync } from 'fs';
 import * as express from 'express';
 
 const {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   AppServerModuleNgFactory,
-  renderModuleFactory
+  renderModuleFactory,
 } = require('../dist-integration-server/main');
 
 const PORT = process.env.PORT || 4200;
@@ -21,15 +22,15 @@ app.use(express.static(DIST_FOLDER, { index: false }));
 
 app.get('*', async (req, res) => {
   const url = req.url;
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.time(`GET: ${url}`);
 
   const html = await renderModuleFactory(AppServerModuleNgFactory, {
     url,
-    document
+    document,
   });
 
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.timeEnd(`GET: ${url}`);
   res.send(html);
 });

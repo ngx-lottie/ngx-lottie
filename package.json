@@ -135,6 +135,5 @@
     "bracketSpacing": true,
     "arrowParens": "avoid",
     "singleQuote": true
-  },
-  "dependencies": {}
+  }
 }

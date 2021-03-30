@@ -41,7 +41,6 @@
             "polyfills": "integration/polyfills.ts",
             "tsConfig": "integration/tsconfig.app.json",
             "preserveSymlinks": true,
-            "aot": true,
             "assets": [
               {
                 "glob": "*.json",
@@ -51,7 +50,13 @@
             ],
             "allowedCommonJsDependencies": [
               "lottie-web"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -65,7 +70,6 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -95,7 +99,9 @@
           "options": {
             "outputPath": "dist-integration-server",
             "main": "integration/main.server.ts",
-            "tsConfig": "integration/tsconfig.server.json"
+            "tsConfig": "integration/tsconfig.server.json",
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {

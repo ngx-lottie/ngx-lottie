@@ -23,7 +23,6 @@
     "resolveJsonModule": true,
     "downlevelIteration": true,
     "noStrictGenericChecks": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "suppressImplicitAnyIndexErrors": true
   },

@@ -3,7 +3,7 @@ version: 2
 job_defaults: &job_defaults
   working_directory: ~/workspace/ngx-lottie
   docker:
-    - image: circleci/node:12.0.0-browsers
+    - image: circleci/node:14.15.0-browsers
 
 cache_key: &cache_key yarn-ngx-lottie-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
 

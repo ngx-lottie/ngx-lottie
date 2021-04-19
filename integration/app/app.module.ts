@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { LottieModule } from 'ngx-lottie';
+import { LottieModule, LottieCacheModule } from 'ngx-lottie';
 
 import { AppComponent } from './app.component';
 
@@ -14,10 +14,8 @@ export function playerFactory() {
     BrowserModule.withServerTransition({ appId: 'ngx-lottie-universal' }),
     BrowserTransferStateModule,
     HttpClientModule,
-    LottieModule.forRoot({
-      player: playerFactory,
-      useCache: true,
-    }),
+    LottieModule.forRoot({ player: playerFactory }),
+    LottieCacheModule.forRoot(),
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],

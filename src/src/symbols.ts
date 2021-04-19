@@ -1,7 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-import { AnimationCache } from './animation-cache';
-
 export interface BMEnterFrameEvent {
   currentTime: number;
   duration: number;
@@ -88,7 +86,6 @@ export type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
 
 export interface LottieOptions {
   player: LottiePlayerFactoryOrLoader;
-  useCache?: boolean;
 }
 
 export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithData;
@@ -97,4 +94,3 @@ export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPa
 export type AnimationOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
 
 export const LOTTIE_OPTIONS = new InjectionToken<LottieOptions>('LottieOptions');
-export const ANIMATION_CACHE = new InjectionToken<AnimationCache | null>('AnimationCache');

@@ -8,10 +8,10 @@ import {
   SimpleChanges,
   NgZone,
 } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Subject, BehaviorSubject, Observable, defer } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import {
   AnimationOptions,
@@ -97,49 +97,24 @@ export class BaseDirective implements OnDestroy {
   >('error');
 
   private destroy$ = new Subject<void>();
-
+  private loadAnimation$ = new Subject<[SimpleChanges, HTMLElement]>();
   private animationItem$ = new BehaviorSubject<AnimationItem | null>(null);
 
   constructor(
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
     private animationLoader: AnimationLoader,
-  ) {}
+  ) {
+    this.setupLoadAnimationListener();
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
-    this.destroy$.complete();
     this.destroyAnimation();
   }
 
   protected loadAnimation(changes: SimpleChanges, container: HTMLElement): void {
-    if (isPlatformServer(this.platformId) || changes.options === undefined) {
-      return;
-    }
-
-    this.destroyAnimation();
-
-    this.animationLoader.resolveLoaderAndLoadAnimation(
-      changes.options.currentValue,
-      container,
-      this.animationItem$,
-      this.destroy$,
-    );
-  }
-
-  private destroyAnimation(): void {
-    // The `ng-lottie` component or the `lottie` directive can be destroyed
-    // before the `animationItem` is set, thus it will fail with
-    // `Cannot read property 'destroy' of null`.
-    // Potentially it can happen if the directive gets destroyed before change
-    // detection is run.
-    if (this.animationItem$.value === null) {
-      return;
-    }
-
-    // `destroy()` will remove all events listeners.
-    this.animationItem$.value.destroy();
-    this.animationItem$.next(null);
+    this.loadAnimation$.next([changes, container]);
   }
 
   private getAnimationItem(): Observable<AnimationItem> {
@@ -161,10 +136,43 @@ export class BaseDirective implements OnDestroy {
           // removes event listeners when calling `destroy()`.
           new Observable<T>(observer => {
             this.ngZone.runOutsideAngular(() => {
-              animationItem.addEventListener<T>(name, event => observer.next(event));
+              animationItem.addEventListener<T>(name, event => {
+                observer.next(event);
+              });
             });
           }),
       ),
     );
+  }
+
+  private setupLoadAnimationListener(): void {
+    this.loadAnimation$
+      .pipe(
+        filter(([changes]) => isPlatformBrowser(this.platformId) && changes.options !== undefined),
+        switchMap(([changes, container]) => {
+          this.destroyAnimation();
+          return this.animationLoader.loadAnimation(changes.options.currentValue, container);
+        }),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(animationItem => {
+        this.animationItem$.next(animationItem);
+      });
+  }
+
+  private destroyAnimation(): void {
+    const animationItem = this.animationItem$.getValue();
+    // The `ng-lottie` component or the `lottie` directive can be destroyed
+    // before the `animationItem` is set, thus it will fail with
+    // `Cannot read property 'destroy' of null`.
+    // Potentially it can happen if the directive gets destroyed before change
+    // detection is run.
+    if (animationItem === null) {
+      return;
+    }
+
+    // `destroy()` will remove all events listeners.
+    animationItem.destroy();
+    this.animationItem$.next(null);
   }
 }

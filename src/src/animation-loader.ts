@@ -1,7 +1,7 @@
 import { Injectable, NgZone, Inject } from '@angular/core';
 
-import { Subject, BehaviorSubject, Observable, from, of } from 'rxjs';
-import { takeUntil, map, publishReplay, refCount } from 'rxjs/operators';
+import { Observable, from, of, animationFrameScheduler } from 'rxjs';
+import { map, observeOn, publishReplay, refCount } from 'rxjs/operators';
 
 import {
   LottiePlayer,
@@ -52,42 +52,36 @@ export class AnimationLoader {
     @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null,
   ) {}
 
-  resolveLoaderAndLoadAnimation(
-    options: AnimationOptions | null,
+  loadAnimation(
+    userOptions: AnimationOptions | null,
     container: HTMLElement,
-    animationItem$: BehaviorSubject<AnimationItem | null>,
-    destroy$: Subject<void>,
-  ): void {
-    this.player$.pipe(takeUntil(destroy$)).subscribe(player => {
-      options = Object.assign(
-        {
-          container,
-          renderer: 'svg',
-          loop: true,
-          autoplay: true,
-        },
-        options,
-      );
-
-      if (this.animationCache !== null) {
-        options = this.animationCache.transformOptions(
-          options as AnimationConfigWithData | AnimationConfigWithPath,
-        );
-      }
-
-      this.loadAnimation(player, options, animationItem$);
-    });
+  ): Observable<AnimationItem> {
+    return this.player$.pipe(
+      observeOn(animationFrameScheduler),
+      map(player => {
+        const options = this.resolveOptions(userOptions, container);
+        if (this.animationCache !== null) {
+          this.animationCache.transformOptions(options);
+        }
+        const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
+        awaitConfigAndCache(this.animationCache, options, animationItem);
+        return animationItem;
+      }),
+    );
   }
 
-  private loadAnimation(
-    player: LottiePlayer,
-    options: AnimationOptions,
-    animationItem$: BehaviorSubject<AnimationItem | null>,
-  ): void {
-    const animationItem = this.ngZone.runOutsideAngular(() =>
-      player.loadAnimation(options as AnimationConfigWithData | AnimationConfigWithPath),
+  private resolveOptions(
+    options: AnimationOptions | null,
+    container: HTMLElement,
+  ): AnimationConfigWithData | AnimationConfigWithPath {
+    return Object.assign(
+      {
+        container,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+      },
+      options,
     );
-    awaitConfigAndCache(this.animationCache, options, animationItem);
-    animationItem$.next(animationItem);
   }
 }

@@ -29,11 +29,13 @@ export class AppComponent implements AfterViewChecked {
   }
 
   animationCreated(animationItem: AnimationItem): void {
+    NgZone.assertInAngularZone();
     console.log('animationCreated -> ', animationItem);
     this.animationItem = animationItem;
   }
 
   destroy(destroyEvent: BMDestroyEvent): void {
+    NgZone.assertNotInAngularZone();
     console.log('destroy -> ', destroyEvent);
   }
 

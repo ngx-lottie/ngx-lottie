@@ -4,29 +4,15 @@ import { Observable, from, of, animationFrameScheduler } from 'rxjs';
 import { map, observeOn, publishReplay, refCount } from 'rxjs/operators';
 
 import {
+  LOTTIE_OPTIONS,
   LottiePlayer,
   LottieOptions,
   AnimationItem,
   AnimationOptions,
   AnimationConfigWithData,
   AnimationConfigWithPath,
-  LOTTIE_OPTIONS,
-  ANIMATION_CACHE,
   LottiePlayerFactoryOrLoader,
 } from './symbols';
-import { AnimationCache } from './animation-cache';
-
-function awaitConfigAndCache(
-  animationCache: AnimationCache | null,
-  options: AnimationOptions,
-  animationItem: AnimationItem,
-): void {
-  if (animationCache !== null) {
-    animationItem.addEventListener('config_ready', () => {
-      animationCache.set(options, animationItem);
-    });
-  }
-}
 
 function streamifyPlayerOrLoader(player: LottiePlayerFactoryOrLoader): Observable<LottiePlayer> {
   const playerOrLoader = player();
@@ -44,33 +30,19 @@ function streamifyPlayerOrLoader(player: LottiePlayerFactoryOrLoader): Observabl
 
 @Injectable()
 export class AnimationLoader {
-  private player$ = streamifyPlayerOrLoader(this.options.player);
+  protected player$ = streamifyPlayerOrLoader(this.options.player).pipe(
+    observeOn(animationFrameScheduler),
+  );
 
-  constructor(
-    private ngZone: NgZone,
-    @Inject(LOTTIE_OPTIONS) private options: LottieOptions,
-    @Inject(ANIMATION_CACHE) private animationCache: AnimationCache | null,
-  ) {}
+  constructor(private ngZone: NgZone, @Inject(LOTTIE_OPTIONS) private options: LottieOptions) {}
 
   loadAnimation(
-    userOptions: AnimationOptions | null,
-    container: HTMLElement,
+    options: AnimationConfigWithData | AnimationConfigWithPath,
   ): Observable<AnimationItem> {
-    return this.player$.pipe(
-      observeOn(animationFrameScheduler),
-      map(player => {
-        const options = this.resolveOptions(userOptions, container);
-        if (this.animationCache !== null) {
-          this.animationCache.transformOptions(options);
-        }
-        const animationItem = this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
-        awaitConfigAndCache(this.animationCache, options, animationItem);
-        return animationItem;
-      }),
-    );
+    return this.player$.pipe(map(player => this.createAnimationItem(player, options)));
   }
 
-  private resolveOptions(
+  resolveOptions(
     options: AnimationOptions | null,
     container: HTMLElement,
   ): AnimationConfigWithData | AnimationConfigWithPath {
@@ -83,5 +55,12 @@ export class AnimationLoader {
       },
       options,
     );
+  }
+
+  protected createAnimationItem(
+    player: LottiePlayer,
+    options: AnimationConfigWithData | AnimationConfigWithPath,
+  ): AnimationItem {
+    return this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
   }
 }

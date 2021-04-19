@@ -135,8 +135,8 @@ export class BaseDirective implements OnDestroy {
           // `@Output()` properties, thus `animationItem` will be `null` already, also `lottie-web`
           // removes event listeners when calling `destroy()`.
           new Observable<T>(observer => {
-            this.ngZone.runOutsideAngular(() => {
-              animationItem.addEventListener<T>(name, event => {
+            animationItem.addEventListener<T>(name, event => {
+              this.ngZone.runOutsideAngular(() => {
                 observer.next(event);
               });
             });
@@ -151,7 +151,9 @@ export class BaseDirective implements OnDestroy {
         filter(([changes]) => isPlatformBrowser(this.platformId) && changes.options !== undefined),
         switchMap(([changes, container]) => {
           this.destroyAnimation();
-          return this.animationLoader.loadAnimation(changes.options.currentValue, container);
+          return this.animationLoader.loadAnimation(
+            this.animationLoader.resolveOptions(changes.options.currentValue, container),
+          );
         }),
         takeUntil(this.destroy$),
       )

@@ -1,4 +1,4 @@
-import { Component, Type, ɵivyEnabled as ivyEnabled } from '@angular/core';
+import { Component, Type, ɵivyEnabled as ivyEnabled, ɵglobal } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 
@@ -39,6 +39,16 @@ describe('ngx-lottie', () => {
   function playerFactory() {
     return (lottie as unknown) as typeof import('lottie-web').default;
   }
+
+  let spy: jest.SpyInstance;
+
+  beforeEach(() => {
+    spy = jest.spyOn(ɵglobal, 'requestAnimationFrame').mockImplementation((cb: any) => cb());
+  });
+
+  afterEach(() => {
+    spy.mockRestore();
+  });
 
   describe('ng-lottie component', () => {
     @Component({

@@ -12,9 +12,7 @@ import {
 import { BaseDirective } from './base.directive';
 import { AnimationLoader } from './animation-loader';
 
-@Directive({
-  selector: '[lottie]',
-})
+@Directive({ selector: '[lottie]' })
 export class LottieDirective extends BaseDirective implements OnChanges {
   constructor(
     ngZone: NgZone,

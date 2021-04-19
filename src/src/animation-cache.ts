@@ -13,15 +13,12 @@ export class AnimationCache {
     return options.useCache ? new AnimationCache() : null;
   }
 
-  transformOptions(
-    options: AnimationConfigWithData | AnimationConfigWithPath,
-  ): AnimationConfigWithData | AnimationConfigWithPath {
+  transformOptions(options: AnimationConfigWithData | AnimationConfigWithPath): void {
     const path = (options as AnimationConfigWithPath).path;
     if (path && this.cache.has(path)) {
       delete (options as AnimationConfigWithPath).path;
       (options as AnimationConfigWithData).animationData = this.cache.get(path);
     }
-    return options;
   }
 
   set(options: AnimationOptions, animationItem: AnimationItem): void {

@@ -1,6 +1,20 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "ngx-lottie",
+  "schematics": {
+    "@nrwl/angular:application": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {}
+  },
   "projects": {
     "ngx-lottie": {
       "projectType": "library",
@@ -25,6 +39,22 @@
           "options": {
             "jestConfig": "libs/ngx-lottie/jest.config.js",
             "passWithNoTests": true
+          }
+        },
+        "publish": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx test ngx-lottie",
+              "cd libs/ngx-lottie",
+              "yarn version --new-version {args.version}",
+              "cd ../..",
+              "nx build ngx-lottie",
+              "git push --follow-tags",
+              "cd dist/libs/ngx-lottie",
+              "npm publish"
+            ],
+            "parallel": false
           }
         }
       }
@@ -155,6 +185,5 @@
         }
       }
     }
-  },
-  "defaultProject": "ngx-lottie"
+  }
 }

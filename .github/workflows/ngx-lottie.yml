@@ -1,4 +1,4 @@
-name: Lint, test and build
+name: CI
 
 on:
   push:
@@ -14,9 +14,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          fetch-depth: 1
+          fetch-depth: 0
 
-      - uses: actions/setup-node@2
+      - run: git fetch --no-tags --prune --depth 2 origin master
+
+      - uses: actions/setup-node@v2
         with:
           node-version: 14.x
 

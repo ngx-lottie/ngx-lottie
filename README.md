@@ -9,23 +9,23 @@
 <br/>
 
 <div align="center">
-  <!-- CircleCI -->
-  <a href="https://circleci.com/gh/ngx-lottie/ngx-lottie/tree/master">
-    <img src="https://circleci.com/gh/ngx-lottie/ngx-lottie/tree/master.svg?style=svg" alt="CircleCI">
+  <!-- GitHub Actions -->
+  <a href="https://github.com/ngx-lottie/ngx-lottie/actions/workflows/ngx-lottie.yml">
+    <img src="https://github.com/ngx-lottie/ngx-lottie/actions/workflows/ngx-lottie.yml/badge.svg?branch=master" alt="GitHubActions" />
   </a>
 
   <!-- License -->
   <a href="https://github.com/ngx-lottie/ngx-lottie/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="Licence: MIT">
+    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="Licence: MIT" />
   </a>
 
   <!-- Package -->
   <a href="https://www.npmjs.com/package/ngx-lottie">
-    <img src="https://badge.fury.io/js/ngx-lottie.svg" alt="npm version" height="18">
+    <img src="https://badge.fury.io/js/ngx-lottie.svg" alt="npm version" height="18" />
   </a>
 
   <!-- Dependecies -->
-  <img alt="David" src="https://img.shields.io/david/ngx-lottie/ngx-lottie.svg">
+  <img alt="David" src="https://img.shields.io/david/ngx-lottie/ngx-lottie.svg" />
 </div>
 
 ## Table of contents

@@ -1,71 +1,79 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
   "projects": {
-    "lottie": {
-      "root": "",
-      "sourceRoot": "src",
+    "ngx-lottie": {
       "projectType": "library",
-      "prefix": "lib",
+      "root": "libs/ngx-lottie",
+      "sourceRoot": "libs/ngx-lottie/src",
       "architect": {
-        "test": {
-          "builder": "@angular-builders/jest:run",
+        "build": {
+          "builder": "@nrwl/angular:ng-packagr-lite",
           "options": {
-            "no-cache": false
+            "tsConfig": "libs/ngx-lottie/tsconfig.lib.json",
+            "project": "libs/ngx-lottie/ng-package.json"
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["libs/ngx-lottie/src/**/*.ts", "libs/ngx-lottie/src/**/*.html"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ngx-lottie/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
     },
-    "integration": {
-      "root": "integration",
-      "sourceRoot": ".",
+    "demos": {
       "projectType": "application",
+      "root": "apps/demos",
+      "sourceRoot": "apps/demos/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist-integration",
-            "index": "integration/index.html",
-            "main": "integration/main.ts",
-            "polyfills": "integration/polyfills.ts",
-            "tsConfig": "integration/tsconfig.app.json",
-            "preserveSymlinks": true,
-            "aot": true,
+            "outputPath": "dist/apps/demos/browser",
+            "index": "apps/demos/src/index.html",
+            "main": "apps/demos/src/main.ts",
+            "polyfills": "apps/demos/src/polyfills.ts",
+            "tsConfig": "apps/demos/tsconfig.app.json",
+            "styles": [],
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
             "assets": [
+              "apps/demos/src/favicon.ico",
+              "apps/demos/src/assets",
               {
                 "glob": "*.json",
-                "input": "integration/assets/animations",
+                "input": "apps/demos/assets/animations",
                 "output": "/assets/animations"
               }
             ],
-            "allowedCommonJsDependencies": [
-              "lottie-web"
-            ]
+            "allowedCommonJsDependencies": ["lottie-web"]
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "integration/environments/environment.ts",
-                  "with": "integration/environments/environment.prod.ts"
+                  "replace": "apps/demos/src/environments/environment.ts",
+                  "with": "apps/demos/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -74,6 +82,11 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -82,43 +95,66 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "integration:build"
+            "browserTarget": "demos:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "integration:build:production"
+              "browserTarget": "demos:build:production"
             }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/demos/src/**/*.ts", "apps/demos/src/**/*.html"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/demos"],
+          "options": {
+            "jestConfig": "apps/demos/jest.config.js",
+            "passWithNoTests": true
           }
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist-integration-server",
-            "main": "integration/main.server.ts",
-            "tsConfig": "integration/tsconfig.server.json"
+            "outputPath": "dist/apps/demos/server",
+            "main": "apps/demos/server.ts",
+            "tsConfig": "apps/demos/tsconfig.server.json",
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {
+              "sourceMap": false,
+              "optimization": true,
+              "outputHashing": "media",
               "fileReplacements": [
                 {
-                  "replace": "integration/environments/environment.ts",
-                  "with": "integration/environments/environment.prod.ts"
+                  "replace": "apps/demos/src/environments/environment.ts",
+                  "with": "apps/demos/src/environments/environment.prod.ts"
                 }
               ]
             }
           }
         },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "lintFilePatterns": [
-              "integration/**/*.ts",
-              "integration/**/*.html"
-            ]
+            "browserTarget": "demos:build",
+            "serverTarget": "demos:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "demos:build:production",
+              "serverTarget": "demos:server:production"
+            }
           }
         }
       }
     }
   },
-  "defaultProject": "lottie"
+  "defaultProject": "ngx-lottie"
 }

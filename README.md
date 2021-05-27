@@ -47,7 +47,7 @@
 
 - **rich:** `ngx-lottie` provides more opportunities to work with API exposed by Lottie
 - **strict:** all types of objects and events are available to you
-- **performant:** the `lottie-web` library can be loaded synchronously or on demand
+- **performant:** the `lottie-web` library can be loaded synchronously or on-demand
 
 ## Quick example
 
@@ -73,7 +73,7 @@
 
 ## Installation
 
-To install `ngx-lottie` run the following command:
+To install `ngx-lottie`, run the following command:
 
 ```bash
 npm i lottie-web ngx-lottie
@@ -118,7 +118,7 @@ export function playerFactory() {
 export class AppModule {}
 ```
 
-Now you can simply use the `ng-lottie` component and provide your custom options via the `options` binding:
+Now you can use the `ng-lottie` component and provide your custom options via the `options` binding.
 
 ```typescript
 import { Component } from '@angular/core';
@@ -142,7 +142,7 @@ export class AppComponent {
 }
 ```
 
-Also it's possible to use the `lottie` directive if you'd like to provide your own custom container and control it:
+Also, it's possible to use the `lottie` directive if you'd like to provide your custom container and manage it:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -166,11 +166,11 @@ export class AppComponent {
 }
 ```
 
-Notice that you will need to import the `LottieModule` into other modules as it exports `ng-lottie` component and `lottie` directive. But `forRoot` has to be called only once!
+Note that you will need to import the `LottieModule` into other modules as it exports the `ng-lottie` component, and the `lottie` directive. `forRoot` has to be called only once!
 
 ## Updating animation
 
-If you want to update animation dynamically then you have to update animation options immutably. Let's look at the following example:
+If you want to update the animation dynamically then you have to update the animation options immutably. Let's look at the following example:
 
 ```ts
 import { Component } from '@angular/core';
@@ -206,7 +206,7 @@ export class AppComponent {
 }
 ```
 
-If you want to update options relying on a response from the server then you'll have to call `markForCheck` to make sure that the change detection will be run if `ng-lottie` is inside a `ChangeDetectionStrategy.OnPush` component:
+If you want to update options relying on a response from the server, then you'll have to call `markForCheck` to make sure that Angular will run the change detection if `ng-lottie` is inside a `ChangeDetectionStrategy.OnPush` component:
 
 ```ts
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
@@ -241,7 +241,7 @@ export class AppComponent {
 }
 ```
 
-You can also store options in `BehaviorSubject` and bind them via `async` pipe in a template:
+You can also store options in `BehaviorSubject` and bind them via the `async` pipe in a template:
 
 ```ts
 @Component({
@@ -277,13 +277,13 @@ export class AppComponent {
 
 ## Listening to `lottie-web` events
 
-The `ng-lottie` listens only to events that the user listens from outside. This means that if you've got the following code:
+The `ng-lottie` adds event listeners to those events that are listened outside. This means that if you've got the following code:
 
 ```html
 <ng-lottie (loopComplete)="onLoopComplete()"></ng-lottie>
 ```
 
-So only `loopComplete` event will be listened on the `AnimatiomItem` under the hood. One important note that all events are listened outside of the Angular zone:
+In the above example, the `ng-lottie` will only listen to the `loopComplete` event on the `AnimationItem` under the hood. One important note that all events are handled outside of the Angular zone:
 
 ```ts
 ngZone.runOutsideAngular(() => {
@@ -291,9 +291,9 @@ ngZone.runOutsideAngular(() => {
 });
 ```
 
-Such a design decision was made because animation items can emit hundreds and thousands of events every second. Some events are not emitted synchronously because they're wrapped into `setTimeout` inside of the `lottie-web` library. This means that if thousand of event occurs during the single second then Angular will run change detection thousand times, which will drastically decrease performance.
+I made such a design decision because animation items can emit hundreds and thousands of events every second. The `lottie-web` emits some events asynchronously by wrapping them into `setTimeout` internally. If thousands of events occur during a single second, then Angular will run change detection a thousand times, drastically decreasing performance.
 
-Therefore, all methods that are event listeners in the template are also called outside the Angular zone:
+Therefore, event handlers will be called outside of the Angular zone:
 
 ```ts
 import { Component, ChangeDetectionStrategy, NgZone } from '@angular/core';
@@ -369,28 +369,23 @@ export class AppComponent {
 
 ## Caching
 
-`lottie-web` will load your JSON file every time when animation is created. When importing the `LottieModule` into the root module you can provide the `useCache` option:
+The `lottie-web` will load your JSON file whenever animation is created. When importing the `LottieModule` into the root module, you can also import the `LottieCacheModule`:
 
 ```ts
 import { NgModule } from '@angular/core';
-import { LottieModule } from 'ngx-lottie';
+import { LottieModule, LottieCacheModule } from 'ngx-lottie';
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
 }
 
 @NgModule({
-  imports: [
-    LottieModule.forRoot({
-      player: playerFactory,
-      useCache: true,
-    }),
-  ],
+  imports: [LottieModule.forRoot({ player: playerFactory }), LottieCacheModule.forRoot()],
 })
 export class AppModule {}
 ```
 
-This will enable cache under the hood. Since the cache is enabled your JSON file will be loaded only once.
+This will enable cache under the hood. Since the cache is enabled, `ngx-lottie` will load your JSON file only once.
 
 ## API
 
@@ -463,7 +458,7 @@ export function playerFactory() {
 }
 ```
 
-It bundles all 3 renderers: `CanvasRenderer`, `SVGRenderer` and `HybridRenderer`. The `SVGRenderer` is used by default. If you don't care which renderer is used and you never provide the `renderer` option then you might want to exclude `CanvasRenderer` and `HybridRenderer`. To do this just import `lottie_svg` file that is inside the `lottie-web/build/player` folder:
+It bundles all 3 renderers: `CanvasRenderer`, `SVGRenderer` and `HybridRenderer`. The `SVGRenderer` is used by default. If you don't care which renderer is used and never provide the `renderer` option, you might want to exclude `CanvasRenderer` and `HybridRenderer`. To do this, just import the `lottie_svg` file that is inside the `lottie-web/build/player` folder:
 
 ```ts
 import player from 'lottie-web/build/player/lottie_svg';
@@ -482,7 +477,7 @@ Its minified size is `198 KiB`.
 
 You can also use the `lottie-web` light version. As Hernan Torrisi (author of `lottie-web`) explains:
 
-> It should work fine but animations won't render correctly if they have expressions or effects.
+> It should work fine, but animations won't render correctly if they have expressions or effects.
 
 The light version can be imported using the following code:
 
@@ -503,9 +498,9 @@ Its minified size is `148 KiB`. Use this at your own risk because I can't know i
 
 ## Optimizations
 
-The `ng-lottie` component is marked with `OnPush` change detection strategy. This means it will not be checked in any phase of the change detection mechanism until you change the reference to some binding. For example if you use an `svg` renderer and there are a lot DOM elements projected — you would like to avoid checking this component, as it's not necessary.
+The `ng-lottie` component is marked with the `OnPush` change detection strategy. This means Angular will not check it in any phase of the change detection mechanism until you change the reference to some binding. For example, if you use an `svg` renderer and there are a lot of DOM elements projected — you would like to avoid checking this component, as it's not necessary.
 
-`AnimationItem` events are listened outside of the Angular zone. You shouldn't worry that animation events will cause change detection every ms.
+The `ngx-lottie` listens to `AnimationItem` events outside of the Angular zone. It would be best if you didn't worry that animation events will cause change detection every ms.
 
 **But be careful!** Always wrap any calls to `AnimationItem` methods in `runOutsideAngular`. See the below code:
 
@@ -537,24 +532,28 @@ export class AppComponent {
   }
 
   stop(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.stop());
+    this.ngZone.runOutsideAngular(() => {
+      this.animationItem.stop();
+    });
   }
 
   play(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.play());
+    this.ngZone.runOutsideAngular(() => {
+      this.animationItem.play();
+    });
   }
 }
 ```
 
-## Server side rendering
+## Server-side rendering
 
-By default, `lottie` will load your `json` file with animation data every time you create an animation. You may have some problems with the connection, so there may be some delay or even timeout. It's worth loading animation data only once and cache it on the client side, so every time you create an animation — the animation data will be retrieved from cache.
+By default, `lottie-web` will load your JSON file with animation data every time you create an animation. You may have some problems with the connection, so there may be some delay or even timeout. It's worth loading animation data only once and cache it on the client-side, so every time you create an animation — `ngx-lottie` will retrieve the animation data from the cache.
 
 `ngx-lottie/server` package gives you the opportunity to preload animation data and cache it using `TransferState`.
 
 ### How2?
 
-TL;DR - see `integration` folder.
+TL;DR - see the `integration` folder.
 
 Import the `LottieServerModule` into your `AppServerModule`:
 
@@ -574,7 +573,7 @@ import { AppComponent } from './app.component';
     ServerTransferStateModule,
     LottieServerModule.forRoot({
       preloadAnimations: {
-        folder: 'dist/assets',
+        folder: 'dist/browser/assets',
         animations: ['data.json'],
       },
     }),
@@ -584,27 +583,25 @@ import { AppComponent } from './app.component';
 export class AppServerModule {}
 ```
 
-Don't forget to import `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of `json` files, that contain animation data, that should be read on the server side, cached and transfered on the client. `folder` is a path where your `json` files are located, but you should use it properly, this path is joined with the `process.cwd()`. Imagine such project structure:
+Don't forget to import the `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of JSON files that contain animation data that Node.js should read on the server-side, cache and transfer to the client. `folder` is a path where your JSON files are located, but you should use it properly, this path is joined with the `process.cwd()`. Assume such a project structure:
 
 ```
 — dist (here you store your output artifacts)
-  — project-name
+  — browser
     — assets
     — index.html
     — main.hash.js
-— dist-server
-  — server.js
+  - server
+    - main.js
 — src (here is your app)
 — angular.json
 — package.json
 — webpack.config.js
 ```
 
-If you start a server from the root folder like `node dist-server/server`, thus the `folder` property should equal `dist/project-name/assets`.
+If you start a server from the root folder like `node dist/server/main`, thus the `folder` property should equal `dist/browser/assets`.
 
-After installing `LottieServerModule` - now you have to import `LottieTransferState` from the `ngx-lottie` package. Don't worry, this service is tree-shakable and won't be bundled if you don't inject it anywhere.
-
-Inject this service into your component where you declare animation options:
+You now can inject the `LottieTransferState` in your components from the `ngx-lottie` package. It's tree-shakable by default and won't get bundled until you inject it anywhere:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -639,4 +636,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Potential pitfalls
 
-There is only one potential pitfall associated with animations in the Safari browser. Also this known issue is in the `lottie-web` library itself. Library consumers have been trying to resolve that issue using different solutions. The only solution that helped most people was installing the latest version of the `lottie-web`.
+There is only one potential pitfall associated with animations in the Safari browser. Also, this known issue is in the `lottie-web` library itself. Library consumers have been trying to resolve that issue using different solutions. The only solution that helped most people was installing the latest version of the `lottie-web`.

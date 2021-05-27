@@ -48,9 +48,9 @@
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "dep-graph": "nx dep-graph",
-    "publish:patch": "nx publish ngx-lottie --version=patch",
-    "publish:minor": "nx publish ngx-lottie --version=minor",
-    "publish:major": "nx publish ngx-lottie --version=major"
+    "publish:patch": "nx publish-patch ngx-lottie",
+    "publish:minor": "nx publish-minor ngx-lottie",
+    "publish:major": "nx publish-major ngx-lottie"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.0.2",

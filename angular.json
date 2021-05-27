@@ -41,18 +41,41 @@
             "passWithNoTests": true
           }
         },
-        "publish": {
+        "publish-patch": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
               "nx test ngx-lottie",
-              "cd libs/ngx-lottie",
-              "yarn version --new-version {args.version}",
-              "cd ../..",
+              "cd libs/ngx-lottie && yarn version --new-version patch",
               "nx build ngx-lottie",
               "git push --follow-tags",
-              "cd dist/libs/ngx-lottie",
-              "npm publish"
+              "cd dist/libs/ngx-lottie && npm publish --access public"
+            ],
+            "parallel": false
+          }
+        },
+        "publish-minor": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx test ngx-lottie",
+              "cd libs/ngx-lottie && yarn version --new-version minor",
+              "nx build ngx-lottie",
+              "git push --follow-tags",
+              "cd dist/libs/ngx-lottie && npm publish --access public"
+            ],
+            "parallel": false
+          }
+        },
+        "publish-major": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx test ngx-lottie",
+              "cd libs/ngx-lottie && yarn version --new-version major",
+              "nx build ngx-lottie",
+              "git push --follow-tags",
+              "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false
           }

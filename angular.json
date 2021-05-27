@@ -46,7 +46,7 @@
           "options": {
             "commands": [
               "nx test ngx-lottie",
-              "cd libs/ngx-lottie && yarn version --new-version patch",
+              "cd libs/ngx-lottie && npm version patch",
               "nx build ngx-lottie",
               "git push --follow-tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
@@ -59,7 +59,7 @@
           "options": {
             "commands": [
               "nx test ngx-lottie",
-              "cd libs/ngx-lottie && yarn version --new-version minor",
+              "cd libs/ngx-lottie && npm version minor",
               "nx build ngx-lottie",
               "git push --follow-tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
@@ -72,7 +72,7 @@
           "options": {
             "commands": [
               "nx test ngx-lottie",
-              "cd libs/ngx-lottie && yarn version --new-version major",
+              "cd libs/ngx-lottie && npm version major",
               "nx build ngx-lottie",
               "git push --follow-tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"

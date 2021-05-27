@@ -1,0 +1,34 @@
+{
+  "name": "ngx-lottie",
+  "version": "6.4.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngx-lottie/ngx-lottie.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ngx-lottie/ngx-lottie#readme",
+  "bugs": {
+    "url": "git+https://github.com/ngx-lottie/ngx-lottie/issues"
+  },
+  "keywords": [
+    "animation",
+    "canvas",
+    "svg",
+    "after effects",
+    "plugin",
+    "angular",
+    "angular8",
+    "angular 8",
+    "angular9",
+    "angular 9",
+    "angular10",
+    "angular 10",
+    "universal",
+    "ivy"
+  ],
+  "sideEffects": true,
+  "peerDependencies": {
+    "@angular/core": ">=8.0.0",
+    "lottie-web": ">=5.4.0"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "npmScope": "rx-angular",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*",
+    ".eslintrc.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "ngx-lottie": {
+      "type": ["lib"],
+      "implicitDependencies": []
+    },
+    "demos": {
+      "type": ["app"]
+    }
+  },
+  "affected": {
+    "defaultBase": "master"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "ngx-lottie": ["libs/ngx-lottie/src/index.ts"],
+      "ngx-lottie/server": ["libs/ngx-lottie/server/src/index.ts"]
+    },
+    "target": "es5",
+    "lib": ["es2017", "dom"],
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types"],
+    "strict": true,
+    "sourceMap": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "noStrictGenericChecks": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": ["cypress"]
+}

@@ -1,5 +1,4 @@
 {
-  "npmScope": "rx-angular",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
@@ -11,6 +10,10 @@
     "nx.json": "*",
     ".eslintrc.json": "*"
   },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "npmScope": "ngx-lottie",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
@@ -27,8 +30,5 @@
     "demos": {
       "type": ["app"]
     }
-  },
-  "affected": {
-    "defaultBase": "master"
   }
 }

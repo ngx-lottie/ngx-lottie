@@ -45,10 +45,9 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "nx test ngx-lottie",
               "cd libs/ngx-lottie && npm version patch",
-              "nx build ngx-lottie",
-              "git push --follow-tags",
+              "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
+              "git add . && git push --follow-tags --tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false
@@ -58,10 +57,9 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "nx test ngx-lottie",
               "cd libs/ngx-lottie && npm version minor",
-              "nx build ngx-lottie",
-              "git push --follow-tags",
+              "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
+              "git add . && git push --follow-tags --tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false
@@ -71,10 +69,9 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "nx test ngx-lottie",
               "cd libs/ngx-lottie && npm version major",
-              "nx build ngx-lottie",
-              "git push --follow-tags",
+              "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
+              "git add . && git push --follow-tags --tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false

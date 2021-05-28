@@ -47,7 +47,7 @@
             "commands": [
               "cd libs/ngx-lottie && npm version patch",
               "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
-              "git add . && git push --follow-tags --tags",
+              "git add . && git push && git push --tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false
@@ -59,7 +59,7 @@
             "commands": [
               "cd libs/ngx-lottie && npm version minor",
               "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
-              "git add . && git push --follow-tags --tags",
+              "git add . && git push && git push --tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false
@@ -71,7 +71,7 @@
             "commands": [
               "cd libs/ngx-lottie && npm version major",
               "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
-              "git add . && git push --follow-tags --tags",
+              "git add . && git push && git push --tags",
               "cd dist/libs/ngx-lottie && npm publish --access public"
             ],
             "parallel": false

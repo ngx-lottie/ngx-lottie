@@ -22,7 +22,7 @@
       "sourceRoot": "libs/ngx-lottie/src",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:ng-packagr-lite",
+          "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-lottie/tsconfig.lib.json",
             "project": "libs/ngx-lottie/ng-package.json"

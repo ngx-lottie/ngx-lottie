@@ -34,7 +34,6 @@
   "homepage": "https://github.com/ngx-lottie/ngx-lottie#readme",
   "scripts": {
     "postinstall": "ngcc && node ./decorate-angular-cli.js && husky install",
-    "ng": "ng",
     "lint": "nx workspace-lint && ng lint",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
@@ -48,6 +47,8 @@
     "format:write": "nx format:write",
     "format:check": "nx format:check",
     "dep-graph": "nx dep-graph",
+    "build": "nx build ngx-lottie",
+    "postbuild": "cp README.md ./dist/libs/ngx-lottie",
     "publish:patch": "nx publish-patch ngx-lottie",
     "publish:minor": "nx publish-minor ngx-lottie",
     "publish:major": "nx publish-major ngx-lottie"

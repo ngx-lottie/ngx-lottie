@@ -38,4 +38,3 @@ jobs:
       - run: yarn nx affected:lint --parallel --base=origin/master
       - run: yarn nx affected:test --parallel --base=origin/master
       - run: yarn nx affected:build --base=origin/master
-        

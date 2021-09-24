@@ -23,11 +23,8 @@
     }
   },
   "projects": {
-    "demos": {
-      "type": ["app"]
-    },
+    "demos": {},
     "ngx-lottie": {
-      "type": ["lib"],
       "implicitDependencies": []
     }
   },

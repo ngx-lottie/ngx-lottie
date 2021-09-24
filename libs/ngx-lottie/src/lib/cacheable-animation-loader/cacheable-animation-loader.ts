@@ -6,7 +6,7 @@ import { AnimationItem, AnimationConfigWithData, AnimationConfigWithPath } from 
 
 @Injectable()
 export class CacheableAnimationLoader extends AnimationLoader {
-  private cache = new Map<string, unknown>();
+  private cache = new Map<string, string>();
 
   loadAnimation(options: AnimationConfigWithData | AnimationConfigWithPath) {
     return this.player$.pipe(
@@ -29,7 +29,8 @@ export class CacheableAnimationLoader extends AnimationLoader {
       }
 
       animationItem.addEventListener('config_ready', () => {
-        this.cache.set(options.path!, animationItem['animationData']);
+        // See the comments below on why we're storing the animation data as a string.
+        this.cache.set(options.path!, JSON.stringify(animationItem['animationData']));
       });
     }
   }
@@ -41,7 +42,11 @@ export class CacheableAnimationLoader extends AnimationLoader {
       return {
         ...options,
         path: undefined,
-        animationData: this.cache.get(options.path!),
+        // Caretaker note: `lottie-web` cannot re-use the `animationData` object between animations, and we
+        // have to retrieve a new object each time an animation is created.
+        // https://github.com/airbnb/lottie-web#html
+        // See comments for the `animationData` property.
+        animationData: JSON.parse(this.cache.get(options.path!)!),
       };
     } else {
       return options;

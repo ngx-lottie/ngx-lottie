@@ -94,7 +94,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/demos/src/**/*.ts", "apps/demos/src/**/*.html"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -140,7 +141,8 @@
             }
           }
         }
-      }
+      },
+      "type": ["app"]
     },
     "ngx-lottie": {
       "projectType": "library",
@@ -158,7 +160,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/ngx-lottie/src/**/*.ts", "libs/ngx-lottie/src/**/*.html"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -203,7 +206,8 @@
             "parallel": false
           }
         }
-      }
+      },
+      "type": ["lib"]
     }
   }
 }

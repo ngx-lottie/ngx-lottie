@@ -4,6 +4,8 @@
 export { LottieModule } from './lib/lottie.module';
 export { LottieCacheModule } from './lib/cacheable-animation-loader/lottie-cache.module';
 
+export { AnimationLoader } from './lib/animation-loader';
+
 export { BaseDirective } from './lib/base.directive';
 export { LottieDirective } from './lib/lottie.directive';
 export { LottieComponent } from './lib/lottie.component';

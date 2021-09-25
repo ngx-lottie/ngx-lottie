@@ -14,7 +14,9 @@ import {
   LottiePlayerFactoryOrLoader,
 } from './symbols';
 
-function streamifyPlayerOrLoader(player: LottiePlayerFactoryOrLoader): Observable<LottiePlayer> {
+function convertPlayerOrLoaderToObservable(
+  player: LottiePlayerFactoryOrLoader,
+): Observable<LottiePlayer> {
   const playerOrLoader = player();
 
   if (playerOrLoader instanceof Promise) {
@@ -30,7 +32,7 @@ function streamifyPlayerOrLoader(player: LottiePlayerFactoryOrLoader): Observabl
 
 @Injectable()
 export class AnimationLoader {
-  protected player$ = streamifyPlayerOrLoader(this.options.player).pipe(
+  protected player$ = convertPlayerOrLoaderToObservable(this.options.player).pipe(
     observeOn(animationFrameScheduler),
   );
 

@@ -27,7 +27,7 @@ describe('Server side rendering', () => {
       .invoke('text')
       .then(text => {
         // Assert
-        const state = JSON.parse(unescapeHtml(text as any));
+        const state = JSON.parse(unescapeHtml(text));
         expect(typeof state).to.equal('object');
 
         const keys = Object.keys(state['animation-data']);
@@ -37,18 +37,13 @@ describe('Server side rendering', () => {
 
   it('should destroy animation', () => {
     // Arrange & act & assert
-    cy.get('button.destroy')
-      .click()
-      .get('ng-lottie')
-      .should('not.exist');
+    cy.get('button.destroy').click().get('ng-lottie').should('not.exist');
   });
 
   it('should contain styles on the container div', () => {
-    // Arrange & act
-    const style = cy.get('.moving-box').invoke('attr', 'style');
-
-    // Assert
-    style
+    // Arrange & act & assert
+    cy.get('.moving-box')
+      .invoke('attr', 'style')
       .should('contain', 'margin: 0px auto')
       .should('contain', 'width: 600px')
       .should('contain', 'height: 500px');
@@ -63,9 +58,7 @@ describe('Server side rendering', () => {
 
   it('should update animation dynamically when options change', () => {
     // Arrange & act & assert
-    cy.get('ng-lottie svg g')
-      .invoke('prop', 'childElementCount')
-      .should('equal', 2);
+    cy.get('ng-lottie svg g').invoke('prop', 'childElementCount').should('equal', 2);
 
     cy.get('.update-animation')
       .click()

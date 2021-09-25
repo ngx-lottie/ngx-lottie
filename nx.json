@@ -24,9 +24,10 @@
   },
   "projects": {
     "demos": {},
-    "ngx-lottie": {
-      "implicitDependencies": []
-    }
+    "demos-e2e": {
+      "implicitDependencies": ["demos"]
+    },
+    "ngx-lottie": {}
   },
   "targetDependencies": {
     "build": [

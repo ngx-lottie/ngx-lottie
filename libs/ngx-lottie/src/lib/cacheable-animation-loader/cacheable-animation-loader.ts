@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { AnimationLoader } from '../animation-loader';
 import { AnimationItem, AnimationConfigWithData, AnimationConfigWithPath } from '../symbols';
 
 @Injectable()
-export class CacheableAnimationLoader extends AnimationLoader {
+export class CacheableAnimationLoader extends AnimationLoader implements OnDestroy {
   private cache = new Map<string, string>();
+
+  ngOnDestroy(): void {
+    this.cache.clear();
+  }
 
   loadAnimation(options: AnimationConfigWithData | AnimationConfigWithPath) {
     return this.player$.pipe(

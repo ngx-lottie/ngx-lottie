@@ -1,0 +1,65 @@
+{
+  "projectType": "library",
+  "root": "libs/ngx-lottie",
+  "sourceRoot": "libs/ngx-lottie/src",
+  "architect": {
+    "build": {
+      "builder": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/ngx-lottie/tsconfig.lib.json",
+        "project": "libs/ngx-lottie/ng-package.json"
+      }
+    },
+    "lint": {
+      "builder": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/ngx-lottie/src/**/*.ts", "libs/ngx-lottie/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "builder": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/ngx-lottie/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish-patch": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "cd libs/ngx-lottie && npm version patch",
+          "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
+          "git add . && git push && git push --tags",
+          "cd dist/libs/ngx-lottie && npm publish --access public"
+        ],
+        "parallel": false
+      }
+    },
+    "publish-minor": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "cd libs/ngx-lottie && npm version minor",
+          "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
+          "git add . && git push && git push --tags",
+          "cd dist/libs/ngx-lottie && npm publish --access public"
+        ],
+        "parallel": false
+      }
+    },
+    "publish-major": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "cd libs/ngx-lottie && npm version major",
+          "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
+          "git add . && git push && git push --tags",
+          "cd dist/libs/ngx-lottie && npm publish --access public"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "type": ["lib"]
+}

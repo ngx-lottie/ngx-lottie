@@ -1,0 +1,128 @@
+{
+  "projectType": "application",
+  "root": "apps/demos",
+  "sourceRoot": "apps/demos/src",
+  "prefix": "app",
+  "architect": {
+    "build": {
+      "builder": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/demos/browser",
+        "index": "apps/demos/src/index.html",
+        "main": "apps/demos/src/main.ts",
+        "polyfills": "apps/demos/src/polyfills.ts",
+        "tsConfig": "apps/demos/tsconfig.app.json",
+        "styles": [],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "assets": [
+          "apps/demos/src/favicon.ico",
+          "apps/demos/src/assets",
+          {
+            "glob": "*.json",
+            "input": "apps/demos/assets/animations",
+            "output": "/assets/animations"
+          }
+        ],
+        "allowedCommonJsDependencies": ["lottie-web"]
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/demos/src/environments/environment.ts",
+              "with": "apps/demos/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "builder": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "demos:build"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "demos:build:production"
+        }
+      }
+    },
+    "lint": {
+      "builder": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/demos/src/**/*.ts", "apps/demos/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "builder": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/demos"],
+      "options": {
+        "jestConfig": "apps/demos/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "server": {
+      "builder": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/demos/server",
+        "main": "apps/demos/server.ts",
+        "tsConfig": "apps/demos/tsconfig.server.json",
+        "sourceMap": true,
+        "optimization": false
+      },
+      "configurations": {
+        "production": {
+          "sourceMap": false,
+          "optimization": true,
+          "outputHashing": "media",
+          "fileReplacements": [
+            {
+              "replace": "apps/demos/src/environments/environment.ts",
+              "with": "apps/demos/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve-ssr": {
+      "builder": "@nguniversal/builders:ssr-dev-server",
+      "options": {
+        "browserTarget": "demos:build",
+        "serverTarget": "demos:server"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "demos:build:production",
+          "serverTarget": "demos:server:production"
+        }
+      }
+    }
+  },
+  "type": ["app"]
+}

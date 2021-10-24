@@ -22,13 +22,6 @@
       }
     }
   },
-  "projects": {
-    "demos": {},
-    "demos-e2e": {
-      "implicitDependencies": ["demos"]
-    },
-    "ngx-lottie": {}
-  },
   "targetDependencies": {
     "build": [
       {
@@ -36,5 +29,20 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "ngx-lottie",
+  "generators": {
+    "@nrwl/angular:application": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {}
   }
 }

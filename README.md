@@ -28,6 +28,35 @@
   <img alt="David" src="https://img.shields.io/david/ngx-lottie/ngx-lottie.svg" />
 </div>
 
+## Compatibility with Angular Versions
+
+<table>
+  <thead>
+    <tr>
+      <th>ngx-lottie</th>
+      <th>Angular</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        7.x
+      </td>
+      <td>
+        >= 8 < 13
+      </td>
+    </tr>
+    <tr>
+      <td>
+        8.x
+      </td>
+      <td>
+        >= 13
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## Table of contents
 
 - [Features](#features)

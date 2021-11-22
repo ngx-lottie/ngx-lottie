@@ -32,7 +32,7 @@
   ],
   "sideEffects": true,
   "peerDependencies": {
-    "@angular/core": ">=8.0.0",
+    "@angular/core": ">=13",
     "lottie-web": ">=5.4.0"
   }
 }

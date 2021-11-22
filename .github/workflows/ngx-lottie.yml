@@ -30,6 +30,7 @@ jobs:
         id: yarn-cache
         with:
           path: |
+            node_modules
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             ~/.cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}

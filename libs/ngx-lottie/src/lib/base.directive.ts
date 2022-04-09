@@ -90,8 +90,9 @@ export class BaseDirective implements OnDestroy {
    * `error` will be dispatched if the Lottie player could not render
    * some frame or parse config.
    */
-  @Output() error =
-    this.awaitAnimationItemAndStartListening<BMRenderFrameErrorEvent | BMConfigErrorEvent>('error');
+  @Output() error = this.awaitAnimationItemAndStartListening<
+    BMRenderFrameErrorEvent | BMConfigErrorEvent
+  >('error');
 
   private destroy$ = new Subject<void>();
   private loadAnimation$ = new Subject<[SimpleChanges, HTMLElement]>();
@@ -132,9 +133,11 @@ export class BaseDirective implements OnDestroy {
           // `@Output()` properties, thus `animationItem` will be `null` already, also `lottie-web`
           // removes event listeners when calling `destroy()`.
           new Observable<T>(observer => {
-            animationItem.addEventListener<T>(name, event => {
-              this.ngZone.runOutsideAngular(() => {
-                observer.next(event);
+            this.ngZone.runOutsideAngular(() => {
+              animationItem.addEventListener<T>(name, event => {
+                this.ngZone.runOutsideAngular(() => {
+                  observer.next(event);
+                });
               });
             });
           }),

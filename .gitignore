@@ -6,7 +6,6 @@ node_modules
 .cache
 yarn-error.log
 coverage
-.husky
 migrations.json
 
 .pnp.*

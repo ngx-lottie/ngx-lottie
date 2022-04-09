@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/ngx-lottie/ngx-lottie#readme",
   "scripts": {
-    "postinstall": "ngcc && node ./decorate-angular-cli.js && husky install",
+    "postinstall": "node ./decorate-angular-cli.js && husky install",
     "lint": "nx workspace-lint && ng lint",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",

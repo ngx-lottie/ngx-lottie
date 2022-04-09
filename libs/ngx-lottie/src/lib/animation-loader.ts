@@ -1,7 +1,7 @@
 import { Injectable, NgZone, Inject } from '@angular/core';
 
 import { Observable, from, of, animationFrameScheduler } from 'rxjs';
-import { map, observeOn, publishReplay, refCount } from 'rxjs/operators';
+import { map, observeOn, shareReplay } from 'rxjs/operators';
 
 import {
   LOTTIE_OPTIONS,
@@ -22,8 +22,7 @@ function convertPlayerOrLoaderToObservable(
   if (playerOrLoader instanceof Promise) {
     return from(playerOrLoader).pipe(
       map(module => module.default || module),
-      publishReplay(1),
-      refCount(),
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
   } else {
     return of(playerOrLoader);

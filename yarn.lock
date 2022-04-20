@@ -8615,10 +8615,10 @@ loglevel@^1.6.8:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.7.1.tgz#005fde2f5e6e47068f935ff28573e125ef72f197"
   integrity sha512-Hesni4s5UkWkwCGJMQGAh71PaLUmKFM60dHvq0zi/vDhhrzuk+4GgNbTXJ12YYQJn6ZKBDNIjYcuQGKudvqrIw==
 
-lottie-web@^5.5.10:
-  version "5.7.8"
-  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.7.8.tgz#c7a2e42983bcb42093590a03ccdde8741d3f960e"
-  integrity sha512-VxKCZk33GwZac6mVHvT3grUFR/zrMsW85M7vxQPrgpJOP2IhcnjMbuD0h7muBkXgw84K9KmGulmcyzvhpzSMAg==
+lottie-web@^5.9.2:
+  version "5.9.2"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.9.2.tgz#38db3f3f3655802c465d725a359fc9d303e31335"
+  integrity sha512-YnoJIKCdKIzno8G/kONOpADW6H/ORZV9puy3vWOhWmHtbDcpISFGVvvdKKa2jwAcsVqXK4xSi0po730kAPIfBw==
 
 lru-cache@^6.0.0:
   version "6.0.0"

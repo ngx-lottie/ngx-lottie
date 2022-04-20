@@ -37,7 +37,7 @@ jobs:
           HUSKY_SKIP_INSTALL: 'true'
         run: yarn --frozen-lockfile --no-progress --non-interactive
 
-      - run: yarn nx affected:lint --parallel --base=origin/master
-      - run: yarn nx affected:test --parallel --base=origin/master
-      - run: yarn nx affected:build --base=origin/master
-      - run: yarn nx affected:e2e --base=origin/master
+      - run: yarn nx affected:lint --parallel --base=origin/7.x
+      - run: yarn nx affected:test --parallel --base=origin/7.x
+      - run: yarn nx affected:build --base=origin/7.x
+      - run: yarn nx affected:e2e --base=origin/7.x

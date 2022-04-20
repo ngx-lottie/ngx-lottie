@@ -88,9 +88,15 @@ export interface LottieOptions {
   player: LottiePlayerFactoryOrLoader;
 }
 
-export type AnimationConfigWithData = import('lottie-web').AnimationConfigWithData;
-export type AnimationConfigWithPath = import('lottie-web').AnimationConfigWithPath;
+export type RendererType = import('lottie-web').RendererType;
 
-export type AnimationOptions = Partial<AnimationConfigWithData> | Partial<AnimationConfigWithPath>;
+export type AnimationConfigWithData<R extends RendererType = 'svg'> =
+  import('lottie-web').AnimationConfigWithData<R>;
+export type AnimationConfigWithPath<R extends RendererType = 'svg'> =
+  import('lottie-web').AnimationConfigWithPath<R>;
+
+export type AnimationOptions<R extends RendererType = 'svg'> =
+  | Partial<AnimationConfigWithData<R>>
+  | Partial<AnimationConfigWithPath<R>>;
 
 export const LOTTIE_OPTIONS = new InjectionToken<LottieOptions>('LottieOptions');

@@ -85,6 +85,9 @@ type LottieLoader = () => Promise<typeof import('lottie-web')>;
 export type LottiePlayerFactoryOrLoader = LottiePlayerFactory | LottieLoader;
 
 export interface LottieOptions {
+  // Determines whether to load files on a separate worker. Note: workers cannot load
+  // animations from URLs (if `options.path` is defined).
+  useWebWorker?: boolean;
   player: LottiePlayerFactoryOrLoader;
 }
 

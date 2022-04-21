@@ -126,7 +126,12 @@ export function playerFactory() {
 }
 
 @NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory })],
+  imports: [
+    LottieModule.forRoot({
+      useWebWorker: true,
+      player: playerFactory,
+    }),
+  ],
 })
 export class AppModule {}
 ```
@@ -142,7 +147,12 @@ export function playerFactory() {
 }
 
 @NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory })],
+  imports: [
+    LottieModule.forRoot({
+      useWebWorker: true,
+      player: playerFactory,
+    }),
+  ],
 })
 export class AppModule {}
 ```

@@ -14,7 +14,10 @@ export function playerFactory() {
     BrowserModule.withServerTransition({ appId: 'ngx-lottie-universal' }),
     BrowserTransferStateModule,
     HttpClientModule,
-    LottieModule.forRoot({ player: playerFactory }),
+    LottieModule.forRoot({
+      useWebWorker: true,
+      player: playerFactory,
+    }),
     LottieCacheModule.forRoot(),
   ],
   declarations: [AppComponent],

@@ -1,7 +1,7 @@
 import { Injectable, NgZone, Inject } from '@angular/core';
 
 import { Observable, from, of, animationFrameScheduler } from 'rxjs';
-import { map, observeOn, shareReplay } from 'rxjs/operators';
+import { map, observeOn, shareReplay, tap } from 'rxjs/operators';
 
 import {
   LOTTIE_OPTIONS,
@@ -16,24 +16,30 @@ import {
 
 function convertPlayerOrLoaderToObservable(
   player: LottiePlayerFactoryOrLoader,
+  useWebWorker?: boolean,
 ): Observable<LottiePlayer> {
   const playerOrLoader = player();
+  const player$ =
+    playerOrLoader instanceof Promise
+      ? from(playerOrLoader).pipe(map(module => module.default || module))
+      : of(playerOrLoader);
 
-  if (playerOrLoader instanceof Promise) {
-    return from(playerOrLoader).pipe(
-      map(module => module.default || module),
-      shareReplay({ bufferSize: 1, refCount: true }),
-    );
-  } else {
-    return of(playerOrLoader);
-  }
+  return player$.pipe(
+    tap(player =>
+      (player as unknown as { useWebWorker: (useWebWorker?: boolean) => void }).useWebWorker(
+        useWebWorker,
+      ),
+    ),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
 }
 
 @Injectable()
 export class AnimationLoader {
-  protected player$ = convertPlayerOrLoaderToObservable(this.options.player).pipe(
-    observeOn(animationFrameScheduler),
-  );
+  protected player$ = convertPlayerOrLoaderToObservable(
+    this.options.player,
+    this.options.useWebWorker,
+  ).pipe(observeOn(animationFrameScheduler));
 
   constructor(private ngZone: NgZone, @Inject(LOTTIE_OPTIONS) private options: LottieOptions) {}
 

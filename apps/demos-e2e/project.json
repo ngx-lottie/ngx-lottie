@@ -1,10 +1,10 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/demos-e2e",
   "sourceRoot": "apps/demos-e2e/src",
-  "architect": {
+  "targets": {
     "e2e": {
-      "builder": "@nrwl/cypress:cypress",
+      "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "apps/demos-e2e/cypress.json",
         "tsConfig": "apps/demos-e2e/tsconfig.e2e.json",
@@ -12,7 +12,7 @@
       }
     },
     "lint": {
-      "builder": "@nrwl/linter:eslint",
+      "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": ["apps/demos-e2e/**/*.{js,ts}"]
       }

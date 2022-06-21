@@ -1,11 +1,11 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/demos",
   "sourceRoot": "apps/demos/src",
   "prefix": "app",
-  "architect": {
+  "targets": {
     "build": {
-      "builder": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:browser",
       "options": {
         "outputPath": "dist/apps/demos/browser",
         "index": "apps/demos/src/index.html",
@@ -62,7 +62,7 @@
       }
     },
     "serve": {
-      "builder": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
         "browserTarget": "demos:build"
       },
@@ -73,22 +73,22 @@
       }
     },
     "lint": {
-      "builder": "@nrwl/linter:eslint",
+      "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": ["apps/demos/src/**/*.ts", "apps/demos/src/**/*.html"]
       },
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "builder": "@nrwl/jest:jest",
+      "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/demos"],
       "options": {
-        "jestConfig": "apps/demos/jest.config.js",
+        "jestConfig": "apps/demos/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "server": {
-      "builder": "@angular-devkit/build-angular:server",
+      "executor": "@angular-devkit/build-angular:server",
       "options": {
         "outputPath": "dist/apps/demos/server",
         "main": "apps/demos/server.ts",
@@ -111,7 +111,7 @@
       }
     },
     "serve-ssr": {
-      "builder": "@nguniversal/builders:ssr-dev-server",
+      "executor": "@nguniversal/builders:ssr-dev-server",
       "options": {
         "browserTarget": "demos:build",
         "serverTarget": "demos:server"

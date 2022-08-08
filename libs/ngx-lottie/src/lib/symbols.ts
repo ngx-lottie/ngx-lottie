@@ -1,22 +1,22 @@
 import { InjectionToken } from '@angular/core';
 
 export interface BMEnterFrameEvent {
-  currentTime: number;
-  duration: number;
-  totalTime: number;
   type: 'enterFrame';
+  currentTime: number;
+  totalTime: number;
+  duration: number;
 }
 
 export interface BMCompleteLoopEvent {
   type: 'loopComplete';
-  loop: number;
-  playCount: number;
-  frameMult: number;
+  currentLoop: boolean | number;
+  totalLoops: number;
+  direction: number;
 }
 
 export interface BMCompleteEvent {
   type: 'complete';
-  duration: number;
+  direction: number;
 }
 
 export interface BMSegmentStartEvent {

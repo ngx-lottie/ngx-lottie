@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2015",
     "module": "es2015",
     "importHelpers": true,
     "downlevelIteration": true,
@@ -18,5 +18,5 @@
     "enableResourceInlining": true
   },
   "include": ["**/*.ts"],
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"]
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

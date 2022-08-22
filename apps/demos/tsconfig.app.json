@@ -5,6 +5,5 @@
     "strict": true,
     "module": "ESNext"
   },
-  "files": ["src/main.ts", "src/polyfills.ts"],
-  "exclude": ["jest.config.ts"]
+  "files": ["src/main.ts", "src/polyfills.ts"]
 }

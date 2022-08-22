@@ -1,15 +1,19 @@
-/* eslint-disable */
-export default {
-  displayName: 'demos',
+module.exports = {
+  bail: true,
+  name: 'ngx-lottie',
+  displayName: 'ngx-lottie',
   preset: '../../jest.preset.js',
+  coverageReporters: ['lcov', 'cobertura'],
+  coverageDirectory: '../../coverage/libs/ngx-lottie',
+  collectCoverageFrom: ['./src/**/!(index).ts'],
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
       stringifyContentPathRegex: '\\.(html|svg)$',
+
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
-  coverageDirectory: '../../coverage/apps/demos',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

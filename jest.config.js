@@ -1,3 +1,3 @@
 const { getJestProjects } = require('@nrwl/jest');
 
-export default { projects: getJestProjects() };
+module.exports = { projects: getJestProjects() };

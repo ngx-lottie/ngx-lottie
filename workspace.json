@@ -4,6 +4,5 @@
     "demos": "apps/demos",
     "demos-e2e": "apps/demos-e2e",
     "ngx-lottie": "libs/ngx-lottie"
-  },
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
+  }
 }

@@ -112,7 +112,10 @@ export class BaseDirective implements OnDestroy {
   }
 
   protected loadAnimation(changes: SimpleChanges, container: HTMLElement): void {
-    this.loadAnimation$.next([changes, container]);
+    // The `loadAnimation` may load `lottie-web` asynchronously and also pipes the player
+    // with `animationFrameScheduler`, which schedules an animation task and triggers change
+    // detection. We'll trigger change detection only once when the animation item is created.
+    this.ngZone.runOutsideAngular(() => this.loadAnimation$.next([changes, container]));
   }
 
   private getAnimationItem(): Observable<AnimationItem> {
@@ -146,9 +149,12 @@ export class BaseDirective implements OnDestroy {
   }
 
   private setupLoadAnimationListener(): void {
-    this.loadAnimation$
+    const loadAnimation$ = this.loadAnimation$.pipe(
+      filter(([changes]) => isPlatformBrowser(this.platformId) && changes.options !== undefined),
+    );
+
+    loadAnimation$
       .pipe(
-        filter(([changes]) => isPlatformBrowser(this.platformId) && changes.options !== undefined),
         switchMap(([changes, container]) => {
           this.destroyAnimation();
           return this.animationLoader.loadAnimation(
@@ -158,7 +164,7 @@ export class BaseDirective implements OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(animationItem => {
-        this.animationItem$.next(animationItem);
+        this.ngZone.run(() => this.animationItem$.next(animationItem));
       });
   }
 

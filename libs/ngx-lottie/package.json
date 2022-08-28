@@ -29,12 +29,17 @@
     "angular 12",
     "angular13",
     "angular 13",
+    "angular14",
+    "angular 14",
     "universal",
     "ivy"
   ],
-  "sideEffects": true,
+  "sideEffects": false,
   "peerDependencies": {
     "@angular/core": ">=13",
     "lottie-web": ">=5.9.2"
+  },
+  "dependencies": {
+    "@scarf/scarf": "^1.1.1"
   }
 }

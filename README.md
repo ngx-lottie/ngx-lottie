@@ -23,9 +23,6 @@
   <a href="https://www.npmjs.com/package/ngx-lottie">
     <img src="https://badge.fury.io/js/ngx-lottie.svg" alt="npm version" height="18" />
   </a>
-
-  <!-- Dependecies -->
-  <img alt="David" src="https://img.shields.io/david/ngx-lottie/ngx-lottie.svg" />
 </div>
 
 ## Compatibility with Angular Versions

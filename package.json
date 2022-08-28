@@ -25,6 +25,8 @@
     "angular 12",
     "angular13",
     "angular 13",
+    "angular14",
+    "angular 14",
     "universal",
     "ivy"
   ],
@@ -113,4 +115,3 @@
     ]
   }
 }
-

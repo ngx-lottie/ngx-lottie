@@ -110,6 +110,8 @@ npm i lottie-web ngx-lottie
 yarn add lottie-web ngx-lottie
 ```
 
+> Please note: ngx-lottie uses [Scarf](https://scarf.sh/) to collect anonymized installation analytics. These analytics help support the maintainers of this library. However, if you'd like to opt out, you can do so by setting `scarfSettings.enabled = false` in your project's package.json. Alternatively, you can set the environment variable `SCARF_ANALYTICS=false` before you install.
+
 ## Usage
 
 First, import the `LottieModule` into the `AppModule`:

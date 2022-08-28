@@ -4,5 +4,6 @@
   "lib": {
     "entryFile": "src/index.ts",
     "flatModuleFile": "ngx-lottie"
-  }
+  },
+  "allowedNonPeerDependencies": ["@scarf/scarf"]
 }

@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   NgZone,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { BaseDirective } from './base.directive';
 import { AnimationLoader } from './animation-loader';
@@ -26,6 +27,8 @@ import { AnimationLoader } from './animation-loader';
     ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class LottieComponent extends BaseDirective implements OnChanges {
   @Input() width: string | null = null;

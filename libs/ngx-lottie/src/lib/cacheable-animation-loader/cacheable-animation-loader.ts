@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { AnimationLoader } from '../animation-loader';
 import { AnimationItem, AnimationConfigWithData, AnimationConfigWithPath } from '../symbols';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CacheableAnimationLoader extends AnimationLoader implements OnDestroy {
   private cache = new Map<string, string>();
 

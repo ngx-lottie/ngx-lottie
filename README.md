@@ -204,6 +204,40 @@ export class AppComponent {
 
 Note that you will need to import the `LottieModule` into other modules as it exports the `ng-lottie` component, and the `lottie` directive. `forRoot` has to be called only once!
 
+### Standalone
+
+`ngx-lottie@9.1.0` exposes standalone components (compatible only with Angular 14+). This means you can import the Lottie component directly into your standalone component:
+
+```ts
+import { Component } from '@angular/core';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
+
+@Component({
+  selector: 'app-root',
+  template: '<ng-lottie [options]="options"></ng-lottie>',
+  standalone: true,
+  imports: [LottieComponent],
+})
+export class AppComponent {
+  options: AnimationOptions = {
+    path: '/assets/animation.json',
+  };
+}
+```
+
+We still need to register providers, for instance, the `player` factory:
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideLottieOptions({
+      player: () => import(/* webpackChunkName: 'lottie-web' */ 'lottie-web'),
+    }),
+  ],
+});
+```
+
 ## Updating animation
 
 If you want to update the animation dynamically then you have to update the animation options immutably. Let's look at the following example:
@@ -242,7 +276,7 @@ export class AppComponent {
 }
 ```
 
-If you want to update options relying on a response from the server, then you'll have to call `markForCheck` to make sure that Angular will run the change detection if `ng-lottie` is inside a `ChangeDetectionStrategy.OnPush` component:
+If you want to update options relying on a response from the server, then you'll have to call `detectChanges` manually to ensure the change detection is run if `ng-lottie` is inside a `ChangeDetectionStrategy.OnPush` component:
 
 ```ts
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
@@ -271,7 +305,7 @@ export class AppComponent {
   updateAnimation(): void {
     this.animationService.loadAnimationOptions().subscribe(options => {
       this.options = options;
-      this.ref.markForCheck();
+      this.ref.detectChanges();
     });
   }
 }
@@ -327,7 +361,7 @@ ngZone.runOutsideAngular(() => {
 });
 ```
 
-I made such a design decision because animation items can emit hundreds and thousands of events every second. The `lottie-web` emits some events asynchronously by wrapping them into `setTimeout` internally. If thousands of events occur during a single second, then Angular will run change detection a thousand times, drastically decreasing performance.
+I made such a design decision because animation items can emit hundreds and thousands of events every second. The `lottie-web` emits some events asynchronously by wrapping them into `setTimeout` internally. Suppose thousands of events occur during a single second. In that case, Angular will run change detection a thousand times, drastically decreasing performance.
 
 Therefore, event handlers will be called outside of the Angular zone:
 
@@ -352,18 +386,11 @@ export class AppComponent {
 }
 ```
 
-Therefore you need:
-
-- either call `NgZone.run()`
-- either call change detection manually via `ChangeDetectorRef.detectChanges()`
-- either mark component to be checked via `ChangeDetectorRef.markForCheck()`
+Therefore you need to re-enter the Angular execution context and call change detection manually via `ChangeDetectorRef.detectChanges()`:
 
 ```ts
 import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { AnimationOptions } from 'ngx-lottie';
-
-// Angular 9+
-import { ɵdetectChanges as detectChanges, ɵmarkDirty as markDirty } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -383,22 +410,10 @@ export class AppComponent {
   constructor(private ngZone: NgZone, private ref: ChangeDetectorRef) {}
 
   onLoopComplete(): void {
-    // * first option via `NgZone.run()`
     this.ngZone.run(() => {
       this.onLoopCompleteCalledTimes++;
+      this.ref.detectChanges();
     });
-
-    // * second option via `ChangeDetectorRef.detectChanges()`
-    this.onLoopCompleteCalledTimes++;
-    this.ref.detectChanges();
-    // Angular 9+
-    detectChanges(this);
-
-    // * third option via `ChangeDetectorRef.markForCheck()`
-    this.onLoopCompleteCalledTimes++;
-    this.ref.markForCheck();
-    // Angular 9+
-    markDirty(this);
   }
 }
 ```
@@ -421,7 +436,22 @@ export function playerFactory() {
 export class AppModule {}
 ```
 
-This will enable cache under the hood. Since the cache is enabled, `ngx-lottie` will load your JSON file only once.
+This will enable the internal cache. The `ngx-lottie` will load JSON files only once since the cache is enabled.
+
+`ngx-lottie@9.1.0` exposes a function that registers DI provider if you're going module-less approach and using standalone components in your app:
+
+```ts
+import { provideLottieOptions, provideCacheableAnimationLoader } from 'ngx-lottie';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideLottieOptions({
+      player: () => import(/* webpackChunkName: 'lottie-web' */ 'lottie-web'),
+    }),
+    provideCacheableAnimationLoader(),
+  ],
+});
+```
 
 ## API
 
@@ -585,7 +615,7 @@ export class AppComponent {
 
 By default, `lottie-web` will load your JSON file with animation data every time you create an animation. You may have some problems with the connection, so there may be some delay or even timeout. It's worth loading animation data only once and cache it on the client-side, so every time you create an animation — `ngx-lottie` will retrieve the animation data from the cache.
 
-`ngx-lottie/server` package gives you the opportunity to preload animation data and cache it using `TransferState`.
+The `ngx-lottie/server` package allows you to preload animation data and cache it using `TransferState`.
 
 ### How2?
 
@@ -619,7 +649,7 @@ import { AppComponent } from './app.component';
 export class AppServerModule {}
 ```
 
-Don't forget to import the `BrowserTransferStateModule` into your `AppModule`. Let's look at these options. `animations` is an array of JSON files that contain animation data that Node.js should read on the server-side, cache and transfer to the client. `folder` is a path where your JSON files are located, but you should use it properly, this path is joined with the `process.cwd()`. Assume such a project structure:
+Don't forget to import the `BrowserTransferStateModule` (not required as of Angular 14) into your `AppModule`. Let's look at these options. `animations` is an array of JSON files that contain animation data that Node.js should read on the server-side, cache, and transfer to the client. `folder` is a path where your JSON files are located. Still, you should use it properly. This path is joined with the `process.cwd()`. Consider the following project structure:
 
 ```
 — dist (here you store your output artifacts)
@@ -637,7 +667,7 @@ Don't forget to import the `BrowserTransferStateModule` into your `AppModule`. L
 
 If you start a server from the root folder like `node dist/server/main`, thus the `folder` property should equal `dist/browser/assets`.
 
-You now can inject the `LottieTransferState` in your components from the `ngx-lottie` package. It's tree-shakable by default and won't get bundled until you inject it anywhere:
+You can now inject the `LottieTransferState` into your components from the `ngx-lottie` package. It's tree-shakable by default and won't get bundled until you inject it anywhere:
 
 ```typescript
 import { Component } from '@angular/core';

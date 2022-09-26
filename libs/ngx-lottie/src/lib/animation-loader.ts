@@ -34,7 +34,7 @@ function convertPlayerOrLoaderToObservable(
   );
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AnimationLoader {
   protected player$ = convertPlayerOrLoaderToObservable(
     this.options.player,

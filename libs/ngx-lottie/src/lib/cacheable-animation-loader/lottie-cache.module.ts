@@ -11,7 +11,7 @@ export class LottieCacheModule {
       providers: [
         {
           provide: AnimationLoader,
-          useClass: CacheableAnimationLoader,
+          useExisting: CacheableAnimationLoader,
         },
       ],
     };

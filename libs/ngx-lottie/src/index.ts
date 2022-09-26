@@ -1,10 +1,9 @@
-/**
- * The public api for consumers of ngx-lottie
- */
 export { LottieModule } from './lib/lottie.module';
 export { LottieCacheModule } from './lib/cacheable-animation-loader/lottie-cache.module';
 
 export { AnimationLoader } from './lib/animation-loader';
+
+export { provideLottieOptions, provideCacheableAnimationLoader } from './lib/providers';
 
 export { BaseDirective } from './lib/base.directive';
 export { LottieDirective } from './lib/lottie.directive';
@@ -22,3 +21,5 @@ export {
   AnimationFilename,
 } from './lib/symbols';
 export { transformAnimationFilenameToKey } from './lib/server';
+
+export * from './private_export';

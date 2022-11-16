@@ -14,6 +14,7 @@ export class LottieModule {
     return {
       ngModule: LottieModule,
       providers: [
+        AnimationLoader,
         {
           provide: LOTTIE_OPTIONS,
           useValue: options,

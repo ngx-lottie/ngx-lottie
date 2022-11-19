@@ -1,4 +1,5 @@
 {
+  "name": "demos-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/demos-e2e/src",
@@ -6,7 +7,7 @@
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/demos-e2e/cypress.json",
+        "cypressConfig": "apps/demos-e2e/cypress.config.ts",
         "tsConfig": "apps/demos-e2e/tsconfig.e2e.json",
         "devServerTarget": "demos:serve-ssr"
       }

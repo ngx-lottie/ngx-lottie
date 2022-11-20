@@ -2,8 +2,9 @@
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
     "module": "ESNext",
-    "target": "ES2016",
-    "types": ["node"]
+    "target": "ES2022",
+    "types": ["node"],
+    "useDefineForClassFields": false
   },
   "files": ["src/main.server.ts", "server.ts"],
   "angularCompilerOptions": {

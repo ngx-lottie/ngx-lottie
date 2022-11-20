@@ -1,4 +1,5 @@
 {
+  "name": "ngx-lottie",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/ngx-lottie/src",
@@ -25,7 +26,7 @@
       }
     },
     "publish-patch": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "cd libs/ngx-lottie && npm version patch",
@@ -37,7 +38,7 @@
       }
     },
     "publish-minor": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "cd libs/ngx-lottie && npm version minor",
@@ -49,7 +50,7 @@
       }
     },
     "publish-major": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "cd libs/ngx-lottie && npm version major",

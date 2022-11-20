@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-import { MainPo } from '../support/main.po';
-
 function unescapeHtml(text: string): string {
   const unescapedText = {
     '&a;': '&',
@@ -15,9 +13,7 @@ function unescapeHtml(text: string): string {
 }
 
 describe('Server side rendering', () => {
-  const main = new MainPo();
-
-  beforeEach(() => main.navigateTo());
+  beforeEach(() => cy.visit('/'));
 
   // We can only be sure that SSR works properly only by compairing
   // transfer state loaded from server

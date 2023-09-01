@@ -24,12 +24,13 @@ import {
   BMConfigErrorEvent,
   AnimationItem,
   AnimationEventName,
+  RendererType,
 } from './symbols';
 import { AnimationLoader } from './animation-loader';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective implements OnDestroy {
-  @Input() options: AnimationOptions | null = null;
+  @Input() options: AnimationOptions<RendererType> | null = null;
 
   @Input() containerClass: string | null = null;
 

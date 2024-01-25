@@ -1,6 +1,3 @@
-export { LottieModule } from './lib/lottie.module';
-export { LottieCacheModule } from './lib/cacheable-animation-loader/lottie-cache.module';
-
 export { AnimationLoader } from './lib/animation-loader';
 
 export { provideLottieOptions, provideCacheableAnimationLoader } from './lib/providers';

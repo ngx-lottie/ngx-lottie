@@ -1,47 +1,40 @@
-import { Injectable, NgZone, Inject } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 
-import { Observable, from, of, animationFrameScheduler } from 'rxjs';
-import { map, observeOn, shareReplay, tap } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { map, mergeMap, shareReplay, tap } from 'rxjs/operators';
 
 import {
   LOTTIE_OPTIONS,
   LottiePlayer,
-  LottieOptions,
   AnimationItem,
   AnimationOptions,
   AnimationConfigWithData,
   AnimationConfigWithPath,
-  LottiePlayerFactoryOrLoader,
 } from './symbols';
 
-function convertPlayerOrLoaderToObservable(
-  player: LottiePlayerFactoryOrLoader,
-  useWebWorker?: boolean,
-): Observable<LottiePlayer> {
-  const playerOrLoader = player();
+function convertPlayerOrLoaderToObservable(): Observable<LottiePlayer> {
+  const ngZone = inject(NgZone);
+  const { player, useWebWorker } = inject(LOTTIE_OPTIONS);
+  const playerOrLoader = ngZone.runOutsideAngular(() => player());
   const player$ =
     playerOrLoader instanceof Promise
       ? from(playerOrLoader).pipe(map(module => module.default || module))
       : of(playerOrLoader);
 
   return player$.pipe(
-    tap(player =>
-      (player as unknown as { useWebWorker: (useWebWorker?: boolean) => void }).useWebWorker(
-        useWebWorker,
-      ),
-    ),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    tap(player => (player as any).useWebWorker?.(useWebWorker)),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
 }
 
 @Injectable({ providedIn: 'root' })
 export class AnimationLoader {
-  protected player$ = convertPlayerOrLoaderToObservable(
-    this.options.player,
-    this.options.useWebWorker,
-  ).pipe(observeOn(animationFrameScheduler));
+  protected player$ = convertPlayerOrLoaderToObservable().pipe(
+    mergeMap(player => raf$(this.ngZone).pipe(map(() => player))),
+  );
 
-  constructor(private ngZone: NgZone, @Inject(LOTTIE_OPTIONS) private options: LottieOptions) {}
+  private ngZone = inject(NgZone);
 
   loadAnimation(
     options: AnimationConfigWithData | AnimationConfigWithPath,
@@ -70,4 +63,16 @@ export class AnimationLoader {
   ): AnimationItem {
     return this.ngZone.runOutsideAngular(() => player.loadAnimation(options));
   }
+}
+
+function raf$(ngZone: NgZone) {
+  return new Observable<void>(subscriber => {
+    const requestId = ngZone.runOutsideAngular(() =>
+      requestAnimationFrame(() => {
+        subscriber.next();
+        subscriber.complete();
+      }),
+    );
+    return () => cancelAnimationFrame(requestId);
+  });
 }

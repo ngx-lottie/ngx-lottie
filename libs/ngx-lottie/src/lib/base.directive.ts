@@ -137,9 +137,9 @@ export class BaseDirective implements OnDestroy {
           // removes event listeners when calling `destroy()`.
           new Observable<T>(observer => {
             this.ngZone.runOutsideAngular(() => {
-              animationItem.addEventListener<T>(name, event => {
+              animationItem.addEventListener(name, event => {
                 this.ngZone.runOutsideAngular(() => {
-                  observer.next(event);
+                  observer.next(event as T);
                 });
               });
             });

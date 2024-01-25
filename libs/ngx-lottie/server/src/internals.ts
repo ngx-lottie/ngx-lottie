@@ -1,6 +1,5 @@
-import { join } from 'path';
-import { TransferState, makeStateKey } from '@angular/platform-browser';
-
+import { join } from 'node:path';
+import { makeStateKey, TransferState } from '@angular/core';
 import { AnimationFilename, transformAnimationFilenameToKey } from 'ngx-lottie';
 
 import { readFileWithAnimationData } from './utils';

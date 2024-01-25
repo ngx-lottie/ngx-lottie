@@ -15,3 +15,5 @@ migrations.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.nx/cache

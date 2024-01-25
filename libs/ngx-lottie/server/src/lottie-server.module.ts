@@ -1,5 +1,10 @@
-import { NgModule, ModuleWithProviders, InjectionToken, APP_INITIALIZER } from '@angular/core';
-import { TransferState } from '@angular/platform-browser';
+import {
+  NgModule,
+  ModuleWithProviders,
+  InjectionToken,
+  APP_INITIALIZER,
+  TransferState,
+} from '@angular/core';
 
 import { LottieServerOptions } from './symbols';
 import { appInitializerFactory } from './internals';

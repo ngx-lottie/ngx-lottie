@@ -5,24 +5,20 @@
   "sourceRoot": "libs/ngx-lottie/src",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "options": {
         "tsConfig": "libs/ngx-lottie/tsconfig.lib.json",
         "project": "libs/ngx-lottie/ng-package.json"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["libs/ngx-lottie/src/**/*.ts", "libs/ngx-lottie/src/**/*.html"]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/ngx-lottie/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/ngx-lottie/jest.config.ts"
       }
     },
     "publish-patch": {

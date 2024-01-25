@@ -65,27 +65,23 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "demos:build"
+        "buildTarget": "demos:build"
       },
       "configurations": {
         "production": {
-          "browserTarget": "demos:build:production"
+          "buildTarget": "demos:build:production"
         }
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["apps/demos/src/**/*.ts", "apps/demos/src/**/*.html"]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/demos"],
       "options": {
-        "jestConfig": "apps/demos/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/demos/jest.config.ts"
       }
     },
     "server": {
@@ -95,7 +91,8 @@
         "main": "apps/demos/server.ts",
         "tsConfig": "apps/demos/tsconfig.server.json",
         "sourceMap": true,
-        "optimization": false
+        "optimization": false,
+        "buildOptimizer": false
       },
       "configurations": {
         "production": {
@@ -107,12 +104,13 @@
               "replace": "apps/demos/src/environments/environment.ts",
               "with": "apps/demos/src/environments/environment.prod.ts"
             }
-          ]
+          ],
+          "buildOptimizer": true
         }
       }
     },
     "serve-ssr": {
-      "executor": "@nguniversal/builders:ssr-dev-server",
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
       "options": {
         "browserTarget": "demos:build",
         "serverTarget": "demos:server"

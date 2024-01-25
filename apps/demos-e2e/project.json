@@ -5,18 +5,14 @@
   "sourceRoot": "apps/demos-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/demos-e2e/cypress.config.ts",
-        "tsConfig": "apps/demos-e2e/tsconfig.e2e.json",
         "devServerTarget": "demos:serve-ssr"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["apps/demos-e2e/**/*.{js,ts}"]
-      }
+      "executor": "@nx/eslint:lint"
     }
   },
   "implicitDependencies": ["demos"]

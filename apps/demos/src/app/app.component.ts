@@ -8,13 +8,15 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions, BMDestroyEvent, LottieTransferState } from 'ngx-lottie';
+import { AnimationOptions, BMDestroyEvent, LottieComponent, LottieTransferState } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent implements AfterViewChecked {
   options!: AnimationOptions;

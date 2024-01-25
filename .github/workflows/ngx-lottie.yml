@@ -10,7 +10,7 @@ jobs:
   lint-test-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
@@ -18,15 +18,15 @@ jobs:
 
       - run: git fetch --no-tags --prune --depth 2 origin master
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14.x
+          node-version: '18.13'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo '::set-output name=dir::$(yarn config get cacheFolder)'
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         id: yarn-cache
         with:
           path: |

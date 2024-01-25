@@ -33,7 +33,8 @@ describe('Server side rendering', () => {
 
   it('should destroy animation', () => {
     // Arrange & act & assert
-    cy.get('button.destroy').click().get('ng-lottie').should('not.exist');
+    cy.get('button.destroy').click();
+    cy.get('ng-lottie').should('not.exist');
   });
 
   it('should contain styles on the container div', () => {
@@ -56,9 +57,9 @@ describe('Server side rendering', () => {
     // Arrange & act & assert
     cy.get('ng-lottie svg g').invoke('prop', 'childElementCount').should('equal', 2);
 
-    cy.get('.update-animation')
-      .click()
-      .get('ng-lottie svg g')
+    cy.get('.update-animation').click();
+
+    cy.get('ng-lottie svg g')
       .invoke('prop', 'childElementCount')
       // The new animation is more complex and has much more elements.
       .should('equal', 8);

@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { TransferState, makeStateKey } from '@angular/platform-browser';
+import { Injectable, makeStateKey, TransferState } from '@angular/core';
 
 import { AnimationFilename } from './symbols';
 import { transformAnimationFilenameToKey } from './server';

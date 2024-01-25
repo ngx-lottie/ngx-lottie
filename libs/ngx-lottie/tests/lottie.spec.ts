@@ -1,8 +1,9 @@
-import { Component, Type, ɵivyEnabled as ivyEnabled, ɵglobal } from '@angular/core';
+import { Component, Type, ɵglobal } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 
 // Do this before requiring `lottie-web`
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 HTMLCanvasElement.prototype.getContext = () => ({
   fillRect: jest.fn(),
@@ -43,6 +44,7 @@ describe('ngx-lottie', () => {
   let spy: jest.SpyInstance;
 
   beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     spy = jest.spyOn(ɵglobal, 'requestAnimationFrame').mockImplementation((cb: any) => cb());
   });
 
@@ -103,11 +105,6 @@ describe('ngx-lottie', () => {
         imports: [LottieModule.forRoot({ player: playerFactory })],
         declarations: [MockComponent],
       });
-    });
-
-    it('Ivy should be enabled', () => {
-      // Assert
-      expect(ivyEnabled).toBeTruthy();
     });
 
     it('should render "svg" element successfully', () => {

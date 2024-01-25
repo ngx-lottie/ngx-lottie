@@ -1,6 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { AnimationLoader } from './animation-loader';
 import { LottieDirective } from './lottie.directive';
 import { LottieComponent } from './lottie.component';
 import { LottieOptions, LOTTIE_OPTIONS } from './symbols';

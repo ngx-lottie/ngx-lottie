@@ -2,16 +2,17 @@ import {
   Directive,
   Input,
   Output,
-  Inject,
   PLATFORM_ID,
-  OnDestroy,
   SimpleChanges,
   NgZone,
+  inject,
+  OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Subject, BehaviorSubject, Observable, defer } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 
 import {
   AnimationOptions,
@@ -38,83 +39,81 @@ export class BaseDirective implements OnDestroy {
   /**
    * `animationCreated` is dispatched after calling `loadAnimation`.
    */
-  @Output() animationCreated = this.getAnimationItem();
+  @Output() readonly animationCreated = this.getAnimationItem();
 
   /**
    * `complete` is dispatched after completing the last frame.
    */
-  @Output() complete = this.awaitAnimationItemAndStartListening<BMCompleteEvent>('complete');
+  @Output() readonly complete =
+    this.awaitAnimationItemAndStartListening<BMCompleteEvent>('complete');
 
   /**
    * `loopComplete` is dispatched after completing the frame loop.
    */
-  @Output() loopComplete =
+  @Output() readonly loopComplete =
     this.awaitAnimationItemAndStartListening<BMCompleteLoopEvent>('loopComplete');
 
   /**
    * `enterFrame` is dispatched after entering the new frame.
    */
-  @Output() enterFrame = this.awaitAnimationItemAndStartListening<BMEnterFrameEvent>('enterFrame');
+  @Output() readonly enterFrame =
+    this.awaitAnimationItemAndStartListening<BMEnterFrameEvent>('enterFrame');
 
   /**
    * `segmentStart` is dispatched when the new segment is adjusted.
    */
-  @Output() segmentStart =
+  @Output() readonly segmentStart =
     this.awaitAnimationItemAndStartListening<BMSegmentStartEvent>('segmentStart');
 
   /**
    * Original event name is `config_ready`. `config_ready` is dispatched
    * after the needed renderer is configured.
    */
-  @Output() configReady = this.awaitAnimationItemAndStartListening<void>('config_ready');
+  @Output() readonly configReady = this.awaitAnimationItemAndStartListening<void>('config_ready');
 
   /**
    * Original event name is `data_ready`. `data_ready` is dispatched
    * when all parts of the animation have been loaded.
    */
-  @Output() dataReady = this.awaitAnimationItemAndStartListening<void>('data_ready');
+  @Output() readonly dataReady = this.awaitAnimationItemAndStartListening<void>('data_ready');
 
   /**
    * Original event name is `DOMLoaded`. `DOMLoaded` is dispatched
    * when elements have been added to the DOM.
    */
-  @Output() domLoaded = this.awaitAnimationItemAndStartListening<void>('DOMLoaded');
+  @Output() readonly domLoaded = this.awaitAnimationItemAndStartListening<void>('DOMLoaded');
 
   /**
    * `destroy` will be dispatched when the component gets destroyed,
    * it's handy for releasing resources.
    */
-  @Output() destroy = this.awaitAnimationItemAndStartListening<BMDestroyEvent>('destroy');
+  @Output() readonly destroy = this.awaitAnimationItemAndStartListening<BMDestroyEvent>('destroy');
 
   /**
    * `error` will be dispatched if the Lottie player could not render
    * some frame or parse config.
    */
-  @Output() error = this.awaitAnimationItemAndStartListening<
+  @Output() readonly error = this.awaitAnimationItemAndStartListening<
     BMRenderFrameErrorEvent | BMConfigErrorEvent
   >('error');
 
-  private destroy$ = new Subject<void>();
+  private ngZone = inject(NgZone);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  private animationLoader = inject(AnimationLoader);
+
   private loadAnimation$ = new Subject<[SimpleChanges, HTMLElement]>();
   private animationItem$ = new BehaviorSubject<AnimationItem | null>(null);
 
-  constructor(
-    private ngZone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: string,
-    private animationLoader: AnimationLoader,
-  ) {
+  constructor() {
     this.setupLoadAnimationListener();
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
     this.destroyAnimation();
   }
 
   protected loadAnimation(changes: SimpleChanges, container: HTMLElement): void {
-    // The `loadAnimation` may load `lottie-web` asynchronously and also pipes the player
-    // with `animationFrameScheduler`, which schedules an animation task and triggers change
-    // detection. We'll trigger change detection only once when the animation item is created.
     this.ngZone.runOutsideAngular(() => this.loadAnimation$.next([changes, container]));
   }
 
@@ -150,7 +149,7 @@ export class BaseDirective implements OnDestroy {
 
   private setupLoadAnimationListener(): void {
     const loadAnimation$ = this.loadAnimation$.pipe(
-      filter(([changes]) => isPlatformBrowser(this.platformId) && changes.options !== undefined),
+      filter(([changes]) => this.isBrowser && changes.options !== undefined),
     );
 
     loadAnimation$
@@ -161,7 +160,7 @@ export class BaseDirective implements OnDestroy {
             this.animationLoader.resolveOptions(changes.options.currentValue, container),
           );
         }),
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(),
       )
       .subscribe(animationItem => {
         this.ngZone.run(() => this.animationItem$.next(animationItem));

@@ -31,7 +31,7 @@ HTMLCanvasElement.prototype.getContext = () => ({
 
 import * as lottie from 'lottie-web';
 
-import { LottieModule, BMDestroyEvent } from '../src';
+import { provideLottieOptions, BMDestroyEvent, LottieComponent, LottieDirective } from '../src';
 import { AnimationOptions, AnimationItem } from '../src/lib/symbols';
 
 import animationData = require('./data.json');
@@ -65,6 +65,8 @@ describe('ngx-lottie', () => {
           (destroy)="destroy($event)"
         ></ng-lottie>
       `,
+      standalone: true,
+      imports: [LottieComponent],
     })
     class MockComponent {
       options: AnimationOptions = {
@@ -102,8 +104,8 @@ describe('ngx-lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: playerFactory })],
-        declarations: [MockComponent],
+        imports: [MockComponent],
+        providers: [provideLottieOptions({ player: playerFactory })],
       });
     });
 
@@ -197,6 +199,8 @@ describe('ngx-lottie', () => {
           (destroy)="destroy($event)"
         ></main>
       `,
+      standalone: true,
+      imports: [LottieDirective],
     })
     class MockComponent {
       options: AnimationOptions = {
@@ -230,8 +234,8 @@ describe('ngx-lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: playerFactory })],
-        declarations: [MockComponent],
+        imports: [MockComponent],
+        providers: [provideLottieOptions({ player: playerFactory })],
       });
     });
 
@@ -278,6 +282,8 @@ describe('ngx-lottie', () => {
           (animationCreated)="animationCreated($event)"
         ></ng-lottie>
       `,
+      standalone: true,
+      imports: [LottieComponent],
     })
     class MockComponent {
       options: AnimationOptions = {
@@ -301,8 +307,8 @@ describe('ngx-lottie', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [LottieModule.forRoot({ player: () => import('lottie-web') })],
-        declarations: [MockComponent],
+        imports: [MockComponent],
+        providers: [provideLottieOptions({ player: () => import('lottie-web') })],
       });
     });
 

@@ -1,6 +1,6 @@
 {
   "name": "ngx-lottie",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ngx-lottie/ngx-lottie.git"
@@ -33,12 +33,17 @@
     "angular 14",
     "angular15",
     "angular 15",
+    "angular 15",
+    "angular16",
+    "angular 16",
+    "angular17",
+    "angular 17",
     "universal",
     "ivy"
   ],
   "sideEffects": false,
   "peerDependencies": {
-    "@angular/core": ">=15",
+    "@angular/core": ">=17",
     "lottie-web": ">=5.9.2"
   },
   "dependencies": {

@@ -135,39 +135,35 @@ yarn add lottie-web ngx-lottie
 
 ## Usage
 
-First, import the `LottieModule` into the `AppModule`:
+First, add `provideLottieOptions` to the `app.config.ts`:
 
 ```typescript
-import { NgModule } from '@angular/core';
-import { LottieModule } from 'ngx-lottie';
+// src/app/app.config.ts
+import { provideLottieOptions } from 'ngx-lottie';
 import player from 'lottie-web';
 
-// Note we need a separate function as it's required
-// by the AOT compiler.
-export function playerFactory() {
-  return player;
-}
-
-@NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory })],
-})
-export class AppModule {}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => player,
+    }),
+  ],
+};
 ```
 
 The `lottie-web` library can be loaded on demand using dynamic import. Webpack will load this library only when your animation gets rendered for the first time. Given the following code:
 
 ```ts
-import { NgModule } from '@angular/core';
-import { LottieModule } from 'ngx-lottie';
+// src/app/app.config.ts
+import { provideLottieOptions } from 'ngx-lottie';
 
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
-}
-
-@NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory })],
-})
-export class AppModule {}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => import('lottie-web'),
+    }),
+  ],
+};
 ```
 
 Now you can use the `ng-lottie` component and provide your custom options via the `options` binding.
@@ -175,13 +171,15 @@ Now you can use the `ng-lottie` component and provide your custom options via th
 ```typescript
 import { Component } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
   template: `
     <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
   `,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -199,13 +197,15 @@ Also, it's possible to use the `lottie` directive if you'd like to provide your 
 ```typescript
 import { Component } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieDirective, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
   template: `
     <main lottie [options]="options" (animationCreated)="animationCreated($event)"></main>
   `,
+  standalone: true,
+  imports: [LottieDirective],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -218,42 +218,6 @@ export class AppComponent {
 }
 ```
 
-Note that you will need to import the `LottieModule` into other modules as it exports the `ng-lottie` component, and the `lottie` directive. `forRoot` has to be called only once!
-
-### Standalone
-
-`ngx-lottie@9.1.0` exposes standalone components (compatible only with Angular 14+). This means you can import the Lottie component directly into your standalone component:
-
-```ts
-import { Component } from '@angular/core';
-import { AnimationItem } from 'lottie-web';
-import { AnimationOptions, LottieComponent } from 'ngx-lottie';
-
-@Component({
-  selector: 'app-root',
-  template: '<ng-lottie [options]="options"></ng-lottie>',
-  standalone: true,
-  imports: [LottieComponent],
-})
-export class AppComponent {
-  options: AnimationOptions = {
-    path: '/assets/animation.json',
-  };
-}
-```
-
-We still need to register providers, for instance, the `player` factory:
-
-```ts
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideLottieOptions({
-      player: () => import(/* webpackChunkName: 'lottie-web' */ 'lottie-web'),
-    }),
-  ],
-});
-```
-
 ## Updating animation
 
 If you want to update the animation dynamically then you have to update the animation options immutably. Let's look at the following example:
@@ -261,7 +225,7 @@ If you want to update the animation dynamically then you have to update the anim
 ```ts
 import { Component } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -269,6 +233,8 @@ import { AnimationOptions } from 'ngx-lottie';
     <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
     <button (click)="updateAnimation()">Update animation</button>
   `,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -297,7 +263,7 @@ If you want to update options relying on a response from the server, then you'll
 ```ts
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -306,6 +272,8 @@ import { AnimationOptions } from 'ngx-lottie';
     <button (click)="updateAnimation()">Update animation</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -327,23 +295,21 @@ export class AppComponent {
 }
 ```
 
-You can also store options in `BehaviorSubject` and bind them via the `async` pipe in a template:
+You can also store options in `singla` and bind them via the `options()` signal call:
 
 ```ts
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie
-      [options]="options$ | async"
-      (animationCreated)="animationCreated($event)"
-    ></ng-lottie>
-
+    <ng-lottie [options]="options()" (animationCreated)="animationCreated($event)"></ng-lottie>
     <button (click)="updateAnimation()">Update animation</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
-  options$ = new BehaviorSubject<AnimationOptions>({
+  options = signal<AnimationOptions>({
     path: '/assets/animation.json',
   });
 
@@ -355,7 +321,7 @@ export class AppComponent {
 
   updateAnimation(): void {
     this.animationService.loadAnimationOptions().subscribe(options => {
-      this.options$.next(options);
+      this.options.set(options);
     });
   }
 }
@@ -383,12 +349,14 @@ Therefore, event handlers will be called outside of the Angular zone:
 
 ```ts
 import { Component, ChangeDetectionStrategy, NgZone } from '@angular/core';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
   template: ` <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -406,7 +374,7 @@ Therefore you need to re-enter the Angular execution context and call change det
 
 ```ts
 import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -415,6 +383,8 @@ import { AnimationOptions } from 'ngx-lottie';
     <p>On loop complete called times = {{ onLoopCompleteCalledTimes }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -439,35 +409,20 @@ export class AppComponent {
 The `lottie-web` will load your JSON file whenever animation is created. When importing the `LottieModule` into the root module, you can also import the `LottieCacheModule`:
 
 ```ts
-import { NgModule } from '@angular/core';
-import { LottieModule, LottieCacheModule } from 'ngx-lottie';
-
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
-}
-
-@NgModule({
-  imports: [LottieModule.forRoot({ player: playerFactory }), LottieCacheModule.forRoot()],
-})
-export class AppModule {}
-```
-
-This will enable the internal cache. The `ngx-lottie` will load JSON files only once since the cache is enabled.
-
-`ngx-lottie@9.1.0` exposes a function that registers DI provider if you're going module-less approach and using standalone components in your app:
-
-```ts
+// src/app/app.config.ts
 import { provideLottieOptions, provideCacheableAnimationLoader } from 'ngx-lottie';
 
-bootstrapApplication(AppComponent, {
+export const appConfig: ApplicationConfig = {
   providers: [
     provideLottieOptions({
-      player: () => import(/* webpackChunkName: 'lottie-web' */ 'lottie-web'),
+      player: () => player,
     }),
     provideCacheableAnimationLoader(),
   ],
-});
+};
 ```
+
+This will enable the internal cache. The `ngx-lottie` will load JSON files only once since the cache is enabled.
 
 ## API
 
@@ -487,6 +442,8 @@ The `ng-lottie` component supports the following bindings:
       [options]="options"
     ></ng-lottie>
   `,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -530,14 +487,22 @@ The size of the `lottie-web` library is quite large. Because when we write this:
 ```ts
 import player from 'lottie-web';
 
-export function playerFactory() {
-  return player;
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => player,
+    }),
+  ],
+};
 
 // Or if you load `lottie-web` on demand
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => import('lottie-web'),
+    }),
+  ],
+};
 ```
 
 It bundles all 3 renderers: `CanvasRenderer`, `SVGRenderer` and `HybridRenderer`. The `SVGRenderer` is used by default. If you don't care which renderer is used and never provide the `renderer` option, you might want to exclude `CanvasRenderer` and `HybridRenderer`. To do this, just import the `lottie_svg` file that is inside the `lottie-web/build/player` folder:
@@ -545,14 +510,22 @@ It bundles all 3 renderers: `CanvasRenderer`, `SVGRenderer` and `HybridRenderer`
 ```ts
 import player from 'lottie-web/build/player/lottie_svg';
 
-export function playerFactory() {
-  return player;
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => player,
+    }),
+  ],
+};
 
 // Or if you load `lottie-web` on demand
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_svg');
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => import('lottie-web'),
+    }),
+  ],
+};
 ```
 
 Its minified size is `198 KiB`.
@@ -566,14 +539,22 @@ The light version can be imported using the following code:
 ```ts
 import player from 'lottie-web/build/player/lottie_light';
 
-export function playerFactory() {
-  return player;
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => player,
+    }),
+  ],
+};
 
 // Or if you load `lottie-web` on demand
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web/build/player/lottie_light');
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideLottieOptions({
+      player: () => import('lottie-web/build/player/lottie_light'),
+    }),
+  ],
+};
 ```
 
 Its minified size is `148 KiB`. Use this at your own risk because I can't know if your animations contain expressions or effects.
@@ -589,7 +570,7 @@ The `ngx-lottie` listens to `AnimationItem` events outside of the Angular zone. 
 ```ts
 import { Component, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
@@ -599,6 +580,8 @@ import { AnimationOptions } from 'ngx-lottie';
     <button (click)="stop()">Stop</button>
     <button (click)="play()">Play</button>
   `,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -640,32 +623,29 @@ TL;DR - see the `integration` folder.
 Import the `LottieServerModule` into your `AppServerModule`:
 
 ```typescript
-import { NgModule } from '@angular/core';
-import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
+// src/app/app.config.server.ts
+import { importProvidersFrom, mergeApplicationConfig } from '@angular/core';
+import { provideServerRendering } from '@angular/platform-server';
 import { LottieServerModule } from 'ngx-lottie/server';
 
-import { AppModule } from './app.module';
-import { AppComponent } from './app.component';
+import { appConfig } from './app.config';
 
-@NgModule({
-  imports: [
-    // `AppModule` first as you know
-    AppModule,
-    ServerModule,
-    ServerTransferStateModule,
-    LottieServerModule.forRoot({
-      preloadAnimations: {
-        folder: 'dist/browser/assets',
-        animations: ['data.json'],
-      },
-    }),
+export const appServerConfig = mergeApplicationConfig(appConfig, {
+  providers: [
+    provideServerRendering(),
+    importProvidersFrom(
+      LottieServerModule.forRoot({
+        preloadAnimations: {
+          folder: 'dist/browser/assets',
+          animations: ['data.json'],
+        },
+      }),
+    ),
   ],
-  bootstrap: [AppComponent],
-})
-export class AppServerModule {}
+});
 ```
 
-Don't forget to import the `BrowserTransferStateModule` (not required as of Angular 14) into your `AppModule`. Let's look at these options. `animations` is an array of JSON files that contain animation data that Node.js should read on the server-side, cache, and transfer to the client. `folder` is a path where your JSON files are located. Still, you should use it properly. This path is joined with the `process.cwd()`. Consider the following project structure:
+Let's look at these options. `animations` is an array of JSON files that contain animation data that Node.js should read on the server-side, cache, and transfer to the client. `folder` is a path where your JSON files are located. Still, you should use it properly. This path is joined with the `process.cwd()`. Consider the following project structure:
 
 ```
 — dist (here you store your output artifacts)
@@ -678,7 +658,6 @@ Don't forget to import the `BrowserTransferStateModule` (not required as of Angu
 — src (here is your app)
 — angular.json
 — package.json
-— webpack.config.js
 ```
 
 If you start a server from the root folder like `node dist/server/main`, thus the `folder` property should equal `dist/browser/assets`.
@@ -687,11 +666,13 @@ You can now inject the `LottieTransferState` into your components from the `ngx-
 
 ```typescript
 import { Component } from '@angular/core';
-import { AnimationOptions, LottieTransferState } from 'ngx-lottie';
+import { LottieComponent, AnimationOptions, LottieTransferState } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
   template: ` <ng-lottie [options]="options"></ng-lottie> `,
+  standalone: true,
+  imports: [LottieComponent],
 })
 export class AppComponent {
   options: AnimationOptions = {
@@ -702,19 +683,7 @@ export class AppComponent {
 }
 ```
 
-Notice, `data.json` is a filename that you pass to the `preloadAnimations.animations` property. Finally change this:
-
-```typescript
-platformBrowserDynamic().bootstrapModule(AppModule);
-```
-
-To this:
-
-```typescript
-document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic().bootstrapModule(AppModule);
-});
-```
+Notice, `data.json` is a filename that you pass to the `preloadAnimations.animations` property.
 
 ## Potential pitfalls
 

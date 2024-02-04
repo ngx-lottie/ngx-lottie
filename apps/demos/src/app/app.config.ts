@@ -7,7 +7,8 @@ export const appConfig: ApplicationConfig = {
     { provide: APP_ID, useValue: 'ngx-lottie-universal' },
     provideHttpClient(),
     provideLottieOptions({
-      useWebWorker: true,
+      // Temporary disabled because ESBuild renames the `workerSelf` variable.
+      // useWebWorker: true,
       player: () => import(/* webpackChunkName: 'lottie-web' */ 'lottie-web'),
     }),
     provideCacheableAnimationLoader(),

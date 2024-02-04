@@ -5,8 +5,9 @@
     "strict": true,
     "module": "ESNext",
     "target": "ES2022",
+    "esModuleInterop": true,
     "useDefineForClassFields": false
   },
-  "files": ["src/main.ts", "src/polyfills.ts"],
+  "files": ["src/main.ts", "src/main.server.ts", "server.ts"],
   "exclude": ["jest.config.ts"]
 }

@@ -1,4 +1,4 @@
-import { Injectable, NgZone, inject } from '@angular/core';
+import { Injectable, NgZone, inject, ɵisPromise } from '@angular/core';
 
 import { Observable, from, of } from 'rxjs';
 import { map, mergeMap, shareReplay, tap } from 'rxjs/operators';
@@ -16,10 +16,15 @@ function convertPlayerOrLoaderToObservable(): Observable<LottiePlayer> {
   const ngZone = inject(NgZone);
   const { player, useWebWorker } = inject(LOTTIE_OPTIONS);
   const playerOrLoader = ngZone.runOutsideAngular(() => player());
-  const player$ =
-    playerOrLoader instanceof Promise
-      ? from(playerOrLoader).pipe(map(module => module.default || module))
-      : of(playerOrLoader);
+  // We need to use `isPromise` instead of checking whether
+  // `result instanceof Promise`. In zone.js patched environments, `global.Promise`
+  // is the `ZoneAwarePromise`. Some APIs, which are likely not patched by zone.js
+  // for certain reasons, might not work with `instanceof`. For instance, the dynamic
+  // import `() => import('./chunk.js')` returns a native promise (not a `ZoneAwarePromise`),
+  // causing this check to be falsy.
+  const player$ = ɵisPromise(playerOrLoader)
+    ? from(playerOrLoader).pipe(map(module => module.default || module))
+    : of(playerOrLoader);
 
   return player$.pipe(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

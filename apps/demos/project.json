@@ -6,21 +6,15 @@
   "prefix": "app",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "options": {
-        "outputPath": "dist/apps/demos/browser",
+        "outputPath": "dist/apps/demos",
         "index": "apps/demos/src/index.html",
-        "main": "apps/demos/src/main.ts",
-        "polyfills": "apps/demos/src/polyfills.ts",
+        "browser": "apps/demos/src/main.ts",
+        "server": "apps/demos/src/main.server.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/demos/tsconfig.app.json",
-        "styles": [],
-        "scripts": [],
-        "vendorChunk": true,
-        "extractLicenses": false,
-        "buildOptimizer": false,
-        "sourceMap": true,
-        "optimization": false,
-        "namedChunks": true,
+        "inlineStyleLanguage": "scss",
         "assets": [
           "apps/demos/src/favicon.ico",
           "apps/demos/src/assets",
@@ -30,7 +24,10 @@
             "output": "/assets/animations"
           }
         ],
-        "allowedCommonJsDependencies": ["lottie-web"]
+        "allowedCommonJsDependencies": ["lottie-web"],
+        "ssr": {
+          "entry": "apps/demos/server.ts"
+        }
       },
       "configurations": {
         "production": {
@@ -40,13 +37,7 @@
               "with": "apps/demos/src/environments/environment.prod.ts"
             }
           ],
-          "optimization": true,
           "outputHashing": "all",
-          "sourceMap": false,
-          "namedChunks": false,
-          "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -59,8 +50,14 @@
               "maximumError": "10kb"
             }
           ]
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
         }
-      }
+      },
+      "defaultConfiguration": "production"
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
@@ -82,44 +79,6 @@
       "outputs": ["{workspaceRoot}/coverage/apps/demos"],
       "options": {
         "jestConfig": "apps/demos/jest.config.ts"
-      }
-    },
-    "server": {
-      "executor": "@angular-devkit/build-angular:server",
-      "options": {
-        "outputPath": "dist/apps/demos/server",
-        "main": "apps/demos/server.ts",
-        "tsConfig": "apps/demos/tsconfig.server.json",
-        "sourceMap": true,
-        "optimization": false,
-        "buildOptimizer": false
-      },
-      "configurations": {
-        "production": {
-          "sourceMap": false,
-          "optimization": true,
-          "outputHashing": "media",
-          "fileReplacements": [
-            {
-              "replace": "apps/demos/src/environments/environment.ts",
-              "with": "apps/demos/src/environments/environment.prod.ts"
-            }
-          ],
-          "buildOptimizer": true
-        }
-      }
-    },
-    "serve-ssr": {
-      "executor": "@angular-devkit/build-angular:ssr-dev-server",
-      "options": {
-        "browserTarget": "demos:build",
-        "serverTarget": "demos:server"
-      },
-      "configurations": {
-        "production": {
-          "browserTarget": "demos:build:production",
-          "serverTarget": "demos:server:production"
-        }
       }
     }
   },

@@ -295,7 +295,7 @@ export class AppComponent {
 }
 ```
 
-You can also store options in `singla` and bind them via the `options()` signal call:
+You can also store options in `signal` and bind them via the `options()` signal call:
 
 ```ts
 @Component({

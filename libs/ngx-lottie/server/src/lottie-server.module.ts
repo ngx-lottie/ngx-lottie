@@ -4,6 +4,7 @@ import {
   InjectionToken,
   APP_INITIALIZER,
   TransferState,
+  makeEnvironmentProviders,
 } from '@angular/core';
 
 import { LottieServerOptions } from './symbols';
@@ -30,4 +31,19 @@ export class LottieServerModule {
       ],
     };
   }
+}
+
+export function provideLottieServerOptions(options: LottieServerOptions) {
+  return makeEnvironmentProviders([
+    {
+      provide: LOTTIE_SERVER_OPTIONS,
+      useValue: options,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      multi: true,
+      deps: [LOTTIE_SERVER_OPTIONS, TransferState],
+    },
+  ]);
 }

@@ -1,1 +1,1 @@
-export { LottieServerModule } from './lottie-server.module';
+export { LottieServerModule, provideLottieServerOptions } from './lottie-server.module';

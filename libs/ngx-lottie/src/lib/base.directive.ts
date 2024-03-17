@@ -1,12 +1,12 @@
 import {
   Directive,
-  Input,
   Output,
   PLATFORM_ID,
   SimpleChanges,
   NgZone,
   inject,
   OnDestroy,
+  input,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,11 +30,11 @@ import { AnimationLoader } from './animation-loader';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective implements OnDestroy {
-  @Input() options: AnimationOptions | null = null;
+  options = input<AnimationOptions | null>(null);
 
-  @Input() containerClass: string | null = null;
+  containerClass = input<string | null>(null);
 
-  @Input() styles: Partial<CSSStyleDeclaration> | null = null;
+  styles = input<Partial<CSSStyleDeclaration> | null>(null);
 
   /**
    * `animationCreated` is dispatched after calling `loadAnimation`.

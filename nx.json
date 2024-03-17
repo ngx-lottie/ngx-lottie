@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "master"
-  },
   "defaultProject": "ngx-lottie",
   "generators": {
     "@nx/angular:application": {
@@ -25,10 +22,6 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true
-    },
     "@nx/jest:jest": {
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "cache": true,
@@ -41,6 +34,10 @@
           "codeCoverage": true
         }
       }
+    },
+    "@nx/eslint:lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
     }
   },
   "namedInputs": {
@@ -60,5 +57,6 @@
       "!{projectRoot}/src/test-setup.[jt]s"
     ]
   },
-  "parallel": 1
+  "parallel": 1,
+  "defaultBase": "master"
 }

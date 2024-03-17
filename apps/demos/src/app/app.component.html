@@ -1,14 +1,14 @@
 <div class="demo">
-  @if (shown) {
-  <ng-lottie
-    width="600px"
-    height="500px"
-    containerClass="moving-box moving-box-second-class"
-    [styles]="styles"
-    [options]="options"
-    (animationCreated)="animationCreated($event)"
-    (destroy)="destroy($event)"
-  ></ng-lottie>
+  @if (shown()) {
+    <ng-lottie
+      width="600px"
+      height="500px"
+      containerClass="moving-box moving-box-second-class"
+      [styles]="styles"
+      [options]="options()"
+      (animationCreated)="animationCreated($event)"
+      (destroy)="destroy($event)"
+    ></ng-lottie>
   }
 
   <div class="controls">

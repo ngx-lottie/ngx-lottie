@@ -3,9 +3,10 @@ import {
   Component,
   ChangeDetectionStrategy,
   AfterViewChecked,
-  NgZone,
   Inject,
   PLATFORM_ID,
+  signal,
+  WritableSignal,
 } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, BMDestroyEvent, LottieComponent, LottieTransferState } from 'ngx-lottie';
@@ -19,9 +20,9 @@ import { AnimationOptions, BMDestroyEvent, LottieComponent, LottieTransferState 
   imports: [LottieComponent],
 })
 export class AppComponent implements AfterViewChecked {
-  options!: AnimationOptions;
+  options!: WritableSignal<AnimationOptions>;
 
-  shown = true;
+  shown = signal(true);
 
   styles: Partial<CSSStyleDeclaration> = {
     margin: '0 auto',
@@ -30,7 +31,6 @@ export class AppComponent implements AfterViewChecked {
   private animationItem: AnimationItem | null = null;
 
   constructor(
-    private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: string,
     private lottieTransferState: LottieTransferState,
   ) {
@@ -45,66 +45,56 @@ export class AppComponent implements AfterViewChecked {
   }
 
   animationCreated(animationItem: AnimationItem): void {
-    NgZone.assertInAngularZone();
     console.log('animationCreated -> ', animationItem);
     this.animationItem = animationItem;
   }
 
   destroy(destroyEvent: BMDestroyEvent): void {
-    NgZone.assertNotInAngularZone();
     console.log('destroy -> ', destroyEvent);
   }
 
   showAnimation(): void {
-    this.shown = true;
+    this.shown.set(true);
   }
 
   destroyAnimation(): void {
-    this.shown = false;
+    this.shown.set(false);
     this.animationItem = null;
   }
 
   setSpeed(speed: number): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.animationItem?.setSpeed(speed);
-    });
+    this.animationItem?.setSpeed(speed);
   }
 
   play(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.animationItem?.play();
-    });
+    this.animationItem?.play();
   }
 
   pause(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.animationItem?.pause();
-    });
+    this.animationItem?.pause();
   }
 
   stop(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.animationItem?.stop();
-    });
+    this.animationItem?.stop();
   }
 
   updateAnimation(): void {
-    this.options = {
+    this.options.set({
       path: '/assets/animations/17893-work-from-home.json',
-    };
+    });
   }
 
   private createOptions(): void {
     const tranferredAnimationData = this.lottieTransferState.get('data.json');
 
     if (tranferredAnimationData) {
-      this.options = {
+      this.options = signal({
         animationData: tranferredAnimationData,
-      };
+      });
     } else {
-      this.options = {
+      this.options = signal({
         path: '/assets/animations/data.json',
-      };
+      });
     }
   }
 }

@@ -118,7 +118,7 @@
   (loopComplete)="loopComplete($event)"
   (destroy)="destroy($event)"
   (error)="error($event)"
-></ng-lottie>
+/>
 ```
 
 ## Installation
@@ -129,6 +129,8 @@ To install `ngx-lottie`, run the following command:
 npm i lottie-web ngx-lottie
 # Or if you use yarn
 yarn add lottie-web ngx-lottie
+# Or if you use pnpm
+pnpm i lottie-web ngx-lottie
 ```
 
 > Please note: ngx-lottie uses [Scarf](https://scarf.sh/) to collect anonymized installation analytics. These analytics help support the maintainers of this library. However, if you'd like to opt out, you can do so by setting `scarfSettings.enabled = false` in your project's package.json. Alternatively, you can set the environment variable `SCARF_ANALYTICS=false` before you install.
@@ -175,9 +177,7 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
-  `,
+  template: ` <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" /> `,
   standalone: true,
   imports: [LottieComponent],
 })
@@ -230,7 +230,7 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" />
     <button (click)="updateAnimation()">Update animation</button>
   `,
   standalone: true,
@@ -268,7 +268,7 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" />
     <button (click)="updateAnimation()">Update animation</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -280,7 +280,10 @@ export class AppComponent {
     path: '/assets/animation.json',
   };
 
-  constructor(private ref: ChangeDetectorRef, private animationService: AnimationService) {}
+  constructor(
+    private ref: ChangeDetectorRef,
+    private animationService: AnimationService,
+  ) {}
 
   animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
@@ -301,7 +304,7 @@ You can also store options in `signal` and bind them via the `options()` signal 
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie [options]="options()" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <ng-lottie [options]="options()" (animationCreated)="animationCreated($event)" />
     <button (click)="updateAnimation()">Update animation</button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -313,7 +316,10 @@ export class AppComponent {
     path: '/assets/animation.json',
   });
 
-  constructor(private ref: ChangeDetectorRef, private animationService: AnimationService) {}
+  constructor(
+    private ref: ChangeDetectorRef,
+    private animationService: AnimationService,
+  ) {}
 
   animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
@@ -332,7 +338,7 @@ export class AppComponent {
 The `ng-lottie` adds event listeners to those events that are listened outside. This means that if you've got the following code:
 
 ```html
-<ng-lottie (loopComplete)="onLoopComplete()"></ng-lottie>
+<ng-lottie (loopComplete)="onLoopComplete()" />
 ```
 
 In the above example, the `ng-lottie` will only listen to the `loopComplete` event on the `AnimationItem` under the hood. One important note that all events are handled outside of the Angular zone:
@@ -353,7 +359,7 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-root',
-  template: ` <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie> `,
+  template: ` <ng-lottie [options]="options" (loopComplete)="onLoopComplete()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [LottieComponent],
@@ -379,7 +385,7 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie [options]="options" (loopComplete)="onLoopComplete()"></ng-lottie>
+    <ng-lottie [options]="options" (loopComplete)="onLoopComplete()" />
     <p>On loop complete called times = {{ onLoopCompleteCalledTimes }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -393,7 +399,10 @@ export class AppComponent {
 
   onLoopCompleteCalledTimes = 0;
 
-  constructor(private ngZone: NgZone, private ref: ChangeDetectorRef) {}
+  constructor(
+    private ngZone: NgZone,
+    private ref: ChangeDetectorRef,
+  ) {}
 
   onLoopComplete(): void {
     this.ngZone.run(() => {
@@ -406,7 +415,7 @@ export class AppComponent {
 
 ## Caching
 
-The `lottie-web` will load your JSON file whenever animation is created. When importing the `LottieModule` into the root module, you can also import the `LottieCacheModule`:
+The `lottie-web` will load your JSON file whenever animation is created. When providing options in the root config, you can also add the `provideCacheableAnimationLoader`:
 
 ```ts
 // src/app/app.config.ts
@@ -440,7 +449,7 @@ The `ng-lottie` component supports the following bindings:
       containerClass="moving-box"
       [styles]="styles"
       [options]="options"
-    ></ng-lottie>
+    />
   `,
   standalone: true,
   imports: [LottieComponent],
@@ -575,7 +584,7 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-root',
   template: `
-    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" />
 
     <button (click)="stop()">Stop</button>
     <button (click)="play()">Play</button>
@@ -620,27 +629,25 @@ The `ngx-lottie/server` package allows you to preload animation data and cache i
 
 TL;DR - see the `integration` folder.
 
-Import the `LottieServerModule` into your `AppServerModule`:
+Add the `provideLottieServerOptions` into your `appServerConfig`:
 
 ```typescript
 // src/app/app.config.server.ts
-import { importProvidersFrom, mergeApplicationConfig } from '@angular/core';
+import { mergeApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
-import { LottieServerModule } from 'ngx-lottie/server';
+import { provideLottieServerOptions } from 'ngx-lottie/server';
 
 import { appConfig } from './app.config';
 
 export const appServerConfig = mergeApplicationConfig(appConfig, {
   providers: [
     provideServerRendering(),
-    importProvidersFrom(
-      LottieServerModule.forRoot({
-        preloadAnimations: {
-          folder: 'dist/browser/assets',
-          animations: ['data.json'],
-        },
-      }),
-    ),
+    provideLottieServerOptions({
+      preloadAnimations: {
+        folder: 'dist/browser/assets',
+        animations: ['data.json'],
+      },
+    }),
   ],
 });
 ```
@@ -670,7 +677,7 @@ import { LottieComponent, AnimationOptions, LottieTransferState } from 'ngx-lott
 
 @Component({
   selector: 'app-root',
-  template: ` <ng-lottie [options]="options"></ng-lottie> `,
+  template: ` <ng-lottie [options]="options" /> `,
   standalone: true,
   imports: [LottieComponent],
 })

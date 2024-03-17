@@ -6,6 +6,7 @@ import {
   ViewChild,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { NgClass, NgStyle } from '@angular/common';
 
@@ -16,10 +17,10 @@ import { BaseDirective } from './base.directive';
   template: `
     <div
       #container
-      [style.width]="width || '100%'"
-      [style.height]="height || '100%'"
-      [ngStyle]="styles"
-      [ngClass]="containerClass"
+      [style.width]="width() || '100%'"
+      [style.height]="height() || '100%'"
+      [ngStyle]="styles()"
+      [ngClass]="containerClass()"
     ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,8 +28,8 @@ import { BaseDirective } from './base.directive';
   imports: [NgStyle, NgClass],
 })
 export class LottieComponent extends BaseDirective implements OnChanges {
-  @Input() width: string | null = null;
-  @Input() height: string | null = null;
+  width = input<string | null>(null);
+  height = input<string | null>(null);
 
   @ViewChild('container', { static: true }) container: ElementRef<HTMLElement> = null!;
 

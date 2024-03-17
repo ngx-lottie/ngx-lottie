@@ -12,7 +12,7 @@
         "index": "apps/demos/src/index.html",
         "browser": "apps/demos/src/main.ts",
         "server": "apps/demos/src/main.server.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/demos/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [

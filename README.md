@@ -75,6 +75,14 @@
         17
       </td>
     </tr>
+    <tr>
+      <td>
+        12.x
+      </td>
+      <td>
+        18
+      </td>
+    </tr>
   </tbody>
 </table>
 

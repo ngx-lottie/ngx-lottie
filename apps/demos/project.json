@@ -65,10 +65,14 @@
         "buildTarget": "demos:build"
       },
       "configurations": {
+        "development": {
+          "buildTarget": "demos:build:development"
+        },
         "production": {
           "buildTarget": "demos:build:production"
         }
-      }
+      },
+      "defaultConfiguration": "development"
     },
     "lint": {
       "executor": "@nx/eslint:lint",

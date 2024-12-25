@@ -1,14 +1,4 @@
-import {
-  Directive,
-  Output,
-  PLATFORM_ID,
-  SimpleChanges,
-  NgZone,
-  inject,
-  OnDestroy,
-  input,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Directive, Output, SimpleChanges, NgZone, inject, OnDestroy, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Subject, BehaviorSubject, Observable, defer } from 'rxjs';
@@ -27,6 +17,11 @@ import {
   AnimationEventName,
 } from './symbols';
 import { AnimationLoader } from './animation-loader';
+
+// Indicates whether the application is operating in server-rendering mode.
+// `ngServerMode` is a global flag set by Angular CLI.
+// https://github.com/angular/angular-cli/blob/b4e9a2af9e50e7b65167d0fdbd4012023135e875/packages/angular/build/src/tools/vite/utils.ts#L102
+declare const ngServerMode: boolean;
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective implements OnDestroy {
@@ -98,7 +93,6 @@ export class BaseDirective implements OnDestroy {
   >('error');
 
   private ngZone = inject(NgZone);
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private animationLoader = inject(AnimationLoader);
 
@@ -149,7 +143,11 @@ export class BaseDirective implements OnDestroy {
 
   private setupLoadAnimationListener(): void {
     const loadAnimation$ = this.loadAnimation$.pipe(
-      filter(([changes]) => this.isBrowser && changes.options !== undefined),
+      filter(
+        ([changes]) =>
+          // `!ngServerMode` is equal to `isBrowser`.
+          typeof ngServerMode !== 'undefined' && !ngServerMode && changes.options !== undefined,
+      ),
     );
 
     loadAnimation$

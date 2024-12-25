@@ -1,16 +1,12 @@
 import {
   NgModule,
   ModuleWithProviders,
-  InjectionToken,
-  APP_INITIALIZER,
-  TransferState,
   makeEnvironmentProviders,
+  provideAppInitializer,
 } from '@angular/core';
 
-import { LottieServerOptions } from './symbols';
-import { appInitializerFactory } from './internals';
-
-export const LOTTIE_SERVER_OPTIONS = new InjectionToken<LottieServerOptions>('LottieServerOptions');
+import { appInitializer } from './internals';
+import { LOTTIE_SERVER_OPTIONS, LottieServerOptions } from './symbols';
 
 @NgModule()
 export class LottieServerModule {
@@ -22,12 +18,7 @@ export class LottieServerModule {
           provide: LOTTIE_SERVER_OPTIONS,
           useValue: options,
         },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: appInitializerFactory,
-          multi: true,
-          deps: [LOTTIE_SERVER_OPTIONS, TransferState],
-        },
+        provideAppInitializer(appInitializer),
       ],
     };
   }
@@ -39,11 +30,6 @@ export function provideLottieServerOptions(options: LottieServerOptions) {
       provide: LOTTIE_SERVER_OPTIONS,
       useValue: options,
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
-      multi: true,
-      deps: [LOTTIE_SERVER_OPTIONS, TransferState],
-    },
+    provideAppInitializer(appInitializer),
   ]);
 }

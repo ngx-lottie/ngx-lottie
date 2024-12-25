@@ -16,7 +16,6 @@ import { AnimationOptions, BMDestroyEvent, LottieComponent, LottieTransferState 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [LottieComponent],
 })
 export class AppComponent implements AfterViewChecked {

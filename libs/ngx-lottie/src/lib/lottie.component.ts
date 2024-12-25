@@ -24,7 +24,6 @@ import { BaseDirective } from './base.directive';
     ></div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NgStyle, NgClass],
 })
 export class LottieComponent extends BaseDirective implements OnChanges {

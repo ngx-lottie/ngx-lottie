@@ -1,9 +1,14 @@
 import { join } from 'node:path';
-import { makeStateKey, TransferState } from '@angular/core';
+import { inject, makeStateKey, TransferState } from '@angular/core';
 import { AnimationFilename, transformAnimationFilenameToKey } from 'ngx-lottie';
 
 import { readFileWithAnimationData } from './utils';
-import { LottieServerOptions, PathToAnimation, AnimationData } from './symbols';
+import {
+  LottieServerOptions,
+  PathToAnimation,
+  AnimationData,
+  LOTTIE_SERVER_OPTIONS,
+} from './symbols';
 
 /** Will be provided through Terser global definitions when the app is build in production mode. */
 declare const ngDevMode: boolean;
@@ -23,7 +28,7 @@ function readAndTransferAnimationData(
         transferAnimationData(transferState, animations[i], animationData);
       })
       .catch(error => {
-        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        if (typeof ngDevMode !== 'undefined' && ngDevMode) {
           console.error(`Failed to read the following file ${path}. Error: `, error);
         }
 
@@ -43,23 +48,27 @@ function transferAnimationData(
 ): void {
   animation = transformAnimationFilenameToKey(animation);
   const key = makeStateKey(animation);
+  if (state.hasKey(key)) {
+    return;
+  }
   state.set(key, JSON.parse(animationData));
 }
 
-export function appInitializerFactory(options: LottieServerOptions, state: TransferState) {
+export async function appInitializer() {
+  const options = inject(LOTTIE_SERVER_OPTIONS);
+  const transferState = inject(TransferState);
   const pathsToAnimations = resolveLottiePaths(options);
   const sources = readAndTransferAnimationData(
-    state,
+    transferState,
     options.preloadAnimations.animations,
     pathsToAnimations,
   );
 
-  return () => Promise.all(sources);
+  await Promise.all(sources);
 }
 
 export function resolveLottiePaths({ preloadAnimations }: LottieServerOptions): PathToAnimation[] {
   const { folder, animations } = preloadAnimations;
   const path = join(process.cwd(), folder);
-
   return animations.map(animation => join(path, animation));
 }

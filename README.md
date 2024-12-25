@@ -83,6 +83,14 @@
         18
       </td>
     </tr>
+    <tr>
+      <td>
+        13.x
+      </td>
+      <td>
+        19
+      </td>
+    </tr>
   </tbody>
 </table>
 

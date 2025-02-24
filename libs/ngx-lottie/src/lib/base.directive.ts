@@ -1,5 +1,13 @@
-import { Directive, Output, SimpleChanges, NgZone, inject, OnDestroy, input } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  Directive,
+  Output,
+  SimpleChanges,
+  NgZone,
+  inject,
+  input,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
 
 import { Subject, BehaviorSubject, Observable, defer } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
@@ -17,11 +25,7 @@ import {
   AnimationEventName,
 } from './symbols';
 import { AnimationLoader } from './animation-loader';
-
-// Indicates whether the application is operating in server-rendering mode.
-// `ngServerMode` is a global flag set by Angular CLI.
-// https://github.com/angular/angular-cli/blob/b4e9a2af9e50e7b65167d0fdbd4012023135e875/packages/angular/build/src/tools/vite/utils.ts#L102
-declare const ngServerMode: boolean;
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({ selector: '[lottie]' })
 export class BaseDirective implements OnDestroy {
@@ -93,6 +97,7 @@ export class BaseDirective implements OnDestroy {
   >('error');
 
   private ngZone = inject(NgZone);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private animationLoader = inject(AnimationLoader);
 
@@ -105,6 +110,8 @@ export class BaseDirective implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroyAnimation();
+    this.loadAnimation$.complete();
+    this.animationItem$.complete();
   }
 
   protected loadAnimation(changes: SimpleChanges, container: HTMLElement): void {
@@ -143,11 +150,7 @@ export class BaseDirective implements OnDestroy {
 
   private setupLoadAnimationListener(): void {
     const loadAnimation$ = this.loadAnimation$.pipe(
-      filter(
-        ([changes]) =>
-          // `!ngServerMode` is equal to `isBrowser`.
-          typeof ngServerMode !== 'undefined' && !ngServerMode && changes.options !== undefined,
-      ),
+      filter(([changes]) => this.isBrowser && changes.options !== undefined),
     );
 
     loadAnimation$
@@ -158,7 +161,6 @@ export class BaseDirective implements OnDestroy {
             this.animationLoader.resolveOptions(changes.options.currentValue, container),
           );
         }),
-        takeUntilDestroyed(),
       )
       .subscribe(animationItem => {
         this.ngZone.run(() => this.animationItem$.next(animationItem));

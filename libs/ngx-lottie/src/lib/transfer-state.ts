@@ -1,11 +1,11 @@
-import { Injectable, makeStateKey, TransferState } from '@angular/core';
+import { inject, Injectable, makeStateKey, TransferState } from '@angular/core';
 
 import { AnimationFilename } from './symbols';
 import { transformAnimationFilenameToKey } from './server';
 
 @Injectable({ providedIn: 'root' })
 export class LottieTransferState {
-  constructor(private transferState: TransferState) {}
+  private transferState = inject(TransferState);
 
   get<T>(animation: AnimationFilename): T | null {
     const animationKey = transformAnimationFilenameToKey(animation);

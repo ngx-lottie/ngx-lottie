@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/demos/src",
   "prefix": "app",
+  "type": ["app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -72,7 +73,8 @@
           "buildTarget": "demos:build:production"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -85,6 +87,5 @@
         "jestConfig": "apps/demos/jest.config.ts"
       }
     }
-  },
-  "type": ["app"]
+  }
 }

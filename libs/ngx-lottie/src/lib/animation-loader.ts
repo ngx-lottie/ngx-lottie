@@ -1,6 +1,6 @@
 import { Injectable, NgZone, inject, ɵisPromise } from '@angular/core';
 
-import { Observable, from, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, mergeMap, shareReplay, tap } from 'rxjs/operators';
 
 import {
@@ -15,16 +15,31 @@ import {
 function convertPlayerOrLoaderToObservable(): Observable<LottiePlayer> {
   const ngZone = inject(NgZone);
   const { player, useWebWorker } = inject(LOTTIE_OPTIONS);
-  const playerOrLoader = ngZone.runOutsideAngular(() => player());
-  // We need to use `isPromise` instead of checking whether
-  // `result instanceof Promise`. In zone.js patched environments, `global.Promise`
-  // is the `ZoneAwarePromise`. Some APIs, which are likely not patched by zone.js
-  // for certain reasons, might not work with `instanceof`. For instance, the dynamic
-  // import `() => import('./chunk.js')` returns a native promise (not a `ZoneAwarePromise`),
-  // causing this check to be falsy.
-  const player$ = ɵisPromise(playerOrLoader)
-    ? from(playerOrLoader).pipe(map(module => module.default || module))
-    : of(playerOrLoader);
+
+  const player$ = new Observable<LottiePlayer>(subscriber => {
+    // Call the `player` function lazily — only when a subscriber
+    // arrives — to avoid importing `lottie-web` on the server, as it will
+    // fail with a "document is not defined" error.
+    const playerOrLoader = ngZone.runOutsideAngular(() => player());
+
+    // We need to use `isPromise` instead of checking whether
+    // `result instanceof Promise`. In zone.js patched environments, `global.Promise`
+    // is the `ZoneAwarePromise`. Some APIs, which are likely not patched by zone.js
+    // for certain reasons, might not work with `instanceof`. For instance, the dynamic
+    // import `() => import('./chunk.js')` returns a native promise (not a `ZoneAwarePromise`),
+    // causing this check to be falsy.
+    if (ɵisPromise(playerOrLoader)) {
+      playerOrLoader
+        .then(module => {
+          subscriber.next(module.default || module);
+          subscriber.complete();
+        })
+        .catch(error => subscriber.error(error));
+    } else {
+      subscriber.next(playerOrLoader);
+      subscriber.complete();
+    }
+  });
 
   return player$.pipe(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

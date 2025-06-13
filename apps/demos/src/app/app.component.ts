@@ -3,12 +3,12 @@ import {
   Component,
   ChangeDetectionStrategy,
   AfterViewChecked,
-  Inject,
   PLATFORM_ID,
   signal,
   WritableSignal,
+  inject,
 } from '@angular/core';
-import { AnimationItem } from 'lottie-web';
+import type { AnimationItem } from 'lottie-web';
 import { AnimationOptions, BMDestroyEvent, LottieComponent, LottieTransferState } from 'ngx-lottie';
 
 @Component({
@@ -29,10 +29,10 @@ export class AppComponent implements AfterViewChecked {
 
   private animationItem: AnimationItem | null = null;
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: string,
-    private lottieTransferState: LottieTransferState,
-  ) {
+  private platformId = inject(PLATFORM_ID);
+  private lottieTransferState = inject(LottieTransferState);
+
+  constructor() {
     this.createOptions();
   }
 

@@ -3,10 +3,11 @@
   "compilerOptions": {
     "types": [],
     "strict": true,
-    "module": "ESNext",
+    "module": "preserve",
     "target": "ES2022",
     "esModuleInterop": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "moduleResolution": "bundler"
   },
   "files": ["src/main.ts", "src/main.server.ts", "server.ts"],
   "exclude": ["jest.config.ts"]

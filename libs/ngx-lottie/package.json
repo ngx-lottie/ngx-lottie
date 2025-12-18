@@ -44,12 +44,14 @@
     "angular 19",
     "angular20",
     "angular 20",
+    "angular21",
+    "angular 21",
     "universal",
     "ivy"
   ],
   "sideEffects": false,
   "peerDependencies": {
-    "@angular/core": ">=20",
+    "@angular/core": ">=21",
     "lottie-web": ">=5.9.2"
   },
   "dependencies": {

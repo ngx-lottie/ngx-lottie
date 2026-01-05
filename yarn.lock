@@ -179,6 +179,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular-devkit/architect@npm:^0.2100.4":
+  version: 0.2100.4
+  resolution: "@angular-devkit/architect@npm:0.2100.4"
+  dependencies:
+    "@angular-devkit/core": "npm:21.0.4"
+    rxjs: "npm:7.8.2"
+  checksum: 10c0/8d9ce91641b6c0bbb64f3a4c21381367a3a724ef6d171aacacb43c0c4cb6cb2b9cf3285aa0d25604d6bf1b22c5448d2d9552f7783c1a781f47b6d3b4558146db
+  languageName: node
+  linkType: hard
+
 "@angular-devkit/build-angular@npm:21.0.3":
   version: 21.0.3
   resolution: "@angular-devkit/build-angular@npm:21.0.3"
@@ -320,6 +330,25 @@ __metadata:
     chokidar:
       optional: true
   checksum: 10c0/9037e731d16a96cf07b3aaf64564bd4e334d1b076df45bc9716e58e41d52b167255ae1a71eaab27f3159772a428b3d1ad5c07e18756582174fccd79a26ed8b69
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/core@npm:21.0.4":
+  version: 21.0.4
+  resolution: "@angular-devkit/core@npm:21.0.4"
+  dependencies:
+    ajv: "npm:8.17.1"
+    ajv-formats: "npm:3.0.1"
+    jsonc-parser: "npm:3.3.1"
+    picomatch: "npm:4.0.3"
+    rxjs: "npm:7.8.2"
+    source-map: "npm:0.7.6"
+  peerDependencies:
+    chokidar: ^4.0.0
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 10c0/bce5ff971b6224d9bf0d1dfd5dfe51caecf2a9e4559551209d6c665741ab3392d72aa51d7e4ab3e36f126836f74ee9190ebfe9fbcbd179d05e7918f37400ef4e
   languageName: node
   linkType: hard
 
@@ -14931,7 +14960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-preset-angular@npm:16.0.0":
+"jest-preset-angular@npm:^16.0.0":
   version: 16.0.0
   resolution: "jest-preset-angular@npm:16.0.0"
   dependencies:
@@ -15198,7 +15227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-util@npm:30.2.0, jest-util@npm:^30.0.0, jest-util@npm:^30.0.2":
+"jest-util@npm:30.2.0, jest-util@npm:^30.0.0, jest-util@npm:^30.0.2, jest-util@npm:^30.2.0":
   version: 30.2.0
   resolution: "jest-util@npm:30.2.0"
   dependencies:
@@ -16968,6 +16997,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ngx-lottie@workspace:."
   dependencies:
+    "@angular-devkit/architect": "npm:^0.2100.4"
     "@angular-devkit/build-angular": "npm:21.0.3"
     "@angular-devkit/core": "npm:21.0.3"
     "@angular-devkit/schematics": "npm:21.0.3"
@@ -17003,6 +17033,7 @@ __metadata:
     "@typescript-eslint/utils": "npm:7.18.0"
     autoprefixer: "npm:^10.4.0"
     browserslist: "npm:^4.28.1"
+    common-path-prefix: "npm:^3.0.0"
     cypress: "npm:10.0.0"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:10.1.5"
@@ -17011,7 +17042,8 @@ __metadata:
     husky: "npm:~6.0.0"
     jest: "npm:30.0.5"
     jest-environment-jsdom: "npm:30.0.5"
-    jest-preset-angular: "npm:16.0.0"
+    jest-preset-angular: "npm:^16.0.0"
+    jest-util: "npm:^30.2.0"
     lint-staged: "npm:^10.2.11"
     lottie-web: "npm:^5.9.2"
     ng-packagr: "npm:21.0.1"
@@ -17022,6 +17054,7 @@ __metadata:
     postcss-url: "npm:10.1.3"
     prettier: "npm:3.2.5"
     rxjs: "npm:7.8.1"
+    ts-jest: "npm:^29.4.6"
     ts-node: "npm:10.9.1"
     tslib: "npm:^2.0.0"
     typescript: "npm:5.9.3"
@@ -21589,7 +21622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^29.4.0":
+"ts-jest@npm:^29.4.0, ts-jest@npm:^29.4.6":
   version: 29.4.6
   resolution: "ts-jest@npm:29.4.6"
   dependencies:

@@ -2,12 +2,13 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "ES2022",
-    "module": "es2015",
+    "module": "preserve",
     "importHelpers": true,
     "downlevelIteration": true,
-    "lib": ["dom", "es2018"],
+    "lib": ["dom", "es2022"],
     "types": ["node"],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "moduleResolution": "bundler"
   },
   "angularCompilerOptions": {
     "compilationMode": "partial",

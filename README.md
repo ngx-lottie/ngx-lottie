@@ -99,6 +99,14 @@
         20
       </td>
     </tr>
+    <tr>
+      <td>
+        21.x
+      </td>
+      <td>
+        21
+      </td>
+    </tr>
   </tbody>
 </table>
 

@@ -13,12 +13,12 @@ function unescapeHtml(text: string): string {
 }
 
 describe('Server side rendering', () => {
-  beforeEach(() => cy.visit('/'));
-
   // We can only be sure that SSR works properly only by compairing
   // transfer state loaded from server
   it('should contain transfer data for "data.json" animation', () => {
     // Arrange & act
+    cy.visit('/');
+
     cy.get('script#ngx-lottie-universal-state')
       .invoke('text')
       .then(text => {
@@ -33,12 +33,15 @@ describe('Server side rendering', () => {
 
   it('should destroy animation', () => {
     // Arrange & act & assert
+    cy.visit('/');
     cy.get('button.destroy').click();
     cy.get('ng-lottie').should('not.exist');
   });
 
   it('should contain styles on the container div', () => {
     // Arrange & act & assert
+    cy.visit('/');
+
     cy.get('.moving-box')
       .invoke('attr', 'style')
       .should('contain', 'margin: 0px auto')
@@ -48,6 +51,8 @@ describe('Server side rendering', () => {
 
   it('should contain multiple classes on the container div', () => {
     // Arrange & act & assert
+    cy.visit('/');
+
     cy.get('.moving-box')
       .invoke('attr', 'class')
       .should('contain', 'moving-box moving-box-second-class');
@@ -55,6 +60,8 @@ describe('Server side rendering', () => {
 
   it('should update animation dynamically when options change', () => {
     // Arrange & act & assert
+    cy.visit('/');
+
     cy.get('ng-lottie svg g').invoke('prop', 'childElementCount').should('equal', 2);
 
     cy.get('.update-animation').click();
@@ -63,5 +70,16 @@ describe('Server side rendering', () => {
       .invoke('prop', 'childElementCount')
       // The new animation is more complex and has much more elements.
       .should('equal', 8);
+  });
+
+  it('should not make duplicate HTTP requests', () => {
+    // Arrange & act
+    cy.intercept('GET', 'http://localhost:4200/assets/animations/data.json').as('dataRequest');
+
+    cy.visit('/duplicate');
+    cy.wait('@dataRequest');
+
+    // Assert
+    cy.get('@dataRequest.all').should('have.length', 1);
   });
 });

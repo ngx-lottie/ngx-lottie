@@ -1,9 +1,16 @@
 import { provideHttpClient } from '@angular/common/http';
-import { APP_ID, ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import {
+  APP_ID,
+  ApplicationConfig,
+  DOCUMENT,
+  inject,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideCacheableAnimationLoader, provideLottieOptions } from 'ngx-lottie';
 
 import { routes } from './app.routes';
+import { provideDotLottie, withDotLottieWasmUrl } from 'ngx-lottie/dotlottie-web';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +23,16 @@ export const appConfig: ApplicationConfig = {
       // useWebWorker: true,
       player: () => import('lottie-web'),
     }),
+    provideDotLottie(
+      {
+        player: () => import('./dotlottie-worker').then(m => m.DotLottieWorker),
+      },
+      // Workers don't have access to the same base URL resolution as the main thread.
+      withDotLottieWasmUrl(() => {
+        const document = inject(DOCUMENT);
+        return `${document.location.origin}/assets/dotlottie-player.wasm`;
+      }),
+    ),
     provideCacheableAnimationLoader(),
   ],
 };

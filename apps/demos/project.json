@@ -23,6 +23,11 @@
             "glob": "*.json",
             "input": "apps/demos/assets/animations",
             "output": "/assets/animations"
+          },
+          {
+            "glob": "dotlottie-player.wasm",
+            "input": "./node_modules/@lottiefiles/dotlottie-web/dist/",
+            "output": "/assets/"
           }
         ],
         "allowedCommonJsDependencies": ["lottie-web"],

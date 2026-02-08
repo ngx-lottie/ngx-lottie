@@ -9,4 +9,8 @@ export const routes: Routes = [
     path: 'duplicate',
     loadComponent: () => import('./duplicate/duplicate.component'),
   },
+  {
+    path: 'dotlottie-demo',
+    loadComponent: () => import('./dotlottie-demo/dotlottie-demo.component'),
+  },
 ];

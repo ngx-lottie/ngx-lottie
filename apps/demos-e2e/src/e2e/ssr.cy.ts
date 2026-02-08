@@ -12,7 +12,7 @@ function unescapeHtml(text: string): string {
   return text.replace(/&[^;]+;/g, (s: string) => unescapedText[s]);
 }
 
-describe('Server side rendering', () => {
+describe('ngx-lottie', () => {
   // We can only be sure that SSR works properly only by compairing
   // transfer state loaded from server
   it('should contain transfer data for "data.json" animation', () => {
@@ -81,5 +81,25 @@ describe('Server side rendering', () => {
 
     // Assert
     cy.get('@dataRequest.all').should('have.length', 1);
+  });
+});
+
+describe('ngx-lottie/dotlottie-web', () => {
+  it('should destroy animation', () => {
+    // Arrange & act & assert
+    cy.visit('/dotlottie-demo');
+    cy.get('button.destroy').click();
+    cy.get('ng-dotlottie-worker').should('not.exist');
+  });
+
+  it('should contain styles on the container div', () => {
+    // Arrange & act & assert
+    cy.visit('/dotlottie-demo');
+
+    cy.get('ng-dotlottie-worker div')
+      .invoke('attr', 'style')
+      .should('contain', 'width: 100%')
+      .should('contain', 'height: 100%')
+      .should('contain', 'line-height: 0');
   });
 });

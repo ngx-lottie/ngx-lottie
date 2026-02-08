@@ -4,7 +4,8 @@
     "baseUrl": "./",
     "paths": {
       "ngx-lottie": ["libs/ngx-lottie/src/index.ts"],
-      "ngx-lottie/server": ["libs/ngx-lottie/server/src/index.ts"]
+      "ngx-lottie/server": ["libs/ngx-lottie/server/src/index.ts"],
+      "ngx-lottie/dotlottie-web": ["libs/ngx-lottie/dotlottie-web/src/index.ts"]
     },
     "target": "es5",
     "lib": ["es2017", "dom"],

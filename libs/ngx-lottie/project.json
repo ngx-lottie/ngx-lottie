@@ -22,42 +22,6 @@
         "jestConfig": "libs/ngx-lottie/jest.config.ts",
         "tsConfig": "libs/ngx-lottie/tsconfig.spec.json"
       }
-    },
-    "publish-patch": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "cd libs/ngx-lottie && npm version patch",
-          "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
-          "git add . && git push && git push --tags",
-          "cd dist/libs/ngx-lottie && npm publish --access public"
-        ],
-        "parallel": false
-      }
-    },
-    "publish-minor": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "cd libs/ngx-lottie && npm version minor",
-          "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
-          "git add . && git push && git push --tags",
-          "cd dist/libs/ngx-lottie && npm publish --access public"
-        ],
-        "parallel": false
-      }
-    },
-    "publish-major": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "cd libs/ngx-lottie && npm version major",
-          "nx build ngx-lottie && cp README.md ./dist/libs/ngx-lottie",
-          "git add . && git push && git push --tags",
-          "cd dist/libs/ngx-lottie && npm publish --access public"
-        ],
-        "parallel": false
-      }
     }
   }
 }

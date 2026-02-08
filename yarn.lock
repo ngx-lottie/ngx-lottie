@@ -3201,6 +3201,11 @@
   resolved "https://registry.yarnpkg.com/@lmdb/lmdb-win32-x64/-/lmdb-win32-x64-3.4.3.tgz#bb4fbcdddfbb4683ecf7bb28045414bfed90afb0"
   integrity sha512-1JdBkcO0Vrua4LUgr4jAe4FUyluwCeq/pDkBrlaVjX3/BBWP1TzVjCL+TibWNQtPAL1BITXPAhlK5Ru4FBd/hg==
 
+"@lottiefiles/dotlottie-web@^0.62.0":
+  version "0.62.0"
+  resolved "https://registry.yarnpkg.com/@lottiefiles/dotlottie-web/-/dotlottie-web-0.62.0.tgz#f3256e5252e951653ee3dc3c75ca5c85845d3c32"
+  integrity sha512-iOvJnOoN202ZtGxT8yFe4Lhh8pj8vTGEEyUJMiNNrTZTGLrp9zSbFZEAow5ICd/MSoAYqDPbSLR/AHYHXq8RLQ==
+
 "@modelcontextprotocol/sdk@1.25.2":
   version "1.25.2"
   resolved "https://registry.yarnpkg.com/@modelcontextprotocol/sdk/-/sdk-1.25.2.tgz#2284560b4e044b4ce5f328ee180931110cb8c5cf"

@@ -93,6 +93,7 @@
     "@angular/ssr": "21.0.3",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@lottiefiles/dotlottie-web": "^0.62.0",
     "@nx/angular": "22.3.1",
     "@nx/cypress": "22.3.1",
     "@nx/eslint": "22.3.1",

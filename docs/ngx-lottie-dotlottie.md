@@ -51,6 +51,8 @@ npm i @lottiefiles/dotlottie-web ngx-lottie
 yarn add @lottiefiles/dotlottie-web ngx-lottie
 # Or if you use pnpm
 pnpm i @lottiefiles/dotlottie-web ngx-lottie
+# Or if you use bun
+bun add @lottiefiles/dotlottie-web ngx-lottie
 ```
 
 ## Usage
@@ -59,7 +61,7 @@ First, add `provideDotLottie` to your `app.config.ts`:
 
 ```typescript
 // src/app/app.config.ts
-import { provideDotLottie } from 'ngx-lottie/dotlottie';
+import { provideDotLottie } from 'ngx-lottie/dotlottie-web';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
 
 export const appConfig: ApplicationConfig = {
@@ -75,7 +77,7 @@ The `@lottiefiles/dotlottie-web` library can be loaded on demand using dynamic i
 
 ```typescript
 // src/app/app.config.ts
-import { provideDotLottie } from 'ngx-lottie/dotlottie';
+import { provideDotLottie } from 'ngx-lottie/dotlottie-web';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -93,7 +95,7 @@ Use `ng-dotlottie` for standard rendering on the main thread. This is suitable f
 ```typescript
 import { Component } from '@angular/core';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
-import { DotLottieComponent } from 'ngx-lottie/dotlottie';
+import { DotLottieComponent } from 'ngx-lottie/dotlottie-web';
 
 @Component({
   selector: 'app-root',
@@ -118,7 +120,7 @@ You can also provide animation data directly instead of using a URL:
 
 ```typescript
 import { Component } from '@angular/core';
-import { DotLottieComponent } from 'ngx-lottie/dotlottie';
+import { DotLottieComponent } from 'ngx-lottie/dotlottie-web';
 
 @Component({
   selector: 'app-root',
@@ -143,7 +145,7 @@ Use `ng-dotlottie-worker` to offload animation rendering to a Web Worker. This i
 ```typescript
 import { Component } from '@angular/core';
 import { DotLottieWorker } from '@lottiefiles/dotlottie-web';
-import { DotLottieWorkerComponent } from 'ngx-lottie/dotlottie';
+import { DotLottieWorkerComponent } from 'ngx-lottie/dotlottie-web';
 
 @Component({
   selector: 'app-root',
@@ -173,7 +175,7 @@ DotLottie components use signal-based inputs for reactive updates. You can updat
 
 ```typescript
 import { Component, signal } from '@angular/core';
-import { DotLottieComponent } from 'ngx-lottie/dotlottie';
+import { DotLottieComponent } from 'ngx-lottie/dotlottie-web';
 
 @Component({
   selector: 'app-root',
@@ -253,7 +255,7 @@ The `ng-dotlottie-worker` component includes state machine functionality for int
 
 ```typescript
 import { Component, viewChild } from '@angular/core';
-import { DotLottieWorkerComponent } from 'ngx-lottie/dotlottie';
+import { DotLottieWorkerComponent } from 'ngx-lottie/dotlottie-web';
 import { StateMachineTransitionEvent } from '@lottiefiles/dotlottie-web';
 
 @Component({
@@ -287,7 +289,9 @@ If you need to host the WASM file at a custom location, use the `withDotLottieWa
 
 ```typescript
 // src/app/app.config.ts
-import { provideDotLottie, withDotLottieWasmUrl } from 'ngx-lottie/dotlottie';
+import { inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { provideDotLottie, withDotLottieWasmUrl } from 'ngx-lottie/dotlottie-web';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
 
 export const appConfig: ApplicationConfig = {
@@ -321,7 +325,7 @@ Both DotLottie components are highly optimized for performance:
 ```typescript
 import { Component, NgZone } from '@angular/core';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
-import { DotLottieComponent } from 'ngx-lottie/dotlottie';
+import { DotLottieComponent } from 'ngx-lottie/dotlottie-web';
 
 @Component({
   selector: 'app-root',

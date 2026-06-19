@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/demos-e2e/src",
+  "implicitDependencies": ["demos"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -14,6 +15,5 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     }
-  },
-  "implicitDependencies": ["demos"]
+  }
 }

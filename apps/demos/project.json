@@ -7,7 +7,8 @@
   "type": ["app"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@angular/build:application",
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/demos",
         "index": "apps/demos/src/index.html",
@@ -62,11 +63,12 @@
           "extractLicenses": false,
           "sourceMap": true
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "options": {
         "buildTarget": "demos:build"
       },
@@ -77,9 +79,7 @@
         "production": {
           "buildTarget": "demos:build:production"
         }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint",

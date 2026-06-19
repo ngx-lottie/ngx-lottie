@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "paths": {
       "ngx-lottie": ["libs/ngx-lottie/src/index.ts"],
       "ngx-lottie/server": ["libs/ngx-lottie/server/src/index.ts"],
@@ -16,7 +15,6 @@
     "declaration": false,
     "noImplicitAny": false,
     "resolveJsonModule": true,
-    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },

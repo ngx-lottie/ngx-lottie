@@ -131,7 +131,7 @@ describe('ngx-lottie', () => {
 
     it('should set width and height in "em"', () => {
       // Arrange & act
-      const fixture = createFixture(MockComponent);
+      const fixture = TestBed.createComponent(MockComponent);
       fixture.componentInstance.width = '20em';
       fixture.componentInstance.height = '20em';
       fixture.detectChanges();

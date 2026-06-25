@@ -24,6 +24,14 @@
   </a>
 </div>
 
+## Support
+
+If you find this project useful, consider supporting its development:
+
+<a href="https://opencollective.com/ngx-lottie" target="_blank">
+  <img src="https://opencollective.com/ngx-lottie/donate/button@2x.png?color=blue" width="200" alt="Support on Open Collective" />
+</a>
+
 ## Packages
 
 This monorepo contains two packages for rendering Lottie animations in Angular:

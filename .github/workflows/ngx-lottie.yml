@@ -10,7 +10,7 @@ jobs:
   lint-test-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
@@ -18,31 +18,19 @@ jobs:
 
       - run: git fetch --no-tags --prune --depth 2 origin master
 
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+          cache: true
+
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo '::set-output name=dir::$(yarn config get cacheFolder)'
-
-      - uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: |
-            node_modules
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ~/.cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
-          restore-keys: ${{ runner.os }}-yarn
-
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        env:
-          HUSKY_SKIP_INSTALL: 'true'
-        run: yarn
+        run: pnpm install --frozen-lockfile
 
-      - run: yarn nx affected:lint --parallel --base=origin/master
-      - run: yarn nx affected:test --parallel --base=origin/master
-      - run: yarn nx affected:build --base=origin/master
-      - run: yarn nx affected:e2e --base=origin/master
+      - run: pnpm nx affected:lint --parallel --base=origin/master
+      - run: pnpm nx affected:test --parallel --base=origin/master
+      - run: pnpm nx affected:build --base=origin/master
+      - run: pnpm nx affected:e2e --base=origin/master

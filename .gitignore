@@ -8,13 +8,8 @@ yarn-error.log
 coverage
 migrations.json
 
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+package-lock.json
+yarn.lock
 
 .nx/cache
 .nx/workspace-data

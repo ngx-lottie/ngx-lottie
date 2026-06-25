@@ -175,13 +175,14 @@ export abstract class ɵɵBaseDotLottieDirective {
         return;
       }
 
-      runInInjectionContext(injector, () => this.render(destroyRef, DotLottie));
+      runInInjectionContext(injector, () => this.render(destroyRef, DotLottie, injector));
     });
   }
 
   private render(
     destroyRef: DestroyRef,
     DotLottieConstructor: typeof DotLottie | typeof DotLottieWorker,
+    injector: Injector,
   ): void {
     const canvas = this.canvas().nativeElement;
 
@@ -208,57 +209,66 @@ export abstract class ɵɵBaseDotLottieDirective {
     // DotLottie instance property when that input changes. This provides
     // fine-grained reactivity similar to React's `useEffect` with dependency arrays.
     effect(() => {
-      this.ngZone.runOutsideAngular(() => instance.loadAnimation(this.animationId() ?? ''));
-    });
-    effect(() => {
       this.ngZone.runOutsideAngular(() =>
         instance.setBackgroundColor(this.backgroundColor() ?? ''),
       );
-    });
+    }, { injector });
+
     effect(() => {
       const data = this.data();
       if (typeof data !== 'string' && typeof data !== 'object') return;
       this.ngZone.runOutsideAngular(() => instance.load({ ...this.buildConfig(), data }));
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() => instance.setLayout(this.layout() ?? {}));
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() => instance.setLoop(this.loop() ?? false));
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() => instance.setMarker(this.marker() ?? ''));
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() => instance.setMode(this.mode() ?? 'forward'));
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() => instance.setRenderConfig(this.renderConfig() ?? {}));
-    });
+    }, { injector });
+
     effect(() => {
       const segment = this.segment();
       if (typeof segment?.[0] === 'number' && typeof segment?.[1] === 'number') {
         this.ngZone.runOutsideAngular(() => instance.setSegment(segment[0], segment[1]));
       }
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() => instance.setSpeed(this.speed() ?? 1));
-    });
+    }, { injector });
+
     effect(() => {
       const src = this.src();
       if (typeof src !== 'string') return;
       this.ngZone.runOutsideAngular(() => instance.load({ ...this.buildConfig(), src }));
-    });
+    }, { injector });
+
     effect(() => {
       const themeId = this.themeId();
       if (typeof themeId !== 'string') return;
       this.ngZone.runOutsideAngular(() => instance.setTheme(themeId));
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() =>
         instance.setUseFrameInterpolation(this.useFrameInterpolation() ?? true),
       );
-    });
+    }, { injector });
+
     effect(() => {
       const isLoaded = this.isLoaded();
       const stateMachineId = this.stateMachineId();
@@ -276,12 +286,13 @@ export abstract class ɵɵBaseDotLottieDirective {
       } else {
         this.ngZone.runOutsideAngular(() => instance.stateMachineStop());
       }
-    });
+    }, { injector });
+
     effect(() => {
       this.ngZone.runOutsideAngular(() =>
         instance.stateMachineSetConfig(this.stateMachineConfig() ?? null),
       );
-    });
+    }, { injector });
 
     destroyRef.onDestroy(() => {
       // Since `destroy()` calls `eventManager.dispatch` with `destroy`,

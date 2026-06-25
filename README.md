@@ -154,6 +154,14 @@ npm i @lottiefiles/dotlottie-web ngx-lottie
         21
       </td>
     </tr>
+    <tr>
+      <td>
+        22.x
+      </td>
+      <td>
+        22
+      </td>
+    </tr>
   </tbody>
 </table>
 
